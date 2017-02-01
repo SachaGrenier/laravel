@@ -8,6 +8,8 @@ use App\Ticket;
 
 class HomeController extends Controller
 {
+    protected $layout = "layouts.default";
+    
      public static function index()
     {
        $sectors = Sector::find(1);
