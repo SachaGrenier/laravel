@@ -10,6 +10,17 @@ $tickets =  HomeController::getTickets();
 $DEBUG = false;
 
 ?>
+
+@include('includes.tables')
+
+@extends('layouts.default')
+
+@section('title', 'Home')
+
+@section('content')   
+  
+<table id="my-table">
+  <thead>
 <div class="container">
 <a href="ticket"><button class="btn btn-success">Créer un ticket</button></a>
 <table id="my-table" class="table table-hover">
@@ -31,34 +42,34 @@ $DEBUG = false;
 
   if($DEBUG)
   {
-	  echo '<pre>';
-	  print_r($tickets);
-	  echo '</pre>';
+    echo '<pre>';
+    print_r($tickets);
+    echo '</pre>';
   }
    foreach ($tickets as $ticket)
   {
-  	    echo '<tr>';
- 	echo '<td>'.$ticket->id.'</td>';
- 	echo '<td>'.$ticket->title.'</td>';
- 	if (isset($ticket->sector))
- 	echo '<td>'.$ticket->sector->name.'</td>';
- 	else
- 	echo '<td>Non attribué</td>';
+        echo '<tr>';
+  echo '<td>'.$ticket->id.'</td>';
+  echo '<td>'.$ticket->title.'</td>';
+  if (isset($ticket->sector))
+  echo '<td>'.$ticket->sector->name.'</td>';
+  else
+  echo '<td>Non attribué</td>';
 
- 	if (isset($ticket->user))
- 	echo '<td>'.$ticket->user->first_name.'</td>';
- 	else
- 	echo '<td>Non attribué</td>';
+  if (isset($ticket->user))
+  echo '<td>'.$ticket->user->first_name.'</td>';
+  else
+  echo '<td>Non attribué</td>';
 
- 	if (isset($ticket->applicant))
- 	echo '<td>'.$ticket->applicant->name.'</td>';
- 	else
- 	echo '<td>Non attribué</td>';
+  if (isset($ticket->applicant))
+  echo '<td>'.$ticket->applicant->name.'</td>';
+  else
+  echo '<td>Non attribué</td>';
 
- 	
- 	echo '<td>'.$ticket->created_at.'</td>';
- 	echo '<td>'.$ticket->updated_at.'</td>';
- 	echo '<td><a href="ticket">Modifier</a></td>';
+  
+  echo '<td>'.$ticket->created_at.'</td>';
+  echo '<td>'.$ticket->updated_at.'</td>';
+  echo '<td><a href="ticket">Modifier</a></td>';
     echo '</tr>';
   }
    
@@ -76,3 +87,6 @@ $(document ).ready(function() {
     $('#my-table').dynatable();
 });
 </script>
+
+@endsection
+

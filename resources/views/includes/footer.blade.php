@@ -1,1 +1,1 @@
-<div id="copyright text-right">© Copyright 2017 ETML</div>
+<p>kopirait dralsorg et pittierst</p>
