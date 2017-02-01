@@ -8,7 +8,7 @@ class Ticket extends Model
 {
      protected $table = 'ticket';
 
-   public function sector()
+    public function sector()
     {
         return $this->belongsTo('App\Sector');
     }
@@ -20,5 +20,6 @@ class Ticket extends Model
     {
         return $this->belongsTo('App\Applicant');
     }
+ 
 }
 

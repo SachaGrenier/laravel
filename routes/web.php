@@ -18,3 +18,6 @@ Route::get('ticket', function () {
     return view('ticket');
 });
 
+Route::post('add_ticket', 
+  ['as' => 'ticket', 'uses' => 'Ticket@add']);
+

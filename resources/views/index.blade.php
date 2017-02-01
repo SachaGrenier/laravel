@@ -1,23 +1,25 @@
 <?php 
 
+//uses home controller
 use App\Http\Controllers\HomeController;
-  
+
+//get all tickets in function of sector
 $tickets =  HomeController::getTickets();
 
-
+//used to show data in $ticket
 $DEBUG = false;
 
-
-
 ?>
-<table id="my-table">
-  <thead>
+<div class="container">
+<a href="ticket"><button class="btn btn-success">Créer un ticket</button></a>
+<table id="my-table" class="table table-hover">
+  <thead class="thead-inverse">
     <tr>
       <th>ID</th>
       <th>Titre</th>
       <th>Secteur</th>
       <th>Utilisateur</th>
-      <th>Prestataire</th>
+      <th>Demandeur</th>
       <th>Crée le</th>
       <th>Modifié le</th>
       <th>Modifier</th>
@@ -59,20 +61,18 @@ $DEBUG = false;
  	echo '<td><a href="ticket">Modifier</a></td>';
     echo '</tr>';
   }
-    
-
    
-    ?>
+?>
+
+
   </tbody>
+
 </table>
-<script src="https://raw.githubusercontent.com/alfajango/jquery-dynatable/master/jquery.dynatable.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-
+</div>
 
 <script>
-$( document ).ready(function() {
-    console.log( "ready!" );
+$(document ).ready(function() {
+
     $('#my-table').dynatable();
 });
 </script>

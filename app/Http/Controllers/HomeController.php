@@ -24,4 +24,5 @@ class HomeController extends Controller
 	
     	return $tickets;
     }
+ 
 }
