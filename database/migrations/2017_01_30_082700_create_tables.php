@@ -14,98 +14,98 @@ class CreateTables extends Migration
     public function up()
     {
 		
-	  Schema::create('t_sector', function (Blueprint $table) {
-            $table->increments('idSector');
-            $table->string('seName');
+	  Schema::create('sector', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
         });
 		
-	   Schema::create('t_title', function (Blueprint $table) {
-            $table->increments('idTitle');
-            $table->string('tiName');
+	   Schema::create('title', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
         });
 		
 		
-        Schema::create('t_applicant', function (Blueprint $table) {
-            $table->increments('idApplicant');
-            $table->string('apFirst_name');
-			$table->string('apLast_name');
-			$table->string('apEmail');
-			$table->string('apPhone_number');
+        Schema::create('applicant', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('first_name');
+			$table->string('last_name');
+			$table->string('email')->nullable();
+			$table->string('phone_number')->nullable();
 			$table->timestamps();
 		
         });
 		
-	   Schema::create('t_contact_company', function (Blueprint $table) {
-            $table->increments('idContact_company');
-            $table->string('conName');
-			$table->string('conWebsite');
-			$table->string('conPhone_number');
-			$table->string('conLogo_path');
+	   Schema::create('contact_company', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+			$table->string('website')->nullable();
+			$table->string('phone_number')->nullable();
+			$table->string('logo_path')->nullable();
         });
 		
 	
 		
-	 Schema::create('t_contact', function (Blueprint $table) {
-            $table->increments('idContact');
-            $table->string('conFirst_name');
-			$table->string('conLast_name');
-			$table->string('conEmail');
-			$table->string('conPhone_number');
-			$table->integer('fkContact_company')->unsigned();
+	 Schema::create('contact', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('first_name');
+			$table->string('last_name');
+			$table->string('email');
+			$table->string('phone_number');
+			$table->integer('contact_company_id')->unsigned();
 			$table->timestamps();
-			$table->foreign('fkContact_company')->references('idContact_company')->on('t_contact_company');
+			$table->foreign('contact_company_id')->references('id')->on('contact_company');
         });
 		
 	
 		
-		    Schema::create('t_user', function (Blueprint $table) {
-            $table->increments('idUser');
-			$table->string('usLogin');
-			$table->string('usPassword');
-            $table->string('usFirst_name');
-			$table->string('usLast_name');
-            $table->string('usEmail');          
-			$table->boolean('usType')->default(0);
-			$table->string('usPicture_path');
-			$table->integer('fkTitle')->unsigned();
-			$table->integer('fkSector')->unsigned();
+		    Schema::create('user', function (Blueprint $table) {
+            $table->increments('id');
+			$table->string('login');
+			$table->string('password');
+            $table->string('first_name');
+			$table->string('last_name');
+            $table->string('email');          
+			$table->boolean('type')->default(0);
+			$table->string('picture_path');
+			$table->integer('title_id')->unsigned();
+			$table->integer('sector_id')->unsigned()->nullable();
             $table->timestamps();
-			$table->foreign('fkTitle')->references('idTitle')->on('t_title');
-			$table->foreign('fkSector')->references('idSector')->on('t_sector');
+			$table->foreign('title_id')->references('id')->on('sector');
+			$table->foreign('sector_id')->references('id')->on('sector');
         });
 		
-			   Schema::create('t_ticket', function (Blueprint $table) {
-            $table->increments('idTicket');
-            $table->string('tiTitle');
-			$table->text('tiContent');
-            $table->text('tiNote');
-			$table->boolean('tiArchived')->default(0);
-			$table->boolean('tiProject')->default(0);
-			$table->date('tiTime_limit');
-			$table->integer('fkUser')->unsigned();
-			$table->integer('fkSector')->unsigned();
-			$table->integer('fkApplicant')->unsigned();
+			   Schema::create('ticket', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+			$table->text('content');
+            $table->text('note');
+			$table->boolean('archived')->default(0);
+			$table->boolean('project')->default(0);
+			$table->date('time_limit')->nullable();
+			$table->integer('user_id')->unsigned()->nullable();
+			$table->integer('sector_id')->unsigned()->nullable();
+			$table->integer('applicant_id')->unsigned()->nullable();
             $table->timestamps();
-			$table->foreign('fkUser')->references('idUser')->on('t_user');
-			$table->foreign('fkSector')->references('idSector')->on('t_sector');
-			$table->foreign('fkApplicant')->references('idApplicant')->on('t_applicant');
+			$table->foreign('user_id')->references('id')->on('user');
+			$table->foreign('sector_id')->references('id')->on('sector');
+			$table->foreign('applicant_id')->references('id')->on('applicant');
         });
 		
-		   Schema::create('t_ticket_contact', function (Blueprint $table) {
-            $table->increments('idTicket_contact');
-            $table->integer('idfkTicket')->unsigned();
-			$table->integer('idfkContact')->unsigned();
-			$table->foreign('idfkContact')->references('idContact')->on('t_contact');
-			$table->foreign('idfkTicket')->references('idTicket')->on('t_ticket');
+		   Schema::create('ticket_contact', function (Blueprint $table) {
+            $table->increments('id');
+			$table->integer('contact_id')->unsigned();
+			$table->integer('ticket_id')->unsigned();
+			$table->foreign('contact_id')->references('id')->on('contact');
+			$table->foreign('ticket_id')->references('id')->on('ticket');
         });
 		
-		  Schema::create('t_file', function (Blueprint $table) {
-            $table->increments('idFile');
-            $table->string('fiPath');
-			$table->string('fiExt',5);
-			$table->integer('fkTicket')->unsigned();
+		  Schema::create('file', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('path');
+			$table->string('ext',5);
+			$table->integer('ticket_id')->unsigned();
 			$table->timestamps();
-			$table->foreign('fkTicket')->references('idTicket')->on('t_ticket');
+			$table->foreign('ticket_id')->references('id')->on('ticket');
         });
 		
     }
