@@ -10,10 +10,10 @@ $tickets =  HomeController::getTickets();
 $DEBUG = false;
 
 ?>
- {{ Html::script('js/jquery.dynatable.js') }}
- {{ Html::style('css/jquery.dynatable.css') }}
 
 @extends('layouts.default')
+
+
 
 @section('title', 'Manage Tickets')
 
