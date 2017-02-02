@@ -5,11 +5,19 @@
     @include('includes.head')       
 </head>
 
-  <!-- Bootstrap Css -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<!-- Bootstrap Css -->
+ {{ Html::style('css/bootstrap.min.css') }}
+ {{ Html::style('css/bootstrap.css') }}
+ {{ Html::style('css/styles.css') }}
+
+<!-- Scripts JS -->
+ {{ Html::script('js/jquery.min.js') }}
+ {{ Html::script('js/bootstrap.min.js') }}
 
 <body>
-   @yield('content')     
+@include('includes.header')	
+
+@yield('content')     
 </body>
 <footer>
    je suis footer

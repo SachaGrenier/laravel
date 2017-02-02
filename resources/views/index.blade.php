@@ -10,17 +10,18 @@ $tickets =  HomeController::getTickets();
 $DEBUG = false;
 
 ?>
-
-@include('includes.tables')
+ {{ Html::script('js/jquery.dynatable.js') }}
+ {{ Html::style('css/jquery.dynatable.css') }}
 
 @extends('layouts.default')
 
+@include('includes.tables')
+
 @section('title', 'Home')
+
 
 @section('content')   
   
-<table id="my-table">
-  <thead>
 <div class="container">
 <a href="ticket"><button class="btn btn-success">Créer un ticket</button></a>
 <table id="my-table" class="table table-hover">
@@ -79,7 +80,7 @@ $DEBUG = false;
   </tbody>
 
 </table>
-</div>
+
 
 <script>
 $(document ).ready(function() {
@@ -88,5 +89,5 @@ $(document ).ready(function() {
 });
 </script>
 
+</div>
 @endsection
-

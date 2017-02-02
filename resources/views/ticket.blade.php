@@ -5,12 +5,22 @@ use App\Http\Controllers\TicketController;
 $sectors =  TicketController::getSectors();
 
 ?>
-<body>
+
+
+@extends('layouts.default')
+
+@section('title', 'new ticket')
+
+
+@section('content')  
+
 <div class="container">
+
 <h1>Ajouter un ticket</h1>
 {{ Form::open(array('action' => 'Ticket@add','class' => 'form-group')) }}
 	<div class="form-group">
-	    {{ Form::label('', 'Demandeur')}}
+	    {{ Form::label('Demandeur', '')}}
+
 	    {{ Form::Text('applicant','',['class' => 'form-control','placeholder' => 'autocomplete incoming']) }}
 	    
  		 {{ Form::button('Ajouter',['class' => 'btn btn-primary', 'onclick' => 'document.getElementById(\'addapplicant\').style.display = \'block\'']) }}
@@ -82,4 +92,4 @@ $sectors =  TicketController::getSectors();
 
 </form>
 </div>
-</body>
+@endsection
