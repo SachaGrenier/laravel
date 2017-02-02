@@ -15,15 +15,12 @@ $DEBUG = false;
 
 @extends('layouts.default')
 
-@include('includes.tables')
-
-@section('title', 'Home')
-
+@section('title', 'Manage Tickets')
 
 @section('content')   
   
 <div class="container">
-<a href="ticket"><button class="btn btn-success">Créer un ticket</button></a>
+<a href="ticket"><button class="btn btn-secondary">Créer un ticket</button></a>
 <table id="my-table" class="table table-hover">
   <thead class="thead-inverse">
     <tr>
