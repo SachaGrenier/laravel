@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sector;
 use App\Ticket;
+use App\User;
+use App\Applicant;
 
 class TicketController extends Controller
 {
@@ -18,9 +20,14 @@ class TicketController extends Controller
     }
     public static function getSectors()
     {
-    	 $sectors = Sector::all();
-             
-
-        return $sectors;
+    	 return Sector::all();
+    }
+    public static function getUsersFromSector()
+    {
+    	return User::where('sector_id',1)->get();
+    }
+    public static function getApplicants()
+    {
+    	return Applicant::all();
     }
 }

@@ -15,14 +15,12 @@ $DEBUG = false;
 
 @extends('layouts.default')
 
-@section('title', 'Home')
+@section('title', 'Manage Tickets')
 
 @section('content')   
   
-<table id="my-table">
-  <thead>
 <div class="container">
-<a href="ticket"><button class="btn btn-success">Créer un ticket</button></a>
+<a href="ticket"><button class="btn btn-secondary">Créer un ticket</button></a>
 <table id="my-table" class="table table-hover">
   <thead class="thead-inverse">
     <tr>
@@ -79,7 +77,7 @@ $DEBUG = false;
   </tbody>
 
 </table>
-</div>
+
 
 <script>
 $(document ).ready(function() {
@@ -90,3 +88,4 @@ $(document ).ready(function() {
 
 @endsection
 
+</div>
