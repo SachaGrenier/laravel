@@ -18,26 +18,23 @@ $js_array = json_encode($applicantsarray);
  {{ Html::script('js/jquery-ui.js') }}
  {{ Html::style('css/jquery-ui.css') }}
 
-
 @extends('layouts.default')
 
-
-
 @section('title', 'ManageTicket - Ticket')
+ 
+@section('content')  
 
-@section('content')   
-
-<body>
 <div class="container">
+
 <h1>Ajouter un ticket</h1>
 <br>
 {{ Form::open(array('action' => 'Ticket@add','class' => 'form-group')) }}
 	<div class="form-group">
 	    {{ Form::label('Demandeur', '')}}
+
 	    {{ Form::Text('applicant','',['class' => 'form-control','placeholder' => 'Inscrivez le nom de votre demandeur','id' => 'autocomplete']) }}
 	    <br><small>Pas dans la liste ?</small>
  		 {{ Form::button('Ajouter un demandeur',['class' => 'btn btn-primary','id' => 'show-applicant-form']) }}
-
     </div>
 	  
 	 <div class="jumbotron" id="applicant-form" style="display: none">
@@ -125,7 +122,7 @@ $js_array = json_encode($applicantsarray);
 
 </form>
 </div>
-</body>
+
 <script type="text/javascript">
 
 <?php echo "var javascript_array = ". $js_array . ";\n"; ?>
@@ -148,3 +145,4 @@ $(document ).ready(function() {
 });
 
 </script>
+@endsection

@@ -10,8 +10,8 @@ $tickets =  HomeController::getTickets();
 $DEBUG = false;
 
 ?>
-
-@include('includes.tables')
+ {{ Html::script('js/jquery.dynatable.js') }}
+ {{ Html::style('css/jquery.dynatable.css') }}
 
 @extends('layouts.default')
 
@@ -86,6 +86,5 @@ $(document ).ready(function() {
 });
 </script>
 
-@endsection
-
 </div>
+@endsection
