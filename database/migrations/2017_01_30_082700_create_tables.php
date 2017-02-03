@@ -84,7 +84,7 @@ class CreateTables extends Migration
 			$table->date('time_limit')->nullable();
 			$table->integer('user_id')->unsigned()->nullable();
 			$table->integer('sector_id')->unsigned()->nullable();
-			$table->integer('applicant_id')->unsigned()->nullable();
+			$table->integer('applicant_id')->unsigned();
             $table->timestamps();
 			$table->foreign('user_id')->references('id')->on('user');
 			$table->foreign('sector_id')->references('id')->on('sector');

@@ -71,16 +71,16 @@ $js_array = json_encode($applicantsarray);
   	</div>
   	<div class="form-group">
         {{ Form::label('Ajouter des notes', '')}}
-	    {{ Form::textarea('notes','',['class' => 'form-control']) }}
+	    {{ Form::textarea('note','',['class' => 'form-control']) }}
   	</div>
   	<div class="form-check">
 	      {{ Form::label('', '',['class' => 'form-check-label'])}}
-	      {{ Form::checkbox('projet',null,false,['class' => 'form-check-input']) }}
+	      {{ Form::checkbox('project',true,false,['class' => 'form-check-input']) }}
       	  Projet
   	</div>
   	<div class="form-group">
      {{ Form::label('Secteur', '') }}
-    <select class="form-control" id="exampleSelect2">
+    <select class="form-control" name="sector">
       <option value="none">Aucun</option>
       <?php
       	foreach ($sectors as $sector)
@@ -93,7 +93,7 @@ $js_array = json_encode($applicantsarray);
   </div>
   <div class="form-group">
      {{ Form::label('Assigner un utilisateur', '') }}
-    <select class="form-control" id="exampleSelect2">
+    <select class="form-control" name="user">
     <option value="none">Aucun</option>
       <?php
       	foreach ($users as $user)
@@ -106,12 +106,12 @@ $js_array = json_encode($applicantsarray);
   </div>
   <div class="form-check">
 	      {{ Form::label('', '',['class' => 'form-check-label'])}}
-	      {{ Form::checkbox('projet',null,false,['class' => 'form-check-input','id' => 'toggle-time-limit']) }}
+	      {{ Form::checkbox('time_limit',true,false,['class' => 'form-check-input','id' => 'toggle-time-limit']) }}
       	  Délai
   	</div>
   <div class="form-group" id="select-timelimit" style="display: none">
    	{{ Form::label('Définir un délai', '')}}
-    {{ Form::text('time_limit','',['id' => 'datepicker', 'class' => 'form-control']) }}
+    {{ Form::text('time_limit_value','',['id' => 'datepicker', 'class' => 'form-control']) }}
   </div>
    <div class="form-group">
 	  <label class="custom-file">
