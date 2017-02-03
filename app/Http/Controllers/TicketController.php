@@ -7,16 +7,25 @@ use App\Sector;
 use App\Ticket;
 use App\User;
 use App\Applicant;
+use Illuminate\Http\Input;
 
 class TicketController extends Controller
 {
     public static function getTicket($idTicket)
     {
-    	
     }
-      public function add()
-    {
+    public static function store(request $request)
+    {   
+        echo '<pre>';
+        print_r($request->input());
+        echo '</pre>';
 
+        $ticket = new Ticket;
+
+        $ticket->title = $request->input('title');
+        $ticket->content = $request->input('content');
+        $ticket->save();
+       
     }
     public static function getSectors()
     {

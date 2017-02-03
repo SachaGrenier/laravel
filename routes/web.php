@@ -15,9 +15,10 @@ Route::get('/', function () {
     return view('index');
 });
 Route::get('ticket', function () {
-    return view('ticket');
+  return view('ticket');
 });
 
-Route::post('add_ticket', 
-  ['as' => 'ticket', 'uses' => 'Ticket@add']);
-
+Route::get('storeticket', function() {
+  return view('ticket');
+});
+Route::post('storeticket', 'TicketController@store');

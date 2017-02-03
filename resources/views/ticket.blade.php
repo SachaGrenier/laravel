@@ -14,9 +14,7 @@ foreach ($applicants as $applicant)
 $js_array = json_encode($applicantsarray);
 ?>
 
- {{ Html::script('js/jquery.min.js') }}
- {{ Html::script('js/jquery-ui.js') }}
- {{ Html::style('css/jquery-ui.css') }}
+
 
 @extends('layouts.default')
 
@@ -27,8 +25,13 @@ $js_array = json_encode($applicantsarray);
 <div class="container">
 
 <h1>Ajouter un ticket</h1>
+<ul>
+    @foreach($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
+</ul>
 <br>
-{{ Form::open(array('action' => 'Ticket@add','class' => 'form-group')) }}
+{{ Form::open(array('url' => 'storeticket','method'=>'POST','class' => 'form-group')) }}
 	<div class="form-group">
 	    {{ Form::label('Demandeur', '')}}
 
@@ -108,7 +111,7 @@ $js_array = json_encode($applicantsarray);
   	</div>
   <div class="form-group" id="select-timelimit" style="display: none">
    	{{ Form::label('Définir un délai', '')}}
-    {{ Form::date('time_limit', \Carbon\Carbon::now(),['class' => 'form-control']) }}
+    {{ Form::text('time_limit','',['id' => 'datepicker', 'class' => 'form-control']) }}
   </div>
    <div class="form-group">
 	  <label class="custom-file">
@@ -120,29 +123,25 @@ $js_array = json_encode($applicantsarray);
  
   {{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
 
-</form>
+{{ Form::close() }}
 </div>
 
 <script type="text/javascript">
 
+$( "#datepicker" ).datepicker();
+$( "#datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy" );
+
+
 <?php echo "var javascript_array = ". $js_array . ";\n"; ?>
 
-$(document ).ready(function() {
 
-	$('#autocomplete').autocomplete({
-	    source: javascript_array});
 
-	$("#show-applicant-form").click(function(){
-    $("#applicant-form").show(200);
-});
-    $("#hide-applicant-form").click(function(){
-    $("#applicant-form").hide(200);
-});
+$('#autocomplete').autocomplete({ source: javascript_array});
 
-    $("#toggle-time-limit").click(function(){
-    $("#select-timelimit").toggle(200);
-});
-});
+$("#show-applicant-form").click(function(){ $("#applicant-form").show(200); });
+$("#hide-applicant-form").click(function(){ $("#applicant-form").hide(200); });
+
+$("#toggle-time-limit").click(function(){ $("#select-timelimit").toggle(200); });
 
 </script>
 @endsection
