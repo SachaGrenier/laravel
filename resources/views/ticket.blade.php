@@ -6,12 +6,21 @@ $sectors =  TicketController::getSectors();
 $users =  TicketController::getUsersFromSector();
 $applicants = TicketController::getApplicants();
 
-$applicantsarray = array();
-foreach ($applicants as $applicant) 
-{
-	array_push($applicantsarray, $applicant->first_name." ".$applicant->last_name);
+$output_array = array();
+
+foreach ($applicants as $row) {
+     $output_array[] = array( 
+        'id' => $row['id'],
+        'value' => $row['first_name'].' '.$row['last_name']
+    );
 }
-$js_array = json_encode($applicantsarray);
+
+// Print out JSON response
+$output_array = json_encode( $output_array );
+
+
+
+
 ?>
 
 
@@ -32,15 +41,18 @@ $js_array = json_encode($applicantsarray);
 </ul>
 <br>
 {{ Form::open(array('url' => 'storeticket','method'=>'POST','class' => 'form-group')) }}
-	<div class="form-group">
+	<div class="form-group" id="applicant_box">
 	    {{ Form::label('Demandeur', '')}}
 
 	    {{ Form::Text('applicant','',['class' => 'form-control','placeholder' => 'Inscrivez le nom de votre demandeur','id' => 'autocomplete']) }}
+
+      <input type="text" id="applicant_id" name="applicant_id" hidden/>
+      <p id="applicant_selected" style="display: none;">Séléctionné : <span id="applicant_name"></span><span id="applicant_rem" style="text-decoration: underline;cursor: pointer" > </span></p>
 	    <br><small>Pas dans la liste ?</small>
  		 {{ Form::button('Ajouter un demandeur',['class' => 'btn btn-primary','id' => 'show-applicant-form']) }}
     </div>
 	  
-	 <div class="jumbotron" id="applicant-form" style="display: none">
+	 <div class="jumbotron" id="applicant-form" style="display: none;">
 	 <h3>Ajouter un demandeur</h3>
 	       <div class="form-group">
 	    	{{ Form::label('Prénom*', '') }}
@@ -69,19 +81,17 @@ $js_array = json_encode($applicantsarray);
         {{ Form::label('Contenu*', '')}}
 	    {{ Form::textarea('content','',['class' => 'form-control']) }}
   	</div>
-  	<div class="form-group">
-        {{ Form::label('Ajouter des notes', '')}}
-	    {{ Form::textarea('note','',['class' => 'form-control']) }}
+    {{ Form::button('Ajouter des notes',['class' => 'btn btn-secondary','id' => 'show-note-box']) }}
+  	<div class="form-group" id="note_box" style="display: none">
+      {{ Form::label('Notes', '')}} 
+	    <br>
+      {{ Form::textarea('note','',['class' => 'form-control']) }}
   	</div>
-  	<div class="form-check">
-	      {{ Form::label('', '',['class' => 'form-check-label'])}}
-	      {{ Form::checkbox('project',true,false,['class' => 'form-check-input']) }}
-      	  Projet
-  	</div>
+ 
   	<div class="form-group">
      {{ Form::label('Secteur', '') }}
     <select class="form-control" name="sector">
-      <option value="none">Aucun</option>
+      <option value="">Aucun</option>
       <?php
       	foreach ($sectors as $sector)
       	 {
@@ -110,9 +120,14 @@ $js_array = json_encode($applicantsarray);
       	  Délai
   	</div>
   <div class="form-group" id="select-timelimit" style="display: none">
-   	{{ Form::label('Définir un délai', '')}}
+   	{{ Form::label('Définir une date', '')}}
     {{ Form::text('time_limit_value','',['id' => 'datepicker', 'class' => 'form-control']) }}
   </div>
+    <div class="form-check">
+        {{ Form::label('', '',['class' => 'form-check-label'])}}
+        {{ Form::checkbox('project',true,false,['class' => 'form-check-input']) }}
+          Projet
+    </div>
    <div class="form-group">
 	  <label class="custom-file">
 	  <input type="file" id="file" class="custom-file-input">
@@ -128,20 +143,64 @@ $js_array = json_encode($applicantsarray);
 
 <script type="text/javascript">
 
+//initialize date picker
 $( "#datepicker" ).datepicker();
+//change date picker date format
 $( "#datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy" );
 
+//set json array for autocomplete function
+<?php echo "var javascript_array = ". $output_array . ";\n"; ?>
 
-<?php echo "var javascript_array = ". $js_array . ";\n"; ?>
+//generates autocomplete input
+//set and show info bar
+//set value to hidden input
+$('#autocomplete').autocomplete({
+   source: javascript_array,
+   select: function (event, ui) {
 
+        $("#applicant_id").val(ui.item.id);
+        $("#applicant_name").text(ui.item.value+" ");
+        $("#applicant_selected").show(200);
+        $("#applicant_rem").text('Déséléctionner');
+    },
+});
 
+$("#show-applicant-form").click(function(){
+  //show add applicant form
+  $("#applicant-form").show(200);
+  $("#autocomplete").val('');
+  $( "#applicant_rem" ).trigger( "click" );
+  $("#applicant_box").hide(200);
 
-$('#autocomplete').autocomplete({ source: javascript_array});
+});
 
-$("#show-applicant-form").click(function(){ $("#applicant-form").show(200); });
-$("#hide-applicant-form").click(function(){ $("#applicant-form").hide(200); });
+$("#hide-applicant-form").click(function(){ 
+  
+  $("#applicant-form").hide(200);
+  $("#applicant_box").show(200);
+});
 
-$("#toggle-time-limit").click(function(){ $("#select-timelimit").toggle(200); });
+$("#toggle-time-limit").click(function(){
 
+  $("#select-timelimit").toggle(200);
+});
+
+$('#applicant_rem').on('click', () => {
+
+  //empty selected applicant name shown
+ $("#applicant_name").text('');
+  //empty "Déséléctionner" text
+ $("#applicant_rem").text('');
+  //remove applicant's id value
+ $("#applicant_id").val('');
+  //remove applicant's firstname and name
+ $("#autocomplete").val('');
+ //hide information line
+ $("#applicant_selected").hide(200);
+});
+
+$("#show-note-box").click(function(){ 
+   $("#note_box").toggle(200);
+  });
 </script>
 @endsection
