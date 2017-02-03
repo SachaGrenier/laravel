@@ -13,14 +13,14 @@ $DEBUG = false;
 
 @extends('layouts.default')
 
-@section('title', 'Manage Tickets')
+@section('title', 'Tickets')
 
 @section('content')   
 
   
 <div class="container">
   <div class="filters">
-    <a href="ticket"><button class="btn btn-secondary">Créer un ticket</button></a>
+    <a href="/ticket"><button class="btn btn-secondary">Créer un ticket</button></a>
 
     {{ Form::label('','',['class' =>'form-check-label']) }}
     Afficher :

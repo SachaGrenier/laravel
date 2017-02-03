@@ -28,7 +28,7 @@ Route::get('/applicant', function () {
 });
 
 Route::get('/admin', function () {
-    return view('admin');
+    return view('login');
 });
 
 Route::get('/parametres', function () {

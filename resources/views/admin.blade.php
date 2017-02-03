@@ -2,4 +2,4 @@
 
 
 
-@section('title', 'Manage Tickets')
+@section('title', 'Admin')

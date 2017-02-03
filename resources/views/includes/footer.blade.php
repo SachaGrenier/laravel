@@ -1,6 +1,6 @@
 
 
       <div class="container">
-        <span class="footer-text">ManageTicket 2017 - ETML</span>
+        <span class="text-muted">ManageTicket 2017 - ETML</span>
       </div>
 

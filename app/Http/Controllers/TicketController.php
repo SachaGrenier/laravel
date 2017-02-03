@@ -26,7 +26,7 @@ class TicketController extends Controller
         {
             $applicant_array = explode(" ", $request->input('project'));
 
-            $applicant = User::where('first_name',$applicant_array[0],'last_name', $applicant_array[1])
+            $applicant = User::where('first_name',$applicant_array[0],'last_name', $applicant_array[1]);
             $ticket->applicant_id =  $applicant->id;
         }
         else

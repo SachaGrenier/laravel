@@ -12,7 +12,7 @@
         <a class="nav-link" href="/">Tickets <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/applicant">Préstataire</a>
+        <a class="nav-link" href="/applicant">Prestataire</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/admin">Administrateur</a>
