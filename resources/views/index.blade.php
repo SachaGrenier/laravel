@@ -20,7 +20,6 @@ $DEBUG = false;
   
 <div class="container">
   <div class="filters">
-    
 
     {{ Form::label('','',['class' =>'form-check-label']) }}
     Afficher :
@@ -72,14 +71,14 @@ $DEBUG = false;
   echo '<td>Non attribué</td>';
 
   if (isset($ticket->applicant))
-  echo '<td>'.$ticket->applicant->name.'</td>';
+  echo '<td>'.$ticket->applicant->first_name.' '.$ticket->applicant->last_name.'</td>';
   else
   echo '<td>Non attribué</td>';
 
   
   echo '<td>'.$ticket->created_at->format('d M Y').'</td>';
   echo '<td>'.$ticket->updated_at->format('d M Y').'</td>';
-  echo '<td><a href="ticket">Modifier</a></td>';
+  echo '<td><a href="'.route('ticket', ['id' => $ticket->id]).'">Modifier</a></td>';
     echo '</tr>';
   }
    
@@ -89,7 +88,6 @@ $DEBUG = false;
   </tbody>
 
 </table>
-
 
 <script>
 $(document ).ready(function() {
