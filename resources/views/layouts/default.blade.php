@@ -14,14 +14,20 @@
 	{{ Html::script('js/jquery-ui.js') }}
 	{{ Html::style('css/jquery-ui.css') }}
 
-		<!-- Script Bootstrap -->
+	<!-- Script Bootstrap -->
+	{{ Html::script('js/tether.min.js') }}
 	{{ Html::script('js/bootstrap.min.js') }}
 
 	<!-- Scripts DynaTable -->
 	{{ Html::script('js/jquery.dynatable.js') }}
 	{{ Html::style('css/jquery.dynatable.css') }}
 
-
+	<script type="text/javascript">
+		$(document).ready(function() {
+	  
+	  	$('.dropdown-toggle').dropdown();
+		});
+	</script>
 
 
 
