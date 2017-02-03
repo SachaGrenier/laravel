@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class SetNullableToNote extends Migration
+class AddCollumnApplicantId extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class SetNullableToNote extends Migration
      */
     public function up()
     {
-       Schema::table('ticket', function (Blueprint $table) {
-    $table->integer('note')->nullable()->change();
-});
+			 Schema::table('ticket', function (Blueprint $table) {
+				 
+				$table->integer('applicant_id')->unsigned();
+				$table->foreign('applicant_id')->references('id')->on('applicant');
+			});
     }
 
     /**
