@@ -9,7 +9,7 @@
       <form class="form-signin">
       <a  id="imagelogo"> {{ Html::image('img/logoMT.png','', array('class'=>'imagelogo')) }}</a>
         <div id="logincontainer">
-	        <h1 class="appname">Manage Ticket</h1>	        
+	        <h1 class="appname">Manage Tickets</h1>	        
 	        {{ Form::Text('login','',['class' => 'form-control','placeholder' => 'Login']) }}       
 	        {{ Form::password('password',['class' => 'form-control', 'placeholder'=>'Password']) }}
 	        <br>

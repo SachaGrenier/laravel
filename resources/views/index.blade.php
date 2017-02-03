@@ -20,7 +20,7 @@ $DEBUG = false;
   
 <div class="container">
   <div class="filters">
-    <a href="/ticket"><button class="btn btn-secondary">Créer un ticket</button></a>
+    
 
     {{ Form::label('','',['class' =>'form-check-label']) }}
     Afficher :

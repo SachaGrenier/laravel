@@ -34,3 +34,8 @@ Route::get('/admin', function () {
 Route::get('/parametres', function () {
     return view('parametres');
 });
+
+Route::get('/ticket', function () {
+    return view('ticket');
+});
+
