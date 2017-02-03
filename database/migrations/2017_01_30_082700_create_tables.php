@@ -78,7 +78,7 @@ class CreateTables extends Migration
             $table->increments('id');
             $table->string('title');
 			$table->text('content');
-            $table->text('note');
+            $table->text('note')->nullable();
 			$table->boolean('archived')->default(0);
 			$table->boolean('project')->default(0);
 			$table->date('time_limit')->nullable();
