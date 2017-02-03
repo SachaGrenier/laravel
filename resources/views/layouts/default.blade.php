@@ -28,9 +28,11 @@
 <body>
 @include('includes.header')	
 
+
 @yield('content')     
 </body>
 <footer>
-   je suis footer
+   @include('includes.footer')	
+
   </footer>
 </html>
