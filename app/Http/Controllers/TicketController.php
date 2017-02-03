@@ -7,14 +7,17 @@ use App\Sector;
 use App\Ticket;
 use App\User;
 use App\Applicant;
-use Illuminate\Http\Input;
+
+use Illuminate\Support\Facades\Input;
+
 
 class TicketController extends Controller
 {
-    public static function getTicket($idTicket)
+    public static function index($id)
     {
+        return Ticket::where('id',$id)->get();
     }
-    public static function store(request $request)
+    public static function store($id)
     {   
         echo '<pre>';
         print_r($request->input());
