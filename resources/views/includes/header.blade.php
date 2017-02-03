@@ -9,19 +9,19 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Ticket <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Tickets <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Préstataire</a>
+        <a class="nav-link" href="/applicant">Prestataire</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Administrateur</a>
+        <a class="nav-link" href="/admin">Administrateur</a>
       </li>
     </ul>
 
 <ul class="navbar-nav mr-right">
       <li class="nav-item">
-        <a class="nav-link" href="#">Paramètres</a>
+        <a class="nav-link" href="/parametres">Paramètres</a>
       </li>
 </ul>
   </div>

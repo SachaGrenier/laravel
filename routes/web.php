@@ -22,3 +22,15 @@ Route::get('storeticket', function() {
   return view('ticket');
 });
 Route::post('storeticket', 'TicketController@store');
+
+Route::get('/applicant', function () {
+    return view('applicant');
+});
+
+Route::get('/admin', function () {
+    return view('login');
+});
+
+Route::get('/parametres', function () {
+    return view('parametres');
+});

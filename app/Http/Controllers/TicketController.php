@@ -24,7 +24,8 @@ class TicketController extends Controller
 
         if($request->input('project'))
         {
-              $ticket->project = $request->input('project');
+
+            $ticket->project = $request->input('project');
             $ticket->title = '[PROJET] '. $request->input('title');
         }
         else
