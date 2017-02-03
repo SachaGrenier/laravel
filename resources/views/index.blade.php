@@ -13,8 +13,6 @@ $DEBUG = false;
 
 @extends('layouts.default')
 
-
-
 @section('title', 'Manage Tickets')
 
 @section('content')   
@@ -28,11 +26,11 @@ $DEBUG = false;
     Afficher :
 
     {{ Form::label('','',['class' =>'form-check-label']) }}
-    {{ Form::checkbox('agree') }}
+     {{ Form::checkbox('archived',true,false) }}
     Archives
 
     {{ Form::label('','',['class' =>'form-check-label']) }}
-    {{ Form::checkbox('agree') }}
+    {{ Form::checkbox('project',true,false) }}
     Projets
   </div>
 <table id="my-table" class="table table-hover">
@@ -79,8 +77,8 @@ $DEBUG = false;
   echo '<td>Non attribué</td>';
 
   
-  echo '<td>'.$ticket->created_at.'</td>';
-  echo '<td>'.$ticket->updated_at.'</td>';
+  echo '<td>'.$ticket->created_at->format('d M Y').'</td>';
+  echo '<td>'.$ticket->updated_at->format('d M Y').'</td>';
   echo '<td><a href="ticket">Modifier</a></td>';
     echo '</tr>';
   }
