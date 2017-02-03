@@ -18,9 +18,23 @@ $DEBUG = false;
 @section('title', 'Manage Tickets')
 
 @section('content')   
+
   
 <div class="container">
-<a href="ticket"><button class="btn btn-secondary">Créer un ticket</button></a>
+  <div class="filters">
+    <a href="ticket"><button class="btn btn-secondary">Créer un ticket</button></a>
+
+    {{ Form::label('','',['class' =>'form-check-label']) }}
+    Afficher :
+
+    {{ Form::label('','',['class' =>'form-check-label']) }}
+    {{ Form::checkbox('agree') }}
+    Archives
+
+    {{ Form::label('','',['class' =>'form-check-label']) }}
+    {{ Form::checkbox('agree') }}
+    Projets
+  </div>
 <table id="my-table" class="table table-hover">
   <thead class="thead-inverse">
     <tr>

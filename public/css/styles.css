@@ -3,4 +3,11 @@
 	width:55px;
 	padding: 0;
 	margin: 0;
+	float: left;
+}
+
+.filters
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
