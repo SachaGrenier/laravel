@@ -7,17 +7,22 @@ use App\Sector;
 use App\Ticket;
 use App\User;
 use App\Applicant;
-
+use App\Redirect;
 use Illuminate\Support\Facades\Input;
 
 
 class TicketController extends Controller
 {
-    public static function index($id)
+    public static function getTicket($id)
     {
-        return Ticket::where('id',$id)->get();
+        $ticket = Ticket::find($id);
+        
+        return $ticket ?: redirect()->route('index');
+  
+
+
     }
-    public static function store($id)
+    public static function store(request $request)
     {   
         echo '<pre>';
         print_r($request->input());
@@ -32,16 +37,12 @@ class TicketController extends Controller
             $ticket->title = '[PROJET] '. $request->input('title');
         }
         else
-        {
             $ticket->title = $request->input('title');
-        }
+        
 
 
         if($request->input('applicant_id'))
-        {
-
             $ticket->applicant_id = $request->input('applicant_id');
-        }
         else
         {
             $applicant = new Applicant;
@@ -54,6 +55,9 @@ class TicketController extends Controller
 
         }
         
+        if($request->input('user_id'))
+            $ticket->user_id = $request->input('user_id');
+
         $ticket->content = $request->input('content');
         $ticket->note = $request->input('note');
         $ticket->sector_id = $request->input('sector');

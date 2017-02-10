@@ -11,21 +11,23 @@
 |
 */
 
+
+
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
+
 Route::get('createticket', function () {
   return view('createticket');
 });
 
-
-Route::get('ticket/{id}', ['as' => 'ticket', 'uses' => 'TicketController@index']);
+Route::get('ticket/{id}', function ($id) {
+    return view('ticket')->with('id', $id);
+})->name('ticket');
 
 Route::get('storeticket', function() {
   return view('createticket');
 });
-
-
 
 Route::post('storeticket', 'TicketController@store');
 
@@ -45,3 +47,9 @@ Route::get('/ticket', function () {
     return view('ticket');
 });
 
+Route::get('ajax',function(){
+   return view('message');
+});
+
+
+Route::get('/gettickets/{type}', ['uses' =>'AjaxController@index']);

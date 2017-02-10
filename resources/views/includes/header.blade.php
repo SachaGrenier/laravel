@@ -18,7 +18,7 @@
         <a class="nav-link" href="/admin">Administrateur</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/ticket">Créer un ticket</a>
+        <a class="nav-link" href="/createticket">Créer un ticket</a>
       </li>
     </ul>
 
