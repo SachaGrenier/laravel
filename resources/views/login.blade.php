@@ -1,8 +1,9 @@
+
+
 {{ Html::style('css/bootstrap.min.css') }}
 {{ Html::style('css/styles.css') }}
 
 
-	
 
 <body>
     <div class="container">

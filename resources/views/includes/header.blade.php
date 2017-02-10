@@ -18,7 +18,7 @@
         <a class="nav-link" href="/admin">Administrateur</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/ticket">Créer un ticket</a>
+        <a class="nav-link" href="/createticket">Créer un ticket</a>
       </li>
     </ul>
 
@@ -30,7 +30,7 @@
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Pramètres
   </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="#">Editer le profil</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="#">Log out</a>
