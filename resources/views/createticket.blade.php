@@ -103,7 +103,7 @@ $output_array = json_encode( $output_array );
   </div>
   <div class="form-group">
      {{ Form::label('Assigner un utilisateur', '') }}
-    <select class="form-control" name="user">
+    <select class="form-control" name="user_id">
     <option value="none">Aucun</option>
       <?php
       	foreach ($users as $user)
