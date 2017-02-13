@@ -1,8 +1,9 @@
 <?php 
 
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\HomeController;
 
-$sectors =  TicketController::getSectors();
+$sectors =  HomeController::getSectors();
 $users =  TicketController::getUsersFromSector();
 $applicants = TicketController::getApplicants();
 
