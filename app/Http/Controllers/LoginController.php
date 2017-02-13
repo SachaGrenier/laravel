@@ -15,6 +15,10 @@ class LoginController extends Controller
         print_r($request->input());
         echo '</pre>';
         */
+         $this->validate($request, [
+        'login' => 'required|max:50',
+        'password' => 'required',
+            ]);
 
 
         $user = User::where('login', $request->input('login'))->get();

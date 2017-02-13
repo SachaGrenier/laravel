@@ -22,11 +22,16 @@ class TicketController extends Controller
 
 
     }
-    public static function store(request $request)
+    public function store(request $request)
     {   
         echo '<pre>';
         print_r($request->input());
         echo '</pre>';
+
+         $this->validate($request, [
+        'title' => 'required|max:255',
+        'content' => 'required',
+            ]);
 
         $ticket = new Ticket;
 
