@@ -16,6 +16,7 @@ class LoginController extends Controller
         echo '</pre>';
         */
 
+
         $user = User::where('login', $request->input('login'))->get();
 
         if (isset($user[0]))
@@ -25,15 +26,16 @@ class LoginController extends Controller
 		          $request->session()->put('firstname', $user[0]->first_name);
 		          $request->session()->put('lastname', $user[0]->last_name);
 
+
           		return redirect()->route('index');
           	}
           	else
           	{ 
-          		return redirect('/')->with('status', 'Login ou mot de passe <strong>erronés</strong>');
+          		return redirect('login')->with('status', 'Login ou mot de passe <strong>erronés</strong>');
           	}
         else
             {
-            	return redirect('/')->with('status', 'Login ou mot de passe <strong>erronés</strong>');
+            	return redirect('login')->with('status', 'Login ou mot de passe <strong>erronés</strong>');
             }
 
       
