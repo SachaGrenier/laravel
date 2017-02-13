@@ -11,10 +11,19 @@
 |
 */
 
-
+/*
+	if(session('id'))
+    	return view('index');
+	else
+    	return view('login');
+    	*/
 
 Route::get('/', function () {
-    return view('index');
+	if(session('id'))
+    	return view('index');
+	else
+    	return view('login');
+
 })->name('index');
 
 Route::get('createticket', function () {
@@ -31,12 +40,21 @@ Route::get('storeticket', function() {
 
 Route::post('storeticket', 'TicketController@store');
 
+Route::post('storeuser', 'AdminController@store');
+
+Route::post('login', 'LoginController@index');
+
+Route::get('login', function() {
+  return view('login');
+})->name('login');
+
+
 Route::get('applicant', function () {
     return view('applicant');
 });
 
 Route::get('admin', function () {
-    return view('login');
+    return view('createuser');
 });
 
 Route::get('parametres', function () {
@@ -44,7 +62,7 @@ Route::get('parametres', function () {
 });
 
 Route::get('/ticket', function () {
-    return view('ticket');
+    return view('index');
 });
 
 Route::get('ajax',function(){
@@ -53,3 +71,9 @@ Route::get('ajax',function(){
 
 
 Route::get('/gettickets/{type}', ['uses' =>'AjaxController@index']);
+
+
+Route::get('logout', function () {
+    session()->flush();
+    return redirect()->route('login');
+})->name('logout');
