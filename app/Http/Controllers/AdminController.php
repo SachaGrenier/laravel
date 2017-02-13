@@ -45,4 +45,8 @@ class AdminController extends Controller
 
         $user->save();
     }
+    public static function getUsers()
+    {
+        return User::all();
+    }
 }

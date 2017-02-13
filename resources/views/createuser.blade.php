@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 
 $sectors =  HomeController::getSectors();
 
 $titles =  HomeController::getTitles();
+
+$users = AdminController::getUsers();
 
 ?>
 
@@ -14,7 +17,44 @@ $titles =  HomeController::getTitles();
  
 @section('content')  
 
+
+
 <div class="container">
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+      <th>Rôle</th>
+      <th>Poubelle !</th>
+    </tr>
+  </thead>
+  <tbody>
+  <?php
+
+  	foreach ($users as $user) 
+  	{
+		echo '<tr>';
+	    echo '<th scope="row">'.$user->id.'</th>';
+	    echo '<td>'.$user->first_name.'</td>';
+	    echo '<td>'.$user->last_name.'</td>';
+	    echo '<td>'.$user->login.'</td>';
+	    echo '<td>';
+	    echo  $user->type ? "Administrateur" : "Utilisateur" ;
+	    echo '</td>';
+	    echo '<td>';
+	    echo Form::open(array('url' => 'deleteuser','method'=>'POST'));
+	    echo '<button type="submit"><img style="width:40px;" src="'. asset('img/trashbin.jpg') .'"></button>';
+	    echo Form::close();
+	    echo '</td>';
+	    echo '</tr>';
+	}
+    ?>
+  </tbody>
+</table>
 
 <br>
 <h1>Ajouter un utilisateur</h1>
@@ -29,7 +69,7 @@ $titles =  HomeController::getTitles();
 	    {{ Form::label('Nom*', '') }}
 	    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
 	</div>
-	
+
 	<div class="form-group">
 	    {{ Form::label('Username*', '') }}
 	    <p id="username"></p>
@@ -67,10 +107,9 @@ $titles =  HomeController::getTitles();
 	      <option value="">Aucun</option>
 	      <?php
 	      	foreach ($titles as $title)
-	      	 {
+	      	{
 	      		echo '<option value="'.$title->id.'">'.$title->name.'</option>';
 	      	}
-
 	       ?>
 	    </select>
   	</div>
