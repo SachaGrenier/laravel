@@ -19,8 +19,8 @@
 	{{ Html::script('js/bootstrap.min.js') }}
 
 	<!-- Scripts DynaTable -->
-	{{ Html::script('js/jquery.dynatable.js') }}
-	{{ Html::style('css/jquery.dynatable.css') }}
+	<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap4.min.css">
 
 	<script type="text/javascript">
 		$(document).ready(function() {

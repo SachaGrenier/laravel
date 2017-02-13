@@ -21,8 +21,8 @@ $DEBUG = false;
   <br>
 <div class="container">
   <div class="btn-group" data-toggle="buttons">
-  <label class="btn btn-primary">
-    <input type="radio" name="options" id="option1" autocomplete="off" value="all"> Tout
+  <label class="btn btn-primary active">
+    <input type="radio" name="options" id="option1" checked autocomplete="off" value="all"> Tout
   </label>
   <label class="btn btn-primary">
     <input type="radio" name="options" id="option2" autocomplete="off" value="archived"> Archives
@@ -35,13 +35,13 @@ $DEBUG = false;
 <br>
 
   
-<table id="my-table" class="table table-hover">
+<table id="my-table" class="table table-striped table-bordered">
   <thead class="thead-inverse">
     <tr>
       <th>ID</th>
       <th>Titre</th>
       <th>Secteur</th>
-      <th>Utilisateur</th>
+      <th>Utilisateur assigné</th>
       <th>Demandeur</th>
       <th>Crée le</th>
       <th>Modifié le</th>
@@ -50,72 +50,91 @@ $DEBUG = false;
     </tr>
   </thead>
   <tbody>
-  <?php
-
-  if($DEBUG)
-  {
-    echo '<pre>';
-    print_r($tickets);
-    echo '</pre>';
-  }
-   foreach ($tickets as $ticket)
-  {
-        echo '<tr>';
-  echo '<td>'.$ticket->id.'</td>';
-  echo '<td><a href="'.route('ticket', ['id' => $ticket->id]).'">'.$ticket->title.'</a></td>';
-  if (isset($ticket->sector))
-  echo '<td>'.$ticket->sector->name.'</td>';
-  else
-  echo '<td>Non attribué</td>';
-
-  if (isset($ticket->user))
-  echo '<td>'.$ticket->user->first_name.'</td>';
-  else
-  echo '<td>Non attribué</td>';
-
-  if (isset($ticket->applicant))
-  echo '<td>'.$ticket->applicant->first_name.' '.$ticket->applicant->last_name.'</td>';
-  else
-  echo '<td>Non attribué</td>';
-
-  
-  echo '<td>'.$ticket->created_at->format('d M Y').'</td>';
-  echo '<td>'.$ticket->updated_at->format('d M Y').'</td>';
-  echo '<td><a href="'.route('ticket', ['id' => $ticket->id]).'">Modifier</a></td>';
-  echo '</tr>';
-  }
-   
-?>
-
-
   </tbody>
 
 </table>
 
 <script>
 $(document ).ready(function() {
+      
+      getTickets('all');
 
-      function getTickets($type)
+      function getTickets(type)
       {
 
         $.ajax({
-        url: '/gettickets/'+ $type,
-
-        success: function(data){
-          $('#my-table').dynatable({
-            dataset: { records: data }
-          });
-        }
+            url: '/gettickets/'+type,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                assignToEventsColumns(data);
+            }
         });
 
-      }
-    
+        function assignToEventsColumns(data) 
+        {
+            
+            var table = $('#my-table').dataTable({
+            "dom": 'C<"clear">lfrtip',
+            "bAutoWidth": true,
+            "aaData": data,
+            "aaSorting": [],
+            "aoColumnDefs": [
+               {
+                   "aTargets": [0],
+                   "mData": "id",
+                   
+               },
+               {
+                   "aTargets": [1], 
+                   "mData": "title",
+                   "mRender": function (event) {
+                    
+                        return '<a href="ticket/'+ data[0].id +'">'+event+'</a> ';
+                   }
+               },
+                {
+                   "aTargets": [2], 
+                   "mData": "sector"
+               },
+                 {
+                   "aTargets": [3], 
+                   "mData": "user"
+               },
+                 {
+                   "aTargets": [4], 
+                   "mData": "applicant"
+               },
+                 {
+                   "aTargets": [5], 
+                   "mData": "created_at"
+               },
+                 {
+                   "aTargets": [6], 
+                   "mData": "updated_at"
+               },
+                {
+                     "aTargets": [7],
+                     "bSearchable": false,
+                     "bSortable": false,
+                     "bSort": false,
+                     "mData": "id",
+                     "mRender": function (event) {
+                         return '<a href="editticket/'+ event+'">Modifier</a> ';
+                     }
+                 }
+                ]});
+           
 
-    $('input[type=radio][name=options]').change(function(){
+          }
+
+       }
+
+      $('input[type=radio][name=options]').change(function(){
       var type = $('input[type=radio][name=options]:checked').val();
-              console.log(getTickets(type));
-    
-    });
+      $('#my-table').dataTable().fnDestroy();
+      getTickets(type);
+      });
 });
 </script>
 

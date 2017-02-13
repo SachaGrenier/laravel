@@ -33,7 +33,22 @@ class AjaxController extends Controller
                 break;
         }
 
-    	return response()->json($tickets, 200);
+        $ui = [];
+
+        foreach ($tickets as $key => $value)
+        {
+        	$ui[] = new \stdClass();
+        	$ui[$key]->id = $value->id;
+        	$ui[$key]->title = $value->title;
+        	$ui[$key]->sector = $value->sector['name'];
+        	$ui[$key]->user = $value->user['first_name']. ' ' . $value->user['last_name'];
+        	$ui[$key]->applicant = $value->applicant['first_name']. ' ' . $value->applicant['last_name'];
+        	$ui[$key]->created_at = $value->created_at->format('d M Y');
+        	$ui[$key]->updated_at = $value->updated_at->format('d M Y');
+
+        }
+
+    	return json_encode($ui);
    }
 }
 

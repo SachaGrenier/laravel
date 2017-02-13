@@ -70,7 +70,7 @@ class CreateTables extends Migration
 			$table->integer('title_id')->unsigned();
 			$table->integer('sector_id')->unsigned()->nullable();
             $table->timestamps();
-			$table->foreign('title_id')->references('id')->on('sector');
+			$table->foreign('title_id')->references('id')->on('title');
 			$table->foreign('sector_id')->references('id')->on('sector');
         });
 		
