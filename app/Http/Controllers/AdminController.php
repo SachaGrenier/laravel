@@ -25,7 +25,7 @@ class AdminController extends Controller
         $user->login = $request->input('username');
         $user->password = Hash::make('secret');       
 
-        $user->picture_path = $request->input('username');
+        $user->picture_path = 'www';
 		
 		if ($request->input('admin')) 
 			$user->type = $request->input('admin');

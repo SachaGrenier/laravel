@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Hash;
+
 
 class LoginController extends Controller
 {
@@ -20,7 +22,8 @@ class LoginController extends Controller
         $user = User::where('login', $request->input('login'))->get();
 
         if (isset($user[0]))
-          	if ($user[0]->password == $request->input('password'))
+          
+          if (Hash::check($request->input('password'), $user[0]->password))         	
           	{ 
           		$request->session()->put('id', $user[0]->id);
 		          $request->session()->put('firstname', $user[0]->first_name);
