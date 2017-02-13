@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Sector;
 use App\Ticket;
+use App\Title;
+
 
 class HomeController extends Controller
 {
@@ -41,4 +43,13 @@ class HomeController extends Controller
     	return $tickets;
     }
  
+     public static function getSectors()
+    {
+         return Sector::all();
+    }
+
+    public static function getTitles()
+    {
+         return Title::all();
+    }
 }

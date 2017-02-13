@@ -32,6 +32,7 @@ class TicketController extends Controller
 
         if($request->input('project'))
         {
+            
 
             $ticket->project = $request->input('project');
             $ticket->title = '[PROJET] '. $request->input('title');
@@ -74,10 +75,7 @@ class TicketController extends Controller
         $ticket->save();
        
     }
-    public static function getSectors()
-    {
-    	 return Sector::all();
-    }
+
     public static function getUsersFromSector()
     {
     	return User::where('sector_id',1)->get();
