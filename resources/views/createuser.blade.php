@@ -20,20 +20,19 @@ $titles =  HomeController::getTitles();
 <h1>Ajouter un utilisateur</h1>
 
 {{ Form::open(array('url' => 'storeuser','method'=>'POST','class' => 'form-group')) }}
+	<div class="form-group">
+	    {{ Form::label('Prénom*', '') }}
+	    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'first_name']) }}
+	</div>
 
     <div class="form-group">
 	    {{ Form::label('Nom*', '') }}
-	    {{ Form::Text('first_name','',['class' => 'form-control form-control']) }}
+	    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
 	</div>
-
-	<div class="form-group">
-	    {{ Form::label('Prénom*', '') }}
-	    {{ Form::Text('last_name','',['class' => 'form-control form-control']) }}
-	</div>
-
+	
 	<div class="form-group">
 	    {{ Form::label('Username*', '') }}
-	    {{ Form::Text('username','',['class' => 'form-control form-control']) }}
+	    <p id="username"></p>
 	</div>
 
 
@@ -80,4 +79,13 @@ $titles =  HomeController::getTitles();
 
 {{ Form::close() }}
 </div>
+<script>
+	$('#first_name').change(function() {
+		$('#username').text($('#first_name').val()+ '_'+$('#last_name').val());
+	});	
+
+	$('#last_name').change(function() {
+		$('#username').text($('#first_name').val()+ '_'+$('#last_name').val());
+	});	
+</script>
 @endsection

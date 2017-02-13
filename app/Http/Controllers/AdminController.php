@@ -16,6 +16,11 @@ class AdminController extends Controller
         print_r($request->input());
         echo '</pre>';
 
+         $this->validate($request, [
+        'first_name' => 'required|max:255',
+        'last_name' => 'required|max:255',
+        'email' => 'required|max:255',
+            ]);
 		
         $user = new User;
 
