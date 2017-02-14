@@ -16,11 +16,7 @@ foreach ($applicants as $row) {
     );
 }
 
-// Print out JSON response
 $output_array = json_encode( $output_array );
-
-
-
 
 ?>
 

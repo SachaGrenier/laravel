@@ -47,7 +47,7 @@ class TicketController extends Controller
         
 
 
-        if($request->input('applicant_id'))
+        if($request->input('applicant_id') && $request->input('applicant_id') != 'none')
             $ticket->applicant_id = $request->input('applicant_id');
         else
         {
@@ -61,7 +61,7 @@ class TicketController extends Controller
 
         }
         
-        if($request->input('user_id'))
+        if($request->input('user_id') && $request->input('user_id') != 'none')
             $ticket->user_id = $request->input('user_id');
 
         $ticket->content = $request->input('content');
@@ -70,9 +70,13 @@ class TicketController extends Controller
 
         
 
-       if($request->input('time_limit'))
-             $ticket->time_limit = date('Y-m-d', strtotime(str_replace('-', '/', $request->input('time_limit_value'))));
-  
+       if($request->input('time_limit') && $request->input('time_limit') != 'none')
+       {
+             //$ticket->time_limit = date('Y-m-d', strtotime(str_replace('-', '/', $request->input('time_limit_value'))));
+            $date = $request->input('time_limit_value');
+            $date = str_replace('/', '-', $date);
+             $ticket->time_limit = date('Y-m-d', strtotime($date));
+        }
         echo '<pre>';
         print_r($ticket);
         echo '</pre>';

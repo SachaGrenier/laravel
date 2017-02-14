@@ -24,18 +24,22 @@ $DEBUG = false;
   <label class="btn btn-primary active">
     <input type="radio" name="options" id="option1" checked autocomplete="off" value="all"> Tout
   </label>
-  <label class="btn btn-primary">
-    <input type="radio" name="options" id="option2" autocomplete="off" value="archived"> Archives
+      <label class="btn btn-primary">
+    <input type="radio" name="options" id="option2" autocomplete="off" value="mine"> Mes tickets
   </label>
   <label class="btn btn-primary">
-    <input type="radio" name="options" id="option3" autocomplete="off" value="project"> Projets
+    <input type="radio" name="options" id="option3" autocomplete="off" value="archived"> Archives
   </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" id="option4" autocomplete="off" value="project"> Projets
+  </label>
+
 </div>
 
 <br>
 
   
-<table id="my-table" class="table table-striped table-bordered">
+<table id="my-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
   <thead class="thead-inverse">
     <tr>
       <th>ID</th>
@@ -44,7 +48,7 @@ $DEBUG = false;
       <th>Utilisateur assigné</th>
       <th>Demandeur</th>
       <th>Crée le</th>
-      <th>Modifié le</th>
+      <th>Délai</th>
       <th>Modifier</th>
 
     </tr>
@@ -56,7 +60,6 @@ $DEBUG = false;
 
 <script>
 $(document ).ready(function() {
-      
       getTickets('all');
 
       function getTickets(type)
@@ -78,6 +81,20 @@ $(document ).ready(function() {
             "dom": 'C<"clear">lfrtip',
             "bAutoWidth": true,
             "aaData": data,
+            "oLanguage": 
+            {
+              "sInfo": "_TOTAL_ résultats (Affiche de _START_ à _END_)",
+              "sInfoEmpty": "Aucun résultat",
+              "sInfoFiltered": " - filtré de _MAX_ entrées",
+               "sLengthMenu": "Affiche _MENU_ résultats",
+              "sEmptyTable": "La table est vide",
+              "sSearch": "Rechercher: ",
+               "oPaginate": 
+                {
+                  "sNext": "Page suivante",
+                  "sPrevious": "Page précédente"
+                }
+            },
             "aaSorting": [],
             "aoColumnDefs": [
                {
@@ -87,11 +104,7 @@ $(document ).ready(function() {
                },
                {
                    "aTargets": [1], 
-                   "mData": "title",
-                   "mRender": function (event) {
-                    
-                        return '<a href="ticket/'+ data[0].id +'">'+event+'</a> ';
-                   }
+                   "mData": "title"
                },
                 {
                    "aTargets": [2], 
@@ -111,7 +124,7 @@ $(document ).ready(function() {
                },
                  {
                    "aTargets": [6], 
-                   "mData": "updated_at"
+                   "mData": "time_limit"
                },
                 {
                      "aTargets": [7],
@@ -131,9 +144,9 @@ $(document ).ready(function() {
        }
 
       $('input[type=radio][name=options]').change(function(){
-      var type = $('input[type=radio][name=options]:checked').val();
-      $('#my-table').dataTable().fnDestroy();
-      getTickets(type);
+        var type = $('input[type=radio][name=options]:checked').val();
+        $('#my-table').dataTable().fnDestroy();
+        getTickets(type);
       });
 });
 </script>

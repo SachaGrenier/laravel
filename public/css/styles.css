@@ -1,3 +1,6 @@
+
+
+
 .logonavbar
 {
 	width:55px;
@@ -5,7 +8,19 @@
 	margin: 0;
 	float: left;
 }
-
+.btn
+{
+  cursor:pointer;
+}
+#my-table_filter
+{
+  margin-left:50%; 
+}
+#my-table_paginate
+{
+  margin-left:50%; 
+  
+}
 .filters
 {
 	margin-top: 10px;

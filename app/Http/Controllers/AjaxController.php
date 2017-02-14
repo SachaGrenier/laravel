@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Ticket;
+use Carbon\Carbon;
 
 
 class AjaxController extends Controller
@@ -28,6 +29,10 @@ class AjaxController extends Controller
                 $tickets =  Ticket::where('archived',1)->get();
                 break;
 
+          	case 'mine':
+                $tickets =  Ticket::where('user_id',session('id'))->get();
+                break;
+
             default:
                 $tickets =  Ticket::all();
                 break;
@@ -39,16 +44,18 @@ class AjaxController extends Controller
         {
         	$ui[] = new \stdClass();
         	$ui[$key]->id = $value->id;
-        	$ui[$key]->title = $value->title;
+        	$ui[$key]->title = '<a href="ticket/' . $value->id.'" >'.$value->title.'</a>';
         	$ui[$key]->sector = $value->sector['name'];
         	$ui[$key]->user = $value->user['first_name']. ' ' . $value->user['last_name'];
         	$ui[$key]->applicant = $value->applicant['first_name']. ' ' . $value->applicant['last_name'];
         	$ui[$key]->created_at = $value->created_at->format('d M Y');
-        	$ui[$key]->updated_at = $value->updated_at->format('d M Y');
+        	$ui[$key]->time_limit = $value->time_limit == null ? "Aucun" : Carbon::parse($value->time_limit)->format('d M Y');
+
+      
 
         }
 
-    	return json_encode($ui);
+    	return $ui;
    }
 }
 
