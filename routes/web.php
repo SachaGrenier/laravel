@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Route::get('createticket', function () {
   return view('createticket');
-});
+})->name('createticket');
 
 Route::get('ticket/{id}', function ($id) {
     return view('ticket')->with('id', $id);
@@ -57,11 +57,11 @@ Route::get('login', function() {
 
 Route::get('applicant', function () {
     return view('applicant');
-});
+})->name('applicant');
 
 Route::get('admin', function () {
     return view('admin');
-});
+})->name('admin');
 
 Route::get('settings', function () {
     return view('parametres');

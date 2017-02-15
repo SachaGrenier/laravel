@@ -56,7 +56,8 @@ class HomeController extends Controller
             $currentuser->picture_path = 'img/profilepictures/'.$file->getClientOriginalName();
 
             $currentuser->save();
-
+            
+            
 
             return redirect()->route('settings');
             
@@ -68,18 +69,22 @@ class HomeController extends Controller
     public static function modifyPassord(Request $request)
     {
         $currentuser = HomeController::getUser(); 
+        
 
-        if ($request->newPassword1 == $request->newPassword2) 
+        if ($request->new_password == $request->new_password_confirm) 
         {
-            if (Hash::check($request->input('oldPassword'), $currentuser->password))
+            if (Hash::check($request->input('old_password'), $currentuser->password))
             {
-                $currentuser->password = Hash::make($request->newPassword1);   
-                $currentuser->save();               
+                $currentuser->password = Hash::make($request->new_password);   
+                $currentuser->save(); 
+
+                return redirect('settings');              
             }
-            else
+            else               
                 return redirect('settings')->with('status', 'Ancien mot de passe <strong>erronés</strong>');
         }
         else
             return redirect('settings')->with('status', 'Les nouveaux mot de passe doivent-être <strong>identique</strong>');
+        
     }
 }

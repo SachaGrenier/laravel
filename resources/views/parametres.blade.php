@@ -14,8 +14,10 @@ $currentuser = HomeController::getUser();
 
 <div class="container">
 
-      <div id="imageprofil"> {{ Html::image($currentuser->picture_path,'', array('class'=>'imageprofil')) }}</div>
-      <br>
+      <h1  class="text-center" style=" margin-top: 10px;">{{ $currentuser->first_name}} {{$currentuser->last_name }}</h1>
+      <div id="imageprofil" style=" margin-bottom: 10px;"> {{ Html::image($currentuser->picture_path,'', array('class'=>'imageprofil')) }}</div>
+
+      
   <div class="form-group">
 	{{ Form::open(array('url' => 'storeimage','method'=>'POST','class' => 'form-group', 'files'=> true)) }}
 
@@ -30,19 +32,19 @@ $currentuser = HomeController::getUser();
 
   </div>
 
-	<div class="jumbotron" id="password-form" >
+	<div class="jumbotron" id="jumbo-password" >
 	 	<h3>Modifier son mot de passe</h3>
 
 		{{ Form::open(array('url' => 'modifypassword','method'=>'POST','class' => 'form-group', 'files'=> true)) }}
 	       
 		    {{ Form::label('Ancien mot de passe', '') }}
-		    {{ Form::password('oldPassword',['class' => 'form-control', 'placeholder'=>'Password']) }}
+		    {{ Form::password('old_password',['class' => 'form-control', 'placeholder'=>'Password']) }}
 
 		    <br>
 
 		    {{ Form::label('Nouveau mot de passe', '') }}
-		    {{ Form::password('newPassword1',['class' => 'form-control', 'placeholder'=>'Password']) }}
-		    {{ Form::password('newPassword2',['class' => 'form-control', 'placeholder'=>'Password']) }}
+		    {{ Form::password('new_password',['class' => 'form-control', 'placeholder'=>'Password']) }}
+		    {{ Form::password('new_password_confirm',['class' => 'form-control', 'placeholder'=>'Password']) }}
 
 		    <br>
 		    
@@ -62,5 +64,6 @@ $currentuser = HomeController::getUser();
   	</div>
 
 </div>
+
 @endsection
 
