@@ -1,3 +1,11 @@
+<?php
+//uses home controller
+use App\Http\Controllers\HomeController;
+
+$currentuser = HomeController::getUser();
+
+
+?>
 
 
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
@@ -8,31 +16,38 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+      
       <li class="nav-item">
-        <a class="nav-link" href="/">Tickets <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Tickets</a>
       </li>
+
       <li class="nav-item">
         <a class="nav-link" href="/applicant">Prestataires</a>
       </li>
+      
       <li class="nav-item">
-        <a class="nav-link" style="display:" href="/admin">Administrateur</a>
+        <a class="nav-link" href="/admin">Administrateur</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/createticket">Créer un ticket</a>
         
+      <li class="nav-item">
+        <a class="nav-link" href="/createticket">Créer un ticket</a>       
       </li>
+
     </ul>
 
 <ul class="navbar-nav mr-right">
       
-<a class="nav-link"> <?php echo session('lastname'). " " ,session('firstname');?> </a>      
+<a class="nav-link"> <?php echo $currentuser->first_name. " " ,$currentuser->last_name;?> </a> 
 
-<div class="dropdown">
+<a id="logonavbar"> {{ Html::image($currentuser->picture_path,'', array('class'=>'logonavbar')) }}</a>
+
+
+<div  class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Pramètres
   </button>
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Editer le profil</a>
+    <a class="dropdown-item" href="edit">Editer le profil</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="logout">Log out</a>
     

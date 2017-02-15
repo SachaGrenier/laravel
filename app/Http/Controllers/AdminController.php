@@ -27,10 +27,10 @@ class AdminController extends Controller
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
-        $user->login = $request->input('username');
+        $user->login = $request->input('first_name').'_'.$request->input('last_name');
         $user->password = Hash::make('secret');       
 
-        $user->picture_path = 'www';
+        $user->picture_path = 'img/profilepictures/default.jpg';
 		
 		if ($request->input('admin')) 
 			$user->type = $request->input('admin');

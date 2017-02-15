@@ -11,12 +11,6 @@
 |
 */
 
-/*
-	if(session('id'))
-    	return view('index');
-	else
-    	return view('login');
-    	*/
 
 Route::get('/', function () {
 	if(session('id'))
@@ -44,6 +38,11 @@ Route::post('storeuser', 'AdminController@store');
 
 Route::post('login', 'LoginController@index');
 
+Route::post('storeimage', 'HomeController@updateProfilPicture');
+
+Route::post('modifypassword', 'HomeController@modifyPassord');
+
+
 Route::get('login', function() {
   return view('login');
 })->name('login');
@@ -61,8 +60,12 @@ Route::get('parametres', function () {
     return view('parametres');
 });
 
-Route::get('/ticket', function () {
+Route::get('ticket', function () {
     return view('index');
+});
+
+Route::get('edit', function () {
+    return view('parametres');
 });
 
 Route::get('ajax',function(){
@@ -77,3 +80,4 @@ Route::get('logout', function () {
     session()->flush();
     return redirect()->route('login');
 })->name('logout');
+
