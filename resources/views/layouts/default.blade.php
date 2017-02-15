@@ -8,6 +8,7 @@
 	<!-- Styles -->
 
 	{{ Html::style('css/bootstrap.min.css') }}
+	{{ Html::style('css/font-awesome.min.css') }}	
 	{{ Html::style('css/styles.css') }}	
 
 	<!-- Scripts jQueryUI -->
