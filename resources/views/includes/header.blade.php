@@ -47,7 +47,7 @@ $currentuser = HomeController::getUser();
     Pramètres
   </button>
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="edit">Editer le profil</a>
+    <a class="dropdown-item" href="settings">Editer le profil</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="logout">Log out</a>
     

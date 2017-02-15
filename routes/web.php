@@ -56,16 +56,12 @@ Route::get('admin', function () {
     return view('createuser');
 });
 
-Route::get('parametres', function () {
+Route::get('settings', function () {
     return view('parametres');
-});
+})->name('settings');
 
 Route::get('ticket', function () {
     return view('index');
-});
-
-Route::get('edit', function () {
-    return view('parametres');
 });
 
 Route::get('ajax',function(){

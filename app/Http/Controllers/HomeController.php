@@ -78,11 +78,11 @@ class HomeController extends Controller
             $currentuser->save();
 
 
-            return redirect()->route('index');
+            return redirect()->route('settings');
             
         }
         else
-            return redirect()->route('parameters');        
+            return redirect()->route('settings');        
     }
     
     public static function modifyPassord(Request $request)
@@ -97,9 +97,9 @@ class HomeController extends Controller
                 $currentuser->save();               
             }
             else
-                return redirect('parametres')->with('status', 'Ancien mot de passe <strong>erronés</strong>');
+                return redirect('settings')->with('status', 'Ancien mot de passe <strong>erronés</strong>');
         }
         else
-            return redirect('parametres')->with('status', 'Les nouveaux mot de passe doivent-être <strong>identique</strong>');
+            return redirect('settings')->with('status', 'Les nouveaux mot de passe doivent-être <strong>identique</strong>');
     }
 }
