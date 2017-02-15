@@ -53,6 +53,14 @@ body {
   margin : auto;
 }
 
+.imageprofil
+{
+  width:200px;
+  display: block;
+  margin : auto;
+}
+
+
 #logincontainer
 {
   margin: auto;

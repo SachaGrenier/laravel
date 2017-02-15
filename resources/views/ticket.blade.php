@@ -20,6 +20,7 @@ $ticket = TicketController::getTicket($id);
 <br>
 <a href="{{route('index')}}"><button class="btn btn-secondary">< Retour aux tickets</button></a>
 <br>
+<br>
 	<h1>{{ $ticket->title }}</h1>
 	<div class="alert alert-info">
 	Demandeur : {{ $ticket->applicant->first_name }} {{ $ticket->applicant->last_name }}
