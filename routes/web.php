@@ -53,7 +53,7 @@ Route::get('applicant', function () {
 });
 
 Route::get('admin', function () {
-    return view('createuser');
+    return view('admin');
 });
 
 Route::get('parametres', function () {

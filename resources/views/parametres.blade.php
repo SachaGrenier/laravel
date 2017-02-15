@@ -14,7 +14,7 @@ $currentuser = HomeController::getUser();
 
 <div class="container">
 
-      <a  id="imageprofil"> {{ Html::image($currentuser->picture_path,'', array('class'=>'imageprofil')) }}</a>
+      <div id="imageprofil"> {{ Html::image($currentuser->picture_path,'', array('class'=>'imageprofil')) }}</div>
       <br>
   <div class="form-group">
 	{{ Form::open(array('url' => 'storeimage','method'=>'POST','class' => 'form-group', 'files'=> true)) }}
