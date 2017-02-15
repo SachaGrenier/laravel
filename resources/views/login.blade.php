@@ -28,7 +28,7 @@
         </div>
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  		<script type="text/javascript">$("#denis").delay(500).hide(20)</script>
+  		<script type="text/javascript">$("#denis").delay(50000).hide(20)</script>
         
       
 

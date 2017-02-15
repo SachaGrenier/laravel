@@ -18,38 +18,38 @@ $currentuser = HomeController::getUser();
     <ul class="navbar-nav mr-auto">
       
       <li class="nav-item">
-        <a class="nav-link" href="/">Tickets</a>
+        <a class="nav-link" href="{{route('index')}}">Tickets</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/applicant">Prestataires</a>
+        <a class="nav-link" href="{{route('applicant')}}">Prestataires</a>
       </li>
       
       <li class="nav-item">
-        <a class="nav-link" href="/admin">Administrateur</a>
+        <a class="nav-link" href="{{route('admin')}}">Administrateur</a>
       </li>
         
       <li class="nav-item">
-        <a class="nav-link" href="/createticket">Créer un ticket</a>       
+        <a class="nav-link" href="{{route('createticket')}}">Créer un ticket</a>       
       </li>
 
     </ul>
 
 <ul class="navbar-nav mr-right">
       
-<a class="nav-link"> <?php echo $currentuser->first_name. " " ,$currentuser->last_name;?> </a> 
+<a class="nav-link"> {{ $currentuser->first_name}} {{$currentuser->last_name }} </a> 
 
 <a id="logonavbar"> {{ Html::image($currentuser->picture_path,'', array('class'=>'logonavbar')) }}</a>
 
 
 <div  class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Pramètres
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i>
+    
   </button>
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="settings">Editer le profil</a>
+    <a class="dropdown-item" href="{{route('settings')}}">Editer le profil</a>
     <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="logout">Log out</a>
+    <a class="dropdown-item" href="{{route('logout')}}">Log out</a>
     
   </div>
 </div>
