@@ -1,11 +1,15 @@
 
-
+.jumbotron-form
+{
+  margin-top: 20px;
+}
 
 .logonavbar
 {
-	width:55px;
+	width:45px;
 	padding: 0;
 	margin: 0;
+  margin-right:10px;
 	float: left;
 }
 .btn

@@ -36,11 +36,18 @@ Route::post('storeticket', 'TicketController@store');
 
 Route::post('storeuser', 'AdminController@store');
 
+Route::post('storetitle', 'AdminController@storetitle');
+
+Route::post('storesector', 'AdminController@storesector');
+
 Route::post('login', 'LoginController@index');
 
 Route::post('storeimage', 'HomeController@updateProfilPicture');
 
 Route::post('modifypassword', 'HomeController@modifyPassord');
+
+Route::post('deleteuser', 'AdminController@deleteuser');
+
 
 
 Route::get('login', function() {

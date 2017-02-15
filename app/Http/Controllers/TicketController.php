@@ -36,14 +36,9 @@ class TicketController extends Controller
         $ticket = new Ticket;
 
         if($request->input('project'))
-        {
-            
-
-            $ticket->project = $request->input('project');
-            $ticket->title = '[PROJET] '. $request->input('title');
-        }
-        else
-            $ticket->title = $request->input('title');
+            $ticket->project = $request->input('project'); 
+        
+        $ticket->title = $request->input('title');
         
 
 
@@ -87,7 +82,8 @@ class TicketController extends Controller
 
     public static function getUsersFromSector()
     {
-    	return User::where('sector_id',1)->get();
+        $user = User::find(session('id'));
+    	return User::where('sector_id',$user->sector_id)->get();
     }
     public static function getApplicants()
     {

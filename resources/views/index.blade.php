@@ -3,9 +3,7 @@
 //uses home controller
 use App\Http\Controllers\HomeController;
 
-
-//get all tickets in function of sector
-$tickets =  HomeController::getTickets("all");
+$sector = HomeController::index();
 
 //used to show data in $ticket
 $DEBUG = false;
@@ -22,9 +20,9 @@ $DEBUG = false;
 <div class="container">
   <div class="btn-group" data-toggle="buttons">
   <label class="btn btn-primary active">
-    <input type="radio" name="options" id="option1" checked autocomplete="off" value="all"> Tout
+    <input type="radio" name="options" id="option1" checked autocomplete="off" value="sector">Tickets {{ $sector->name }}
   </label>
-      <label class="btn btn-primary">
+  <label class="btn btn-primary">
     <input type="radio" name="options" id="option2" autocomplete="off" value="mine"> Mes tickets
   </label>
   <label class="btn btn-primary">
@@ -32,6 +30,9 @@ $DEBUG = false;
   </label>
   <label class="btn btn-primary">
     <input type="radio" name="options" id="option4" autocomplete="off" value="project"> Projets
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" id="option5" autocomplete="off" value="all"> Tous les tickets
   </label>
 
 </div>
@@ -60,7 +61,7 @@ $DEBUG = false;
 
 <script>
 $(document ).ready(function() {
-      getTickets('all');
+      getTickets('sector');
 
       function getTickets(type)
       {

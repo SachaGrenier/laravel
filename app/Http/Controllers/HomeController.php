@@ -18,33 +18,13 @@ class HomeController extends Controller
     
      public static function index()
     {
-       $sectors = Sector::find(1);
+
+       $user = User::find(session('id'));
+
+       $sector = Sector::find($user->sector->id);
              
 
-        return $sectors;
-    }
-    public static function getTickets($type = "all")
-    {
-        switch ($type) 
-        {
-            case 'all':
-                $tickets =  Ticket::all();
-                break;
-
-            case 'project':
-                $tickets =  Ticket::where('project',1)->get();
-                break;
-
-            case 'archived':
-                $tickets =  Ticket::where('archived',1)->get();
-                break;
-
-            default:
-                $tickets =  Ticket::all();
-                break;
-        }
-
-    	return $tickets;
+        return $sector;
     }
  
      public static function getSectors()

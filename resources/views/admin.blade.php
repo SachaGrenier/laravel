@@ -42,10 +42,14 @@ $users = AdminController::getUsers();
 		  <thead>
 		    <tr>
 		      <th>#</th>
+		      <th></th>
 		      <th>Prénom</th>
 		      <th>Nom</th>
 		      <th>Login</th>
+		      <th>Droits</th>
 		      <th>Rôle</th>
+		      <th>Secteur</th>
+		      <th>Modifier</th>
 		      <th>Poubelle !</th>
 		    </tr>
 		  </thead>
@@ -56,14 +60,21 @@ $users = AdminController::getUsers();
 		  	{
 				echo '<tr>';
 			    echo '<th scope="row">'.$user->id.'</th>';
+			    echo '<td><img style="width:55px;" src="'.$user->picture_path.'"></td>';
 			    echo '<td>'.$user->first_name.'</td>';
 			    echo '<td>'.$user->last_name.'</td>';
 			    echo '<td>'.$user->login.'</td>';
 			    echo '<td>';
 			    echo  $user->type ? "Administrateur" : "Utilisateur" ;
 			    echo '</td>';
+			    echo '<td>'.$user->title->name.'</td>';
+			    echo '<td>';
+			    echo  isset($user->sector) ? $user->sector->name : "Aucun" ;
+			    echo '</td>';		
+			    echo '<td><a href="edituser/'.$user->id.'">Modifier</a></td>';	    
 			    echo '<td>';
 			    echo Form::open(array('url' => 'deleteuser','method'=>'POST'));
+			    echo Form::hidden('id', $user->id);
 			    echo '<button type="submit"><img style="width:40px;" src="'. asset('img/trashbin.jpg') .'"></button>';
 			    echo Form::close();
 			    echo '</td>';
@@ -74,9 +85,9 @@ $users = AdminController::getUsers();
 		</table>
 
 		
-		<button id="show-jumbo-user" class="btn btn-primary">Ajoutey un utilisateur mamène</button>
-		<br>
-		<div class="jumbotron" id="jumbo-user">
+		<button id="show-jumbo-user" class="btn btn-primary">Ajouter un utilisateur</button>
+		
+		<div class="jumbotron jumbotron-form" id="jumbo-user">
 		<h3>Ajouter un utilisateur</h3>
 
 		{{ Form::open(array('url' => 'storeuser','method'=>'POST','class' => 'form-group')) }}
@@ -122,7 +133,7 @@ $users = AdminController::getUsers();
 		  	</div>
 
 		  	    <div class="form-group">
-		     {{ Form::label('Rôle', '') }}
+		     {{ Form::label('Rôle*', '') }}
 			    <select class="form-control" name="title_id">
 			      <option value="">Aucun</option>
 			      <?php
@@ -172,11 +183,11 @@ $users = AdminController::getUsers();
 		    ?>
 		  </tbody>
 		</table>
-		<button id="show-jumbo-sector" class="btn btn-primary">Ajoutey un secteur mamène</button>
-		<div class="jumbotron" id="jumbo-sector">
+		<button id="show-jumbo-sector" class="btn btn-primary">Ajouter un secteur</button>
+		<div class="jumbotron jumbotron-form" id="jumbo-sector">
 
 			<h3>Ajouter un secteur</h3>
-			{{ Form::open(array('url' => 'storeuser','method'=>'POST','class' => 'form-group')) }}
+			{{ Form::open(array('url' => 'storesector','method'=>'POST','class' => 'form-group')) }}
 				<div class="form-group">
 				    {{ Form::label('Nom', '') }}
 				    {{ Form::Text('name','',['class' => 'form-control form-control']) }}
@@ -217,11 +228,11 @@ $users = AdminController::getUsers();
 		    ?>
 		  </tbody>
 		</table>
-		<button id="show-jumbo-title" class="btn btn-primary">Ajoutey un rôle mamène</button>
-		<div class="jumbotron" id="jumbo-title">
+		<button id="show-jumbo-title" class="btn btn-primary">Ajouter un rôle</button>
+		<div class="jumbotron jumbotron-form" id="jumbo-title">
 
-			<h3>Ajouter un secteur</h3>
-			{{ Form::open(array('url' => 'storeuser','method'=>'POST','class' => 'form-group')) }}
+			<h3>Ajouter un rôle</h3>
+			{{ Form::open(array('url' => 'storetitle','method'=>'POST','class' => 'form-group')) }}
 				<div class="form-group">
 				    {{ Form::label('Nom', '') }}
 				    {{ Form::Text('name','',['class' => 'form-control form-control']) }}
@@ -233,6 +244,7 @@ $users = AdminController::getUsers();
 
 		</div>
 	</div>
+</div>
 </div>
 <script>
 $(document ).ready(function() {
