@@ -75,7 +75,7 @@ $users = AdminController::getUsers();
 			    echo '<td>';
 			    echo Form::open(array('url' => 'deleteuser','method'=>'POST'));
 			    echo Form::hidden('id', $user->id);
-			    echo '<button type="submit"><img style="width:40px;" src="'. asset('img/trashbin.jpg') .'"></button>';
+			    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();
 			    echo '</td>';
 			    echo '</tr>';

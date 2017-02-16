@@ -20,15 +20,15 @@ class AjaxController extends Controller
         {
             case 'sector':
                 $user = User::find(session('id'));            
-                $tickets = Ticket::where('sector_id',$user->sector->id)->get();
+                $tickets = Ticket::where('sector_id',$user->sector->id)->where('archived',false)->get();
             break;
 
             case 'all':
-                $tickets =  Ticket::all();
+                $tickets =  Ticket::where('archived',false)->get();
                 break;
 
             case 'project':
-                $tickets =  Ticket::where('project',1)->get();
+                $tickets =  Ticket::where('project',1)->where('archived',false)->get();
                 break;
 
             case 'archived':
@@ -36,11 +36,11 @@ class AjaxController extends Controller
                 break;
 
           	case 'mine':
-                $tickets =  Ticket::where('user_id',session('id'))->get();
+                $tickets =  Ticket::where('user_id',session('id'))->where('archived',false)->get();
                 break;
 
             default:
-                $tickets =  Ticket::all();
+                $tickets =  Ticket::where('archived',false)->get();
                 break;
         }
 
@@ -48,10 +48,14 @@ class AjaxController extends Controller
 
         foreach ($tickets as $key => $value)
         {
+            $isarchived = $value->archived ? "[ARCHIVE] " : "";
             $isproject = $value->project ? "[PROJET] " : "";
+            $isproject2 = $value->project ? 'style="color:green"' : "";
+            $isarchived2 = $value->archived ? 'style="color:red"' : "";
+
         	$ui[] = new \stdClass();
         	$ui[$key]->id = $value->id;
-        	$ui[$key]->title = '<a href="ticket/' . $value->id.'" > '.$isproject.''.$value->title.'</a>';
+        	$ui[$key]->title = '<a href="ticket/' . $value->id.'" '.$isarchived2.' '.$isproject2.'>'.$isarchived.' '.$isproject.''.$value->title.'</a>';
         	$ui[$key]->sector = $value->sector['name'];
         	$ui[$key]->user = $value->user['first_name']. ' ' . $value->user['last_name'];
         	$ui[$key]->applicant = $value->applicant['first_name']. ' ' . $value->applicant['last_name'];

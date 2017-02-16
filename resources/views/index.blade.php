@@ -50,8 +50,6 @@ $DEBUG = false;
       <th>Demandeur</th>
       <th>Crée le</th>
       <th>Délai</th>
-      <th>Modifier</th>
-
     </tr>
   </thead>
   <tbody>
@@ -87,9 +85,10 @@ $(document ).ready(function() {
               "sInfo": "_TOTAL_ résultats (Affiche de _START_ à _END_)",
               "sInfoEmpty": "Aucun résultat",
               "sInfoFiltered": " - filtré de _MAX_ entrées",
-               "sLengthMenu": "Affiche _MENU_ résultats",
+               "sLengthMenu": "Afficher _MENU_ résultats",
               "sEmptyTable": "La table est vide",
-              "sSearch": "Rechercher: ",
+              "sSearchPlaceholder" : "Rechercher",
+              "sSearch": "_INPUT_ ",
                "oPaginate": 
                 {
                   "sNext": "Page suivante",
@@ -126,17 +125,7 @@ $(document ).ready(function() {
                  {
                    "aTargets": [6], 
                    "mData": "time_limit"
-               },
-                {
-                     "aTargets": [7],
-                     "bSearchable": false,
-                     "bSortable": false,
-                     "bSort": false,
-                     "mData": "id",
-                     "mRender": function (event) {
-                         return '<a href="editticket/'+ event+'">Modifier</a> ';
-                     }
-                 }
+               }
                 ]});
            
 

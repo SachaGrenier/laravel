@@ -48,6 +48,11 @@ Route::post('modifypassword', 'HomeController@modifyPassord');
 
 Route::post('deleteuser', 'AdminController@deleteuser');
 
+Route::post('archiveticket', 'TicketController@archiveticket');
+
+Route::post('updateticket', 'TicketController@updateticket');
+
+
 
 
 Route::get('login', function() {

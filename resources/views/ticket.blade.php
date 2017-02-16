@@ -7,6 +7,10 @@ $ticket = TicketController::getTicket($id);
 
 $applicants = TicketController::getApplicants();
 
+$sectors = TicketController::getSectors();
+
+$users = TicketController::getUsers();
+
 $output_array = array();
 
 foreach ($applicants as $row) {
@@ -30,10 +34,17 @@ $output_array = json_encode( $output_array );
 <div class="container">
 <br>
 <a href="{{route('index')}}"><button class="btn btn-secondary">< Retour aux tickets</button></a>
-<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modifier ticket</button>
+  
+  <?php 
+  if(!$ticket->archived)
+  {
+echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modifier ticket</button>';
+}
+?>
 <br>
 <br>
-	<h1 id="title">{{ $ticket->project ? "[PROJET] " : "" }}{{ $ticket->title }}</h1>
+ {{ Form::open(array('url' => 'updateticket','method'=>'POST','class' => 'form-group')) }}
+	<h1 id="title">{{ $ticket->archived ? "[ARCHIVE] " : "" }} {{ $ticket->project ? "[PROJET] " : "" }}{{ $ticket->title }}</h1>
 	<div class="form-group">
 
 	{{ Form::Text('title', $ticket->title,['class' => 'form-control form-control-lg','placeholder' => 'Titre de la demande','id' => 'title-input','hidden']) }}
@@ -64,17 +75,72 @@ $output_array = json_encode( $output_array );
   <li class="list-group-item">Projet : <span id="project-text"> {{ $ticket->project  ? "Oui" : "Non" }}</span>{{ Form::checkbox('project',true,$ticket->project,['id' => 'project']) }}</li>
   <li class="list-group-item">Crée le : {{ $ticket->created_at->format('d M Y') }}</li>
   <li class="list-group-item">Modifié le : {{ $ticket->updated_at->format('d M Y') }}</li>
-  <li class="list-group-item">Archivé : {{ $ticket->archived  ? "Oui" : "Non" }}</li>
-  <li class="list-group-item">Secteur : {{ $ticket->sector_id  ?  $ticket->sector->name : "Aucun" }}</li>
-  <li class="list-group-item">Utilisateur assigné : {{ $ticket->user_id  ? $ticket->user->first_name . " " . $ticket->user->last_name : "Aucun" }}</li>
+  <li class="list-group-item">Archivé :  {{ $ticket->archived  ? "Oui" : "Non" }}</li>
+  <li class="list-group-item">Secteur : <span id="sector-text">{{ $ticket->sector_id  ?  $ticket->sector->name : "Aucun" }}</span> 
+  <select class="form-control" name="sector_id" id="sector">
+      
+      <?php
+      
+      echo '<option value="">Aucun</option>';
+      	foreach ($sectors as $sector)
+      	 {
+      		echo '<option value="'.$sector->id.'" ';
+      		if(isset($ticket->sector_id))
+      			echo $ticket->sector->id == $sector->id ? "selected" : "" ;
+	  		
+      		echo '>'.$sector->name.'</option>';
+      	}
+       ?>
+    </select></li>
+  <li class="list-group-item">Utilisateur assigné : <span id="user-text">{{ $ticket->user_id  ? $ticket->user->first_name . " " . $ticket->user->last_name : "Aucun" }}</span>
+  <select class="form-control" name="user_id" id="user">
+      <option value="">Aucun</option>
+      <?php
+      	foreach ($users as $user)
+      	 {
+      		echo '<option value="'.$user->id.'" ';
+      		if(isset($ticket->user_id))
+      			echo $ticket->user->id == $user->id ? "selected" : "" ;
+
+      		echo '>'.$user->first_name.' '.$user->last_name.'</option>';
+      	}
+
+       ?>
+    </select></li>
 </ul>
 <br>
-  <button type="button" class="btn btn-primary" id="apply-modifications">Appliquer les modifications</button>
-  <button type="button" class="btn btn-danger">Archiver</button>
-  <button type="button" class="btn btn-secondary" id="cancel-modifications">Annuler les modifications</button>
+
+<div class="row">
+    <div class="col">
+	  	{{ Form::hidden('id', $ticket->id)}}
+	    <button type="submit" class="btn btn-primary" id="apply-modifications">Appliquer les modifications</button>
+  	{{ Form::close() }}
+    </div>
+    <div class="col">
+
+  <?php
+
+  if(!$ticket->archived)
+  {
+  	Form::open(array('url' => 'archiveticket','method'=>'POST','class' => 'form-group','style' => 'display:iniline-block'));
+  	Form::hidden('id', $ticket->id);
+  	echo '<button type="submit" class="btn btn-danger" style="display:block;margin:auto">Archiver</button>';
+  	Form::close();
+  }
+  ?>
+    </div>
+    <div class="col">
+     <button type="button" class="btn btn-secondary" id="cancel-modifications" style="float:right">Annuler les modifications</button>
+    </div>
+ 
+
+</div>
+ 
+  
 
 </div>
 <script>
+//TODO -> GERER SI LE DELAI EXISTE DEJA (rip me)
 //initialize date picker
 $( "#datepicker" ).datepicker();
 //change date picker date format
@@ -84,6 +150,8 @@ $(document ).ready(function() {
 	$('#apply-modifications').hide();
 	$('#cancel-modifications').hide();
 	$('#project').hide();
+	$('#sector').hide();
+	$('#user').hide();
 	$('#time_limit-input').hide();
 	$('#time_limit-checkbox').hide();
 });
@@ -98,6 +166,10 @@ $('#edit-ticket').click(function(){
 	$('#title').hide();
 	$('#edit-ticket').hide();
 	$('#project').show(100);
+	$('#sector-text').hide();
+	$('#sector').show(100);
+	$('#user-text').hide();
+	$('#user').show(100);
 	$('#project-text').hide();
 	$('#toggle-time-limit').show(100);
 	$('#time_limit-checkbox').show(100);
