@@ -50,6 +50,11 @@ Route::post('modifyemail', 'HomeController@updateEmail');
 
 Route::post('deleteuser', 'AdminController@deleteuser');
 
+Route::post('archiveticket', 'TicketController@archiveticket');
+
+Route::post('updateticket', 'TicketController@updateticket');
+
+
 
 
 Route::get('login', function() {

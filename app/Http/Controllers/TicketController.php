@@ -56,12 +56,12 @@ class TicketController extends Controller
 
         }
         
-        if($request->input('user_id') && $request->input('user_id') != 'none')
-            $ticket->user_id = $request->input('user_id');
+        
+        $ticket->user_id = $request->input('user_id');
 
         $ticket->content = $request->input('content');
         $ticket->note = $request->input('note');
-        $ticket->sector_id = $request->input('sector');
+        $ticket->sector_id = $request->input('sector_id');
 
         
 
@@ -79,7 +79,40 @@ class TicketController extends Controller
         $ticket->save();
        
     }
+    public static function archiveticket(Request $request)
+    {
+        $ticket = Ticket::find($request->id);
+        $ticket->archived = 1;
+        $ticket->save();
+    }
 
+    public static function updateticket(Request $request)
+    {
+            echo '<pre>';
+        print_r($request->input());
+        echo '</pre>';
+        //TODO applicant
+        $ticket = Ticket::find($request->id);
+        $ticket->title = $request->input('title');
+        $ticket->sector_id = $request->input('sector_id');
+        $ticket->content = $request->input('content');
+        $ticket->note = $request->input('note');
+        $ticket->user_id = $request->input('user_id');
+        if($request->input('project'))
+            $ticket->project = $request->input('project'); 
+
+        if($request->input('time_limit') && $request->input('time_limit') != 'none')
+        {
+             //$ticket->time_limit = date('Y-m-d', strtotime(str_replace('-', '/', $request->input('time_limit_value'))));
+            $date = $request->input('time_limit_value');
+            $date = str_replace('/', '-', $date);
+             $ticket->time_limit = date('Y-m-d', strtotime($date));
+        }
+        $ticket->save();
+            echo '<pre>';
+        print_r($ticket);
+        echo '</pre>';
+    }
     public static function getUsersFromSector()
     {
         $user = User::find(session('id'));
@@ -88,5 +121,14 @@ class TicketController extends Controller
     public static function getApplicants()
     {
     	return Applicant::all();
+    }
+    public static function getSectors()
+    {
+         return Sector::all();
+    }
+    public static function getUsers()
+    {
+         return User::all();
+
     }
 }

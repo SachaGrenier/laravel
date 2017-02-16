@@ -87,7 +87,7 @@ $output_array = json_encode( $output_array );
  
   	<div class="form-group">
      {{ Form::label('Secteur', '') }}
-    <select class="form-control" name="sector">
+    <select class="form-control" name="sector_id">
       <option value="">Aucun</option>
       <?php
       	foreach ($sectors as $sector)
@@ -101,7 +101,7 @@ $output_array = json_encode( $output_array );
   <div class="form-group">
      {{ Form::label('Assigner un utilisateur', '') }}
     <select class="form-control" name="user_id">
-    <option value="none">Aucun</option>
+    <option value="">Aucun</option>
       <?php
       	foreach ($users as $user)
       	 {
