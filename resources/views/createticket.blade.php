@@ -37,7 +37,7 @@ $output_array = json_encode( $output_array );
     @endforeach
 </ul>
 <br>
-{{ Form::open(array('url' => 'storeticket','method'=>'POST','class' => 'form-group')) }}
+{{ Form::open(array('url' => 'storeticket','method'=>'POST','class' => 'form-group', 'files' => true)) }}
 	<div class="form-group" id="applicant_box">
 	    {{ Form::label('Demandeur', '')}}
 
@@ -125,15 +125,15 @@ $output_array = json_encode( $output_array );
         {{ Form::checkbox('project',true,false,['class' => 'form-check-input']) }}
           Projet
     </div>
-   <div class="form-group">
+  <div class="form-group">
 	  <label class="custom-file">
-	  <input type="file" id="file" class="custom-file-input">
+	  {{Form::file('fichier',['class' => 'custom-file-input'])}}
 	  <span class="custom-file-control">Ajouter un fichier</span>
-  	  </label>
+  	</label>
   </div>
   
  
-  {{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
+  {{Form::submit('Créer',['class' => 'btn btn-primary'])}}
 
 {{ Form::close() }}
 </div>
