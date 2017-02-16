@@ -74,8 +74,12 @@ $users = AdminController::getUsers();
 			    echo '<td><a href="edituser/'.$user->id.'">Modifier</a></td>';	    
 			    echo '<td>';
 			    echo Form::open(array('url' => 'deleteuser','method'=>'POST'));
+<<<<<<< HEAD
 			    echo Form::hidden('id', $user->id);
 			    echo '<button type="submit"><img style="width:40px;" src="'. asset('img/trashbin.jpg') .'"></button>';
+=======
+			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+>>>>>>> a3dae3c9ba8243aa723a743452748555987066ce
 			    echo Form::close();
 			    echo '</td>';
 			    echo '</tr>';
