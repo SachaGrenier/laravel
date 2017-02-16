@@ -19,7 +19,8 @@
 }
 #my-table_filter
 {
-  margin-left:50%; 
+
+  margin-left:10px; 
 }
 #my-table_paginate
 {
@@ -72,4 +73,17 @@ body {
   margin: auto;
   height: 100px;
   width: 300px;
+}
+
+.input-sm
+{
+    margin-right:10px;
+  margin-left:10px;
+
+}
+
+.table-profile-picture
+{
+  border-radius: 5px;
+  width: 55px;
 }

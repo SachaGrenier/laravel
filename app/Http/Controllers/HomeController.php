@@ -10,11 +10,12 @@ use App\Ticket;
 use App\Title;
 use App\User;
 
-
 class HomeController extends Controller
 {
 
-    protected $layout = "layouts.default";
+    
+
+        protected $layout = "layouts.default";
     
      public static function index()
     {
@@ -56,32 +57,36 @@ class HomeController extends Controller
             $currentuser->picture_path = 'img/profilepictures/'.$file->getClientOriginalName();
 
             $currentuser->save();
-            
-            
-
-            return redirect()->route('settings');
-            
+            return redirect()->route('settings');            
         }
         else
             return redirect()->route('settings');        
     }
+
+    //get user and update his email
+    public static function updateEmail(Request $request)
+    {
+        $user = User::find(session('id'));
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect()->route('settings'); 
+    }
     
-    public static function modifyPassord(Request $request)
+    public static function updatePassword(Request $request)
     {
         $currentuser = HomeController::getUser(); 
         
-
         if ($request->new_password == $request->new_password_confirm) 
         {
             if (Hash::check($request->input('old_password'), $currentuser->password))
             {
                 $currentuser->password = Hash::make($request->new_password);   
                 $currentuser->save(); 
-
                 return redirect('settings');              
             }
             else               
-                return redirect('settings')->with('status', 'Ancien mot de passe <strong>erronés</strong>');
+                return redirect('settings')->with('status','Ancien mot de passe <strong>erroné</strong>');
         }
         else
             return redirect('settings')->with('status', 'Les nouveaux mot de passe doivent-être <strong>identique</strong>');

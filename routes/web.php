@@ -44,7 +44,9 @@ Route::post('login', 'LoginController@index');
 
 Route::post('storeimage', 'HomeController@updateProfilPicture');
 
-Route::post('modifypassword', 'HomeController@modifyPassord');
+Route::post('modifypassword', 'HomeController@updatePassword');
+
+Route::post('modifyemail', 'HomeController@updateEmail');
 
 Route::post('deleteuser', 'AdminController@deleteuser');
 
