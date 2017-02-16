@@ -78,6 +78,7 @@ $(document ).ready(function() {
             
             var table = $('#my-table').dataTable({
             "dom": 'C<"clear">lfrtip',
+            "order": [[ 5, "desc" ]],
             "bAutoWidth": true,
             "aaData": data,
             "oLanguage": 

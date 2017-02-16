@@ -31,7 +31,7 @@ class AdminController extends Controller
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
-        $user->login = $request->input('first_name').'_'.$request->input('last_name');
+        $user->login = strtolower($request->input('first_name').'_'.$request->input('last_name'));
         $user->password = Hash::make('secret');       
 
         $user->picture_path = 'img/profilepictures/default.jpg';
@@ -65,6 +65,10 @@ class AdminController extends Controller
     {
         return User::all();
     }
+    public static function getUser($id)
+    {
+        return User::find($id);
+    }
     public function deleteuser(request $request)
     {
         $tickets = Ticket::where('user_id', $request->input('id'))->get();
@@ -77,5 +81,22 @@ class AdminController extends Controller
 
         $user = User::find($request->input('id'));
         $user->delete();
+    }
+    public function updateuser(request $request)
+    {
+        $user = User::find($request->input('id'));
+
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->email = $request->input('email');
+        $user->login = $request->input('login');
+        $user->sector_id = $request->input('sector_id');
+        $user->title_id = $request->input('title_id');
+        if ($request->input('admin')) 
+            $user->type = $request->input('admin');
+        else
+            $user->type = 0;
+
+        $user->save();
     }
 }

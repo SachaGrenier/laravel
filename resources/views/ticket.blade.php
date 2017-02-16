@@ -72,7 +72,7 @@ echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modi
   
   	<span id="time_limit-input">{{ Form::text('time_limit_value','',['id' => 'datepicker', 'class' => 'form-control']) }}</span>
   </li>
-  <li class="list-group-item">Projet : <span id="project-text"> {{ $ticket->project  ? "Oui" : "Non" }}</span>{{ Form::checkbox('project',true,$ticket->project,['id' => 'project']) }}</li>
+  <li class="list-group-item">Projet : <span id="project-text"> {{ $ticket->project  ? "Oui" : "Non" }}</span>{{ Form::checkbox('project',true,$ticket->project,['id' => 'project']) }}</li> 
   <li class="list-group-item">Crée le : {{ $ticket->created_at->format('d M Y') }}</li>
   <li class="list-group-item">Modifié le : {{ $ticket->updated_at->format('d M Y') }}</li>
   <li class="list-group-item">Archivé :  {{ $ticket->archived  ? "Oui" : "Non" }}</li>

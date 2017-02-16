@@ -98,6 +98,7 @@ class TicketController extends Controller
         $ticket->content = $request->input('content');
         $ticket->note = $request->input('note');
         $ticket->user_id = $request->input('user_id');
+        //TODO ca marche pas
         if($request->input('project'))
             $ticket->project = $request->input('project'); 
 

@@ -28,6 +28,10 @@ Route::get('ticket/{id}', function ($id) {
     return view('ticket')->with('id', $id);
 })->name('ticket');
 
+Route::get('edituser/{id}', function ($id) {
+    return view('edituser')->with('id', $id);
+})->name('edituser');
+
 Route::get('storeticket', function() {
   return view('createticket');
 });
@@ -54,7 +58,7 @@ Route::post('archiveticket', 'TicketController@archiveticket');
 
 Route::post('updateticket', 'TicketController@updateticket');
 
-
+Route::post('updateuser', 'AdminController@updateuser');
 
 
 Route::get('login', function() {

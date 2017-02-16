@@ -257,11 +257,11 @@ $(document ).ready(function() {
 
 
 	$('#first_name').change(function() {
-		$('#username').text($('#first_name').val()+ '_'+$('#last_name').val());
+		$('#username').text($('#first_name').val().toLowerCase()+ '_'+$('#last_name').val().toLowerCase());
 	});	
 
 	$('#last_name').change(function() {
-		$('#username').text($('#first_name').val()+ '_'+$('#last_name').val());
+		$('#username').text($('#first_name').val().toLowerCase()+ '_'+$('#last_name').val().toLowerCase());
 	});	
 
 	$('#show-jumbo-user').click(function() {
