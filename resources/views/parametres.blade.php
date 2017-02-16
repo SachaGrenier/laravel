@@ -19,10 +19,13 @@ $currentuser = HomeController::getUser();
 
       
   <div class="jumbotron">
-  	<h3>Modifier son image de profil</h3>
+  	<h3>Modifier mon image de profil</h3>
 		{{ Form::open(array('url' => 'storeimage','method'=>'POST','class' => 'form-group', 'files'=> true)) }}		    
-			{{ Form::file('image') }}
+			   <label class="custom-file">
+    {{Form::file('image',['class' => 'custom-file-input'])}}
+    <span class="custom-file-control">Ajouter une image</span>
 			<br>
+      <br>
 	  		{{ Form::submit('Modifier',['class' => 'btn btn-primary']) }}
 		{{ Form::close() }}
 
@@ -31,7 +34,7 @@ $currentuser = HomeController::getUser();
   </div>
 
 	<div class="jumbotron">
-	 	<h3>Modifier son mot de passe</h3>
+	 	<h3>Modifier mon mot de passe</h3>
 
 		{{ Form::open(array('url' => 'modifypassword','method'=>'POST','class' => 'form-group', 'files'=> true)) }}	       
 		    

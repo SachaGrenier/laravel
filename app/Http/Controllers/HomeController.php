@@ -89,7 +89,7 @@ class HomeController extends Controller
                 return redirect('settings')->with('status','Ancien mot de passe <strong>erroné</strong>');
         }
         else
-            return redirect('settings')->with('status', 'Les nouveaux mot de passe doivent-être <strong>identique</strong>');
+            return redirect('settings')->with('status', 'Les mots de passes ne correspond pas!');
         
     }
 }
