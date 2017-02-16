@@ -8,6 +8,7 @@ use App\Ticket;
 use App\User;
 use App\Applicant;
 use App\Redirect;
+use App\File;
 use Illuminate\Support\Facades\Input;
 
 
@@ -53,7 +54,6 @@ class TicketController extends Controller
             $applicant->phone_number = $request->input('phone_number');
             $applicant->save();
             $ticket->applicant_id = $applicant->id;
-
         }
         
         
@@ -62,6 +62,7 @@ class TicketController extends Controller
         $ticket->content = $request->input('content');
         $ticket->note = $request->input('note');
         $ticket->sector_id = $request->input('sector_id');
+
 
         
 

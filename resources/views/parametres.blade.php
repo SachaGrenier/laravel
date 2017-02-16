@@ -14,7 +14,7 @@ $currentuser = HomeController::getUser();
 
 <div class="container">
 
-      <h1  class="text-center" style=" margin-top: 10px;">{{ $currentuser->first_name}} {{$currentuser->last_name }}</h1>
+      <h1  class="text-center" style=" margin-top: 10px;">{{ $currentuser->login}}</h1>
       <div id="imageprofil" style=" margin-bottom: 10px;"> {{ Html::image($currentuser->picture_path,'', array('class'=>'imageprofil')) }}</div>
 
       

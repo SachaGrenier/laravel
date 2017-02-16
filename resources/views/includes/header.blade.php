@@ -29,7 +29,7 @@ $currentuser = HomeController::getUser();
       </li>
     </ul>
     <ul class="navbar-nav mr-right">  
-      <a class="nav-link"> {{ $currentuser->first_name}} {{$currentuser->last_name }} </a> 
+      <a class="nav-link"> {{ $currentuser->login}} </a> 
       <a id="logonavbar"> {{ Html::image($currentuser->picture_path,'', array('class'=>'logonavbar')) }}</a>
       <div  class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i>   
