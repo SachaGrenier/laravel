@@ -58,9 +58,10 @@ $users = AdminController::getUsers();
 
 		  	foreach ($users as $user) 
 		  	{
+
 				echo '<tr>';
 			    echo '<th scope="row">'.$user->id.'</th>';
-			    echo '<td><img style="width:55px;" src="'.$user->picture_path.'"></td>';
+			    echo '<td><img class="table-profile-picture" src="'.$user->picture_path.'"></td>';
 			    echo '<td>'.$user->first_name.'</td>';
 			    echo '<td>'.$user->last_name.'</td>';
 			    echo '<td>'.$user->login.'</td>';
