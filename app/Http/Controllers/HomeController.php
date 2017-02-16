@@ -10,7 +10,6 @@ use App\Ticket;
 use App\Title;
 use App\User;
 
-
 class HomeController extends Controller
 {
 
@@ -76,11 +75,7 @@ class HomeController extends Controller
             $currentuser->picture_path = 'img/profilepictures/'.$file->getClientOriginalName();
 
             $currentuser->save();
-            
-            
-
-            return redirect()->route('settings');
-            
+            return redirect()->route('settings');            
         }
         else
             return redirect()->route('settings');        
@@ -90,14 +85,12 @@ class HomeController extends Controller
     {
         $currentuser = HomeController::getUser(); 
         
-
         if ($request->new_password == $request->new_password_confirm) 
         {
             if (Hash::check($request->input('old_password'), $currentuser->password))
             {
                 $currentuser->password = Hash::make($request->new_password);   
                 $currentuser->save(); 
-
                 return redirect('settings');              
             }
             else               
