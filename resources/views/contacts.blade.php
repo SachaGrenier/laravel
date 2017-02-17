@@ -1,13 +1,6 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AdminController;
-
-$sectors =  HomeController::getSectors();
-
-$titles =  HomeController::getTitles();
-
-$users = AdminController::getUsers();
 
 $contacts = HomeController::getContacts();
 
@@ -39,8 +32,7 @@ $compagnies = HomeController::getCompanies();
 		<table class="table table-hover">
 		  <thead>
 		    <tr>
-		      <th>#</th>
-		      
+		      <th>#</th>		      
 		      <th>Prénom</th>
 		      <th>Nom</th>
 		      <th>Téléphone</th>
@@ -60,90 +52,28 @@ $compagnies = HomeController::getCompanies();
 			    echo '<td>'.$contact->last_name.'</td>';
 			    echo '<td>'.$contact->phone_number.'</td>';
 			    echo '<td>'.$contact->email.'</td>'; 
-			    echo '<td>'.$contact->email.'</td>';
+			    echo '<td>'.$contact->company.'</td>';
+			   	echo '<td>';
+			    echo Form::open(array('url' => 'deletesector','method'=>'POST'));
+			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+			    echo Form::close();
+			    echo '</td>';
 			    echo '</tr>';
 			}
+
 		    ?>
 		  </tbody>
-		</table>
-
-		
-		<button id="show-jumbo-user" class="btn btn-primary">Ajouter un utilisateur</button>
-		
-		<div class="jumbotron jumbotron-form" id="jumbo-user">
-		<h3>Ajouter un utilisateur</h3>
-
-		{{ Form::open(array('url' => 'storeuser','method'=>'POST','class' => 'form-group')) }}
-			<div class="form-group">
-			    {{ Form::label('Prénom*', '') }}
-			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'first_name']) }}
-			</div>
-
-		    <div class="form-group">
-			    {{ Form::label('Nom*', '') }}
-			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
-			</div>
-
-			<div class="form-group">
-			    {{ Form::label('Username*', '') }}
-			    <p id="username"></p>
-			</div>
-
-
-			<div class="form-group">
-			    {{ Form::label('Email', '') }}
-			    {{ Form::Text('email','',['class' => 'form-control form-control']) }}
-			</div>
-		 	
-		 	<div class="form-check">
-		        {{ Form::label('', '',['class' => 'form-check-label'])}}
-		        {{ Form::checkbox('admin',true,false,['class' => 'form-check-input']) }}
-		          Administrateur
-		    </div>
-
-		    <div class="form-group">
-		     {{ Form::label('Secteur', '') }}
-			    <select class="form-control" name="sector_id">
-			      <option value="">Aucun</option>
-			      <?php
-			      	foreach ($sectors as $sector)
-			      	 {
-			      		echo '<option value="'.$sector->id.'">'.$sector->name.'</option>';
-			      	}
-
-			       ?>
-			    </select>
-		  	</div>
-
-		  	    <div class="form-group">
-		     {{ Form::label('Rôle*', '') }}
-			    <select class="form-control" name="title_id">
-			      <option value="">Aucun</option>
-			      <?php
-			      	foreach ($titles as $title)
-			      	{
-			      		echo '<option value="'.$title->id.'">'.$title->name.'</option>';
-			      	}
-			       ?>
-			    </select>
-		  	</div>
-
-		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
-
-		{{ Form::close() }}
-		</div>
-
-		<br>
-		<br>
-
+		</table>	
 	</div>
+</div>
 	
 	  
-	<div id="div-sector" class="tab-pane" role="tabpanel">
+<div id="div-enterprise" class="tab-pane" role="tabpanel">
 		<table class="table table-hover">
 		  <thead>
 		    <tr>
 		      <th>#</th>
+		      <th>Logo</th>
 		      <th>Entreprise</th>
 		      <th>Poubelle !</th>
 		    </tr>
@@ -156,6 +86,7 @@ $compagnies = HomeController::getCompanies();
 				echo '<tr>';
 			    echo '<th scope="row">'.$compagny->id.'</th>';
 			    echo '<td>'.$compagny->name.'</td>';
+			    echo '<td>'.$compagny->name.'</td>';
 			    echo '<td>';
 			    echo Form::open(array('url' => 'deletesector','method'=>'POST'));
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
@@ -166,23 +97,7 @@ $compagnies = HomeController::getCompanies();
 		    ?>
 		  </tbody>
 		</table>
-		<button id="show-jumbo-sector" class="btn btn-primary">Ajouter un secteur</button>
-		<div class="jumbotron jumbotron-form" id="jumbo-sector">
-
-			<h3>Ajouter un secteur</h3>
-			{{ Form::open(array('url' => 'storesector','method'=>'POST','class' => 'form-group')) }}
-				<div class="form-group">
-				    {{ Form::label('Nom', '') }}
-				    {{ Form::Text('name','',['class' => 'form-control form-control']) }}
-				</div>
-		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
-
-			{{ Form::close() }}
-
-		</div>
-	</div>
-	</div>
+	</div>	
 </div>
-
 @endsection
   
