@@ -66,9 +66,9 @@ Route::get('login', function() {
 })->name('login');
 
 
-Route::get('applicant', function () {
-    return view('applicant');
-})->name('applicant');
+Route::get('contact', function () {
+    return view('contacts');
+})->name('contact');
 
 Route::get('admin', function () {
     return view('admin');

@@ -9,6 +9,8 @@ use App\Sector;
 use App\Ticket;
 use App\Title;
 use App\User;
+use App\Contact;
+use App\Company;
 
 class HomeController extends Controller
 {
@@ -42,6 +44,17 @@ class HomeController extends Controller
     {
         return User::find(session('id'));
     }
+
+        public static function getContacts()
+    {
+        return Contact::all();
+    }
+
+            public static function getCompanies()
+    {
+        return Company::all();
+    }
+
 
     public static function updateProfilPicture(Request $request)
     {

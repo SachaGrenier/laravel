@@ -9,76 +9,58 @@ $titles =  HomeController::getTitles();
 
 $users = AdminController::getUsers();
 
+$contacts = HomeController::getContacts();
+
+$compagnies = HomeController::getCompanies();
+
 ?>
 
 @extends('layouts.default')
 
-@section('title', 'Administration')
- 
-@section('content')  
+@section('title', 'Prestataires')
 
-
+@section('content')
 
 <div class="container">
 <br>
 
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" href="#div-user" data-toggle="tab" role="tab">Utilisateurs</a>
+    <a class="nav-link active" href="#div-contact" data-toggle="tab" role="tab">Contacts</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#div-sector" data-toggle="tab" role="tab">Secteurs</a>
+    <a class="nav-link" href="#div-enterprise" data-toggle="tab" role="tab">Enteprises</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#div-title" data-toggle="tab" role="tab">Rôles</a>
-  </li>
-
 </ul>
   
 
 <div class="tab-content">
-	<div id="div-user" class="tab-pane active" role="tabpanel">
+	<div id="div-contact" class="tab-pane active" role="tabpanel">
 		<table class="table table-hover">
 		  <thead>
 		    <tr>
 		      <th>#</th>
-		      <th></th>
+		      
 		      <th>Prénom</th>
 		      <th>Nom</th>
-		      <th>Login</th>
-		      <th>Droits</th>
-		      <th>Rôle</th>
-		      <th>Secteur</th>
-		      <th>Modifier</th>
+		      <th>Téléphone</th>
+		      <th>Email</th>
+		      <th>Entreprise</th>
 		      <th>Poubelle !</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		  <?php
 
-		  	foreach ($users as $user) 
+		  	foreach ($contacts as $contact) 
 		  	{
-
 				echo '<tr>';
-			    echo '<th scope="row">'.$user->id.'</th>';
-			    echo '<td><img class="table-profile-picture" src="'.$user->picture_path.'"></td>';
-			    echo '<td>'.$user->first_name.'</td>';
-			    echo '<td>'.$user->last_name.'</td>';
-			    echo '<td>'.$user->login.'</td>';
-			    echo '<td>';
-			    echo  $user->type ? "Administrateur" : "Utilisateur" ;
-			    echo '</td>';
-			    echo '<td>'.$user->title->name.'</td>';
-			    echo '<td>';
-			    echo  isset($user->sector) ? $user->sector->name : "Aucun" ;
-			    echo '</td>';		
-			    echo '<td><a href="edituser/'.$user->id.'">Modifier</a></td>';	    
-			    echo '<td>';
-			    echo Form::open(array('url' => 'deleteuser','method'=>'POST'));
-			    echo Form::hidden('id', $user->id);
-			    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
-			    echo Form::close();
-			    echo '</td>';
+			    echo '<th scope="row">'.$contact->id.'</th>';			    
+			    echo '<td>'.$contact->first_name.'</td>';
+			    echo '<td>'.$contact->last_name.'</td>';
+			    echo '<td>'.$contact->phone_number.'</td>';
+			    echo '<td>'.$contact->email.'</td>'; 
+			    echo '<td>'.$contact->email.'</td>';
 			    echo '</tr>';
 			}
 		    ?>
@@ -162,18 +144,18 @@ $users = AdminController::getUsers();
 		  <thead>
 		    <tr>
 		      <th>#</th>
-		      <th>Secteur</th>
+		      <th>Entreprise</th>
 		      <th>Poubelle !</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		  <?php
 
-		  	foreach ($sectors as $sector) 
+		  	foreach ($compagnies as $compagny) 
 		  	{
 				echo '<tr>';
-			    echo '<th scope="row">'.$sector->id.'</th>';
-			    echo '<td>'.$sector->name.'</td>';
+			    echo '<th scope="row">'.$compagny->id.'</th>';
+			    echo '<td>'.$compagny->name.'</td>';
 			    echo '<td>';
 			    echo Form::open(array('url' => 'deletesector','method'=>'POST'));
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
@@ -197,80 +179,10 @@ $users = AdminController::getUsers();
 
 			{{ Form::close() }}
 
-
-		</div>
-		
-		
-	  	</div>
-	  	<div id="div-title" class="tab-pane" role="tabpanel">
-		<table class="table table-hover">
-		  <thead>
-		    <tr>
-		      <th>#</th>
-		      <th>Rôles</th>
-		      <th>Poubelle !</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		  <?php
-
-		  	foreach ($titles as $title) 
-		  	{
-				echo '<tr>';
-			    echo '<th scope="row">'.$title->id.'</th>';
-			    echo '<td>'.$title->name.'</td>';
-			    echo '<td>';
-			    echo Form::open(array('url' => 'deletesector','method'=>'POST'));
-			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
-			    echo Form::close();
-			    echo '</td>';
-			    echo '</tr>';
-			}
-		    ?>
-		  </tbody>
-		</table>
-		<button id="show-jumbo-title" class="btn btn-primary">Ajouter un rôle</button>
-		<div class="jumbotron jumbotron-form" id="jumbo-title">
-
-			<h3>Ajouter un rôle</h3>
-			{{ Form::open(array('url' => 'storetitle','method'=>'POST','class' => 'form-group')) }}
-				<div class="form-group">
-				    {{ Form::label('Nom', '') }}
-				    {{ Form::Text('name','',['class' => 'form-control form-control']) }}
-				</div>
-		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
-
-			{{ Form::close() }}
-			
 		</div>
 	</div>
+	</div>
 </div>
-</div>
-<script>
-$(document ).ready(function() {
-	$('#jumbo-user').hide();
-	$('#jumbo-sector').hide();
-	$('#jumbo-title').hide();
 
-});
-
-
-	$('#first_name').change(function() {
-		$('#username').text($('#first_name').val().toLowerCase()+ '_'+$('#last_name').val().toLowerCase());
-	});	
-
-	$('#last_name').change(function() {
-		$('#username').text($('#first_name').val().toLowerCase()+ '_'+$('#last_name').val().toLowerCase());
-	});	
-
-	$('#show-jumbo-user').click(function() {
-		$('#jumbo-user').toggle(200);
-	});
-	$('#show-jumbo-sector').click(function() {
-		$('#jumbo-sector').toggle(200);
-	});
-	$('#show-jumbo-title').click(function() {
-		$('#jumbo-title').toggle(200);
-	});
-</script>
 @endsection
+  
