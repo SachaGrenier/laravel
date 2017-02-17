@@ -122,10 +122,10 @@ echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modi
 
   if(!$ticket->archived)
   {
-  	Form::open(array('url' => 'archiveticket','method'=>'POST','class' => 'form-group','style' => 'display:iniline-block'));
-  	Form::hidden('id', $ticket->id);
+  	echo Form::open(array('url' => 'archiveticket','method'=>'POST','class' => 'form-group','style' => 'display:iniline-block'));
+  	echo Form::hidden('id', $ticket->id);
   	echo '<button type="submit" class="btn btn-danger" style="display:block;margin:auto">Archiver</button>';
-  	Form::close();
+  	echo Form::close();
   }
   ?>
     </div>
