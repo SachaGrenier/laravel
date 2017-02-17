@@ -17,7 +17,14 @@ $currentuser = HomeController::getUser();
       <h1  class="text-center" style=" margin-top: 10px;">{{ $currentuser->login}}</h1>
       <div id="imageprofil" style=" margin-bottom: 10px;"> {{ Html::image($currentuser->picture_path,'', array('class'=>'imageprofil')) }}</div>
 
-      
+   <?php
+   if (Session::get('status'))
+   {
+	   echo '<div class="alert '.Session::get('class').'">';
+	   echo Session::get('status');
+	   echo '</div>';
+   }
+  ?>    
   <div class="jumbotron">
   	<h3>Modifier mon image de profil</h3>
 		{{ Form::open(array('url' => 'storeimage','method'=>'POST','class' => 'form-group', 'files'=> true)) }}		    
@@ -46,16 +53,6 @@ $currentuser = HomeController::getUser();
 		    <br>	    
 		    {{ Form::submit('Modifier',['class' => 'btn btn-primary']) }}
 		{{ Form::close()}}
-
-		<?php
-          if (session('status'))
-          {
-            echo '<div class="alert alert-danger">';
-            echo session('status');
-            
-        echo '</div>';
-         }
-          ?>
   	</div>
 
   	<div class="jumbotron">

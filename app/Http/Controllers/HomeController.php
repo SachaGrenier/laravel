@@ -11,6 +11,7 @@ use App\Title;
 use App\User;
 use App\Contact;
 use App\Company;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -70,18 +71,36 @@ class HomeController extends Controller
             $currentuser->picture_path = 'img/profilepictures/'.$file->getClientOriginalName();
 
             $currentuser->save();
-            return redirect()->route('settings');            
+            Session::flash('status', 'La photo de profil à bien été mise à jour'); 
+            Session::flash('class', 'alert-success'); 
+            return redirect('settings');            
         }
         else
-            return redirect()->route('settings');        
+        {
+            Session::flash('status', 'Fichier invalide'); 
+            Session::flash('class', 'alert-danger'); 
+            return redirect('settings');        
+        }
     }
 
     //get user and update his email
     public static function updateEmail(Request $request)
     {
         $user = User::find(session('id'));
-        $user->email = $request->email;
-        $user->save();
+        if (filter_var($request->email, FILTER_VALIDATE_EMAIL)) 
+        {
+            $user->email = $request->email;
+            $user->save();
+            Session::flash('status', 'Adresse email modifiée avec succès'); 
+            Session::flash('class', 'alert-success'); 
+               
+        }
+        else
+        {
+            Session::flash('status', 'Adresse email incorrecte'); 
+            Session::flash('class', 'alert-danger'); 
+        }
+        
 
         return redirect()->route('settings'); 
     }
@@ -96,13 +115,23 @@ class HomeController extends Controller
             {
                 $currentuser->password = Hash::make($request->new_password);   
                 $currentuser->save(); 
-                return redirect('settings');              
+                Session::flash('status', 'Mot de passe modifié avec succès'); 
+                Session::flash('class', 'alert-success'); 
+                            
             }
-            else               
-                return redirect('settings')->with('status','Ancien mot de passe <strong>erroné</strong>');
+            else   
+            {            
+                Session::flash('status', 'Ancien mot de passe <strong>erroné</strong>'); 
+                Session::flash('class', 'alert-danger'); 
+            }
+           
         }
         else
-            return redirect('settings')->with('status', 'Les mots de passes ne correspond pas!');
-        
+        {
+            Session::flash('status', 'Les mots de passes ne correspondent pas!'); 
+            Session::flash('class', 'alert-danger'); 
+           
+        }
+         return redirect('settings');
     }
 }

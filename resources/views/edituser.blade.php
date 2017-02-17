@@ -23,6 +23,14 @@ $titles = HomeController::getTitles();
 
 	    <h1  class="text-center" style=" margin-top: 10px;">{{ $user->first_name}} {{$user->last_name }}</h1>
 	    <div id="imageprofil" style=" margin-bottom: 10px;"> {{ Html::image($user->picture_path,'', array('class'=>'imageprofil')) }}</div>
+		<?php
+		   if (Session::get('status'))
+		   {
+			   echo '<div class="alert '.Session::get('class').'">';
+			   echo Session::get('status');
+			   echo '</div>';
+		   }
+		  ?>  
 		{{ Form::open(array('url' => 'updateuser','method'=>'POST','class' => 'form-group'))}}
 		<div class="form-group">
 			    {{ Form::label('Prénom', '') }}
@@ -82,8 +90,11 @@ $titles = HomeController::getTitles();
 
 		  	{{ Form::submit('Modifier',['class' => 'btn btn-primary']) }}
 		{{ Form::close() }}
-
-		  	{{ Form::submit('Réinitialiser le mot de passe',['class' => 'btn btn-danger']) }}
+		
+		{{ Form::open(array('url' => 'resetpassword','method'=>'POST','class' => 'form-group'))}}	
+			{{ Form::hidden('id',$user->id) }}
+	  		{{ Form::submit('Réinitialiser le mot de passe',['class' => 'btn btn-danger']) }}
+	  	{{ Form::close() }}
 
 
 </div>
