@@ -60,6 +60,12 @@ Route::post('updateticket', 'TicketController@updateticket');
 
 Route::post('updateuser', 'AdminController@updateuser');
 
+Route::post('resetpassword', 'AdminController@resetpassword');
+
+Route::post('deletesector', 'AdminController@deletesector');
+
+Route::post('deletetitle', 'AdminController@deletetitle');
+
 
 Route::get('login', function() {
   return view('login');

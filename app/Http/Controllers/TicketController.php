@@ -9,6 +9,8 @@ use App\User;
 use App\Applicant;
 use App\Redirect;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
+
 
 
 class TicketController extends Controller
@@ -24,11 +26,7 @@ class TicketController extends Controller
     }
     public function store(request $request)
     {   
-        echo '<pre>';
-        print_r($request->input());
-        echo '</pre>';
-
-         $this->validate($request, [
+        $this->validate($request, [
         'title' => 'required|max:255',
         'content' => 'required',
             ]);
@@ -72,11 +70,19 @@ class TicketController extends Controller
             $date = str_replace('/', '-', $date);
              $ticket->time_limit = date('Y-m-d', strtotime($date));
         }
-        echo '<pre>';
-        print_r($ticket);
-        echo '</pre>';
+      
 
-        $ticket->save();
+        if($ticket->save())
+        {
+            Session::flash('status', 'Ticket crée avec succès! <a href="ticket/'. $ticket->id .'">Afficher le ticket</a>'); 
+            Session::flash('class', 'alert-success'); 
+        }
+        else
+        {
+            Session::flash('status', 'Désolé, il semblerait que quelque chose cloche dans votre requête..'); 
+            Session::flash('class', 'alert-danger'); 
+        }
+         return redirect('createticket');
        
     }
     public static function archiveticket(Request $request)

@@ -36,6 +36,14 @@ $output_array = json_encode( $output_array );
         <li>{{ $error }}</li>
     @endforeach
 </ul>
+ <?php
+   if (Session::get('status'))
+   {
+     echo '<div class="alert '.Session::get('class').'">';
+     echo Session::get('status');
+     echo '</div>';
+   }
+  ?>  
 <br>
 {{ Form::open(array('url' => 'storeticket','method'=>'POST','class' => 'form-group', 'files' => true)) }}
 	<div class="form-group" id="applicant_box">
