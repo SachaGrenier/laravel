@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 
@@ -9,17 +8,14 @@ use App\User;
 use App\Title;
 use App\Ticket;
 use App\Sector;
+use Illuminate\Support\Facades\Session;
 
 
 class AdminController extends Controller
 {
     public function store(request $request)
     {
-    	echo '<pre>';
-        print_r($request->input());
-        echo '</pre>';
-
-         $this->validate($request, [
+    	$this->validate($request, [
         'first_name' => 'required|max:255',
         'last_name' => 'required|max:255',
         'email' => 'required|max:255',
@@ -47,19 +43,57 @@ class AdminController extends Controller
 		
 		$user->sector_id = $request->input('sector_id');
 
-        $user->save();
+        if($user->save())
+        {
+            Session::flash('status', 'L\'utilisateur <strong>'.$user->first_name.' '.$user->last_name.'</strong> à bien été crée. <strong><a href="/edituser/'.$user->id.'">Modifier</a></strong>'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+            return redirect('admin');
+
+
     }
     public function storetitle(request $request)
     {
         $title = new Title;
         $title->name = $request->input('name');
-        $title->save();
+        
+        if($title->save())
+        {
+            Session::flash('status', 'Le rôle <strong>'.$title->name.'</strong> à bien été  crée'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+            return redirect('admin');
+
     }
       public function storesector(request $request)
     {
         $sector = new Sector;
         $sector->name = $request->input('name');
-        $sector->save();
+        
+        if($sector->save())
+        {
+            Session::flash('status', 'Le secteur <strong>'.$sector->name.'</strong> à bien été  crée'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+            return redirect('admin');
     }
     public static function getUsers()
     {
@@ -80,7 +114,77 @@ class AdminController extends Controller
         }
 
         $user = User::find($request->input('id'));
-        $user->delete();
+         if($user->delete())
+        {
+            Session::flash('status', 'Le profil à correctement été supprimé'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+
+        return redirect('admin');
+    }
+    public function deletesector(request $request)
+    {
+        $tickets = Ticket::where('sector_id', $request->input('id'))->get();
+
+        foreach ($tickets as $ticket)
+        {
+            $ticket->sector_id = null;
+            $ticket->save();
+        }
+         $users = User::where('sector_id', $request->input('id'))->get();
+
+        foreach ($users as $user)
+        {
+            $user->sector_id = null;
+            $user->save();
+        }
+        $sector = Sector::find($request->input('id'));
+         if($sector->delete())
+        {
+            Session::flash('status', 'Le secteur <strong>'. $sector->name. '</strong> à correctement été supprimé'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+
+        return redirect('admin');
+
+    }
+    public function deletetitle(request $request)
+    {
+        $users = User::where('title_id', $request->input('id'))->get();
+
+        foreach ($users as $user)
+        {
+            $user->title_id = null;
+            $user->save();
+        }
+
+        $title = Title::find($request->input('id'));
+        if($title->delete())
+        {
+            Session::flash('status', 'Le rôle <strong>'. $title->name. '</strong> à correctement été supprimé'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+
+        return redirect('admin');
+
     }
     public function updateuser(request $request)
     {
@@ -97,6 +201,37 @@ class AdminController extends Controller
         else
             $user->type = 0;
 
-        $user->save();
+        if($user->save())
+        {
+            Session::flash('status', 'Le profil à correctement été mis à jour'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+
+        return redirect('edituser/'. $request->input('id'));
+
+    }
+    public function resetpassword(request $request)
+    {
+        $user = User::find($request->input('id'));
+        $user->password = Hash::make('secret');
+        if($user->save())
+        {
+            Session::flash('status', 'Le mot de passe à bien été réinitialisé'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+            return redirect('edituser/'. $request->input('id'));
+
     }
 }

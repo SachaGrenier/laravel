@@ -34,7 +34,15 @@ $users = AdminController::getUsers();
   </li>
 
 </ul>
-  
+  <br>
+  <?php
+		   if (Session::get('status'))
+		   {
+			   echo '<div class="alert '.Session::get('class').'">';
+			   echo Session::get('status');
+			   echo '</div>';
+		   }
+		  ?>  
 
 <div class="tab-content">
 	<div id="div-user" class="tab-pane active" role="tabpanel">
@@ -176,6 +184,7 @@ $users = AdminController::getUsers();
 			    echo '<td>'.$sector->name.'</td>';
 			    echo '<td>';
 			    echo Form::open(array('url' => 'deletesector','method'=>'POST'));
+			    echo Form::hidden('id', $sector->id);
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();
 			    echo '</td>';
@@ -220,7 +229,8 @@ $users = AdminController::getUsers();
 			    echo '<th scope="row">'.$title->id.'</th>';
 			    echo '<td>'.$title->name.'</td>';
 			    echo '<td>';
-			    echo Form::open(array('url' => 'deletesector','method'=>'POST'));
+			    echo Form::open(array('url' => 'deletetitle','method'=>'POST'));
+			    echo Form::hidden('id', $title->id);
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();
 			    echo '</td>';
