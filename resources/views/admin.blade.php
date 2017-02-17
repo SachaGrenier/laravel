@@ -251,8 +251,7 @@ $users = AdminController::getUsers();
 		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
 
 			{{ Form::close() }}
-
-
+			
 		</div>
 	</div>
 </div>
