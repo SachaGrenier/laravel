@@ -26,7 +26,6 @@ $compagnies = HomeController::getCompanies();
   </li>
 </ul>
   
-
 <div class="tab-content">
 	<div id="div-contact" class="tab-pane active" role="tabpanel">
 		<table class="table table-hover">
@@ -43,7 +42,6 @@ $compagnies = HomeController::getCompanies();
 		  </thead>
 		  <tbody>
 		  <?php
-
 		  	foreach ($contacts as $contact) 
 		  	{
 				echo '<tr>';
@@ -66,8 +64,7 @@ $compagnies = HomeController::getCompanies();
 		</table>	
 	</div>
 </div>
-	
-	  
+		  
 <div id="div-enterprise" class="tab-pane" role="tabpanel">
 		<table class="table table-hover">
 		  <thead>
@@ -80,7 +77,6 @@ $compagnies = HomeController::getCompanies();
 		  </thead>
 		  <tbody>
 		  <?php
-
 		  	foreach ($compagnies as $compagny) 
 		  	{
 				echo '<tr>';

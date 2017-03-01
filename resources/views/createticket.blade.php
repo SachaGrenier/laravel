@@ -45,7 +45,7 @@ $output_array = json_encode( $output_array );
    }
   ?>  
 <br>
-{{ Form::open(array('url' => 'storeticket','method'=>'POST','class' => 'form-group', 'files' => true)) }}
+{{ Form::open(array('url' => 'storeticket','method'=>'POST','class' => 'form-group', 'files' => true , 'id' => 'ticket-form')) }}
 	<div class="form-group" id="applicant_box">
 	    {{ Form::label('Demandeur', '')}}
 
@@ -80,7 +80,7 @@ $output_array = json_encode( $output_array );
 
     <div class="form-group">
 	    {{ Form::label('Titre de la demande*', '') }}
-	    {{ Form::Text('title','',['class' => 'form-control form-control-lg']) }}
+	    {{ Form::Text('title','',['class' => 'form-control form-control-lg', 'id' => 'title-input']) }}
     </div>
   	<div class="form-group">
         {{ Form::label('Contenu*', '')}}
@@ -130,7 +130,7 @@ $output_array = json_encode( $output_array );
   </div>
     <div class="form-check">
         {{ Form::label('', '',['class' => 'form-check-label'])}}
-        {{ Form::checkbox('project',true,false,['class' => 'form-check-input']) }}
+        {{ Form::checkbox('project',true,false,['class' => 'form-check-input', 'id' => 'check-project']) }}
           Projet
     </div>
   <div class="form-group">
@@ -207,5 +207,21 @@ $('#applicant_rem').on('click', () => {
 $("#show-note-box").click(function(){ 
    $("#note_box").toggle(200);
   });
+  var title;
+
+$("#check-project").change(function(){
+
+  if ($(this).is(":checked")) {  
+    title =  $("#title-input").val();
+    $("#title-input").val("[PROJET] "+title);
+  }
+  else{
+    $("#title-input").val(title);
+  }
+});
+
+$("#ticket-form").submit(function(){
+  $("#title-input").val(title);
+});
 </script>
 @endsection
