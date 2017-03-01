@@ -53,7 +53,7 @@ $companies = ContactController::getCompanies();
 			    echo '<td>'.$contact->email.'</td>'; 
 			    echo '<td>'.$contact->company.'</td>';
 			   	echo '<td>';
-			    echo Form::open(array('url' => 'deletesector','method'=>'POST'));
+			    echo Form::open(array('url' => 'deletecontact','method'=>'POST'));
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();
 			    echo '</td>';
@@ -62,7 +62,47 @@ $companies = ContactController::getCompanies();
 
 		    ?>
 		  </tbody>
-		</table>	
+		</table>
+
+		<button id="show-jumbo-contact" class="btn btn-primary">Ajouter un contact</button>
+		<div class="jumbotron jumbotron-form" id="jumbo-contact">
+		<h3>Ajouter un contact</h3>
+		{{ Form::open(array('url'=>'storecontact' , 'method'=>'POST' , 'class'=>'form-group', 'files'=> true))}}
+
+		<div class="form-group">
+			    {{ Form::label('Nom*', '') }}
+			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+		</div>
+		<div class="form-group">
+			    {{ Form::label('Prénom*', '') }}
+			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'First_name']) }}
+		</div>
+		<div class="form-group">
+			    {{ Form::label('Téléphone*', '') }}
+			    {{ Form::Text('phone_number','',['class' => 'form-control form-control','id' => 'Phone_number' , 'placeholder' => 'Ex: 0217918384']) }}
+		</div>
+		<div class="form-group">
+			    {{ Form::label('Email*', '') }}
+			    {{ Form::Text('email','',['class' => 'form-control form-control','id' => 'Email']) }}
+		</div>
+		<div class="form-group">
+		     {{ Form::label('Entreprise', '') }}
+			    <select class="form-control" name="company_id">
+			      <option value="">Aucun</option>
+			      <?php
+			      	foreach ($companies as $company)
+			      	 {
+			      		echo '<option value="'.$company->id.'">'.$company->name.'</option>';
+			      	}
+
+			       ?>
+			    </select>
+		 </div>
+
+
+		{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
+		{{Form::close()}}
+		</div>
 </div>
 		  
 <div id="div-enterprise" class="tab-pane" role="tabpanel">
@@ -72,6 +112,7 @@ $companies = ContactController::getCompanies();
 		      <th>#</th>
 		      <th>Logo</th>
 		      <th>Entreprise</th>
+		      <th>Téléphone</th>
 		      <th>Poubelle !</th>
 		    </tr>
 		  </thead>
@@ -83,8 +124,9 @@ $companies = ContactController::getCompanies();
 			    echo '<th scope="row">'.$company->id.'</th>';
 			    echo '<td>'.$company->name.'</td>';
 			    echo '<td>'.$company->name.'</td>';
+			    echo '<td>'.$company->phone_number.'</td>';
 			    echo '<td>';
-			    echo Form::open(array('url' => 'deletesector','method'=>'POST'));
+			    echo Form::open(array('url' => 'deletecompany','method'=>'POST'));
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();
 			    echo '</td>';
@@ -93,7 +135,46 @@ $companies = ContactController::getCompanies();
 		    ?>
 		  </tbody>
 		</table>
-	</div>	
+
+		<button id="show-jumbo-enterprise" class="btn btn-primary">Ajouter une entreprise</button>
+		<div class="jumbotron jumbotron-form" id="jumbo-enterprise">
+		<h3>Ajouter une entreprise</h3>
+		{{ Form::open(array('url'=>'storecompany' , 'method'=>'POST' , 'class'=>'form-group', 'files'=> true))}}
+
+		<div class="form-group">
+			    {{ Form::label('Nom*', '') }}
+			    {{ Form::Text('name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+		</div>
+		<div class="form-group">
+			    {{ Form::label('Site web*', '') }}
+			    {{ Form::Text('website','',['class' => 'form-control form-control','id' => 'last_name' , 'placeholder' => 'Ex: www.exemple.com']) }}
+		</div>
+		<div class="form-group">
+			    {{ Form::label('Téléphone*', '') }}
+			    {{ Form::Text('phone_number','',['class' => 'form-control form-control','id' => 'Phone_number' , 'placeholder' => 'Ex: 0217918384']) }}
+		</div>
+		<div class="form-group">
+			<label class="custom-file">
+    		{{Form::file('image',['class' => 'custom-file-input'])}}
+    		<span class="custom-file-control">Ajouter le logo de l'entreprise</span>
+		</div>
+		{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
+		{{Form::close()}}
+		</div>
+</div>	
 </div>
+</div>
+<script>
+$(document ).ready(function() {
+	$('#jumbo-enterprise').hide();
+	$('#jumbo-contact').hide();
+});
+	$('#show-jumbo-enterprise').click(function() {
+		$('#jumbo-enterprise').toggle(200);
+	});
+	$('#show-jumbo-contact').click(function() {
+		$('#jumbo-contact').toggle(200);
+	});
+</script>
 @endsection
   
