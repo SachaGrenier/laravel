@@ -36,7 +36,7 @@ class ContactController extends Controller
                 $destinationPath = 'img/companylogos/';
                 $name = str_random(mt_rand(15,25)).'.'.$file->getClientOriginalExtension();
                 $file->move($destinationPath,$name); 
-                $company->picture_path = $destinationPath.$name;   
+                $company->logo_path = $destinationPath.$name;   
             }
             else
             {
@@ -65,10 +65,10 @@ class ContactController extends Controller
     {
     	$contact = new Contact;
     	$contact->last_name = $request->input('last_name');
-    	$contact->first_nae = $request->input('first_name');
+    	$contact->first_name = $request->input('first_name');
     	$contact->phone_number = $request->input('phone_number');
     	$contact->email = $request->input('email');
-    	$contact->company_id = $request->input('company_id');
+    	$contact->contact_company_id = $request->input('company_id');
 	  
 	  	if($contact->save())
         {
