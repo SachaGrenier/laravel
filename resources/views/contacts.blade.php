@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
 
-$contacts = HomeController::getContacts();
+$contacts = ContactController::getContacts();
 
-$compagnies = HomeController::getCompanies();
+$companies = ContactController::getCompanies();
 
 ?>
 
@@ -77,12 +77,12 @@ $compagnies = HomeController::getCompanies();
 		  </thead>
 		  <tbody>
 		  <?php
-		  	foreach ($compagnies as $compagny) 
+		  	foreach ($companies as $company) 
 		  	{
 				echo '<tr>';
-			    echo '<th scope="row">'.$compagny->id.'</th>';
-			    echo '<td>'.$compagny->name.'</td>';
-			    echo '<td>'.$compagny->name.'</td>';
+			    echo '<th scope="row">'.$company->id.'</th>';
+			    echo '<td>'.$company->name.'</td>';
+			    echo '<td>'.$company->name.'</td>';
 			    echo '<td>';
 			    echo Form::open(array('url' => 'deletesector','method'=>'POST'));
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';

@@ -44,40 +44,43 @@ class HomeController extends Controller
         return User::find(session('id'));
     }
 
-    public static function getContacts()
-    {
-        return Contact::all();
-    }
-
-    public static function getCompanies()
-    {
-        return Company::all();
-    }
+    
 
     public static function updateProfilPicture(Request $request)
     {
-        $file = $request->image;
-        $destinationPath = 'img/profilepictures';
+        
+        if ($request->hasFile('image'))
+        {
+            $file = $request->image;    
+            if($file->isValid())
+            {
+                $destinationPath = 'img/profilepictures/';
+                $name = str_random(mt_rand(15,25)).'.'.$file->getClientOriginalExtension();
+                $currentuser = HomeController::getUser(); 
+                $file->move($destinationPath,$name); 
+                $currentuser->picture_path = $destinationPath.$name;
 
-        if ($file->isValid()) 
-        {           
-                    
-            $currentuser = HomeController::getUser(); 
-            $file->move($destinationPath,$file->getClientOriginalName());            
-
-            $currentuser->picture_path = 'img/profilepictures/'.$file->getClientOriginalName();
-
-            $currentuser->save();
-            Session::flash('status', 'La photo de profil à bien été mise à jour'); 
-            Session::flash('class', 'alert-success'); 
-            return redirect('settings');            
+                $currentuser->save();
+                Session::flash('status', 'La photo de profil à bien été mise à jour'); 
+                Session::flash('class', 'alert-success'); 
+            }
+            else
+            {
+                Session::flash('status', 'Fichier invalide'); 
+                Session::flash('class', 'alert-danger'); 
+            }
+                
+                
+            
         }
         else
         {
-            Session::flash('status', 'Fichier invalide'); 
+             Session::flash('status', 'Fichier invalide'); 
             Session::flash('class', 'alert-danger'); 
-            return redirect('settings');        
         }
+        return redirect('settings');  
+
+
     }
 
     //get user and update his email

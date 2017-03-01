@@ -66,6 +66,13 @@ Route::post('deletesector', 'AdminController@deletesector');
 
 Route::post('deletetitle', 'AdminController@deletetitle');
 
+Route::post('storecontact', 'ContactController@storecontact');
+
+Route::post('storecompany', 'ContactController@storecompany');
+
+Route::post('deletecompany', 'ContactController@deletecompany');
+
+Route::post('deletecontact', 'ContactController@deletecontact');
 
 Route::get('login', function() {
   return view('login');
