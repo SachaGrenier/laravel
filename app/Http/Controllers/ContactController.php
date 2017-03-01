@@ -68,7 +68,7 @@ class ContactController extends Controller
     	$contact->first_name = $request->input('first_name');
     	$contact->phone_number = $request->input('phone_number');
     	$contact->email = $request->input('email');
-    	$contact->contact_company_id = $request->input('company_id');
+    	$contact->company_id = $request->input('company_id');
 	  
 	  	if($contact->save())
         {
