@@ -14,8 +14,6 @@ class AjaxController extends Controller
 {
     public function index($type){
       
-     
-
       switch ($type) 
         {
             case 'sector':
@@ -43,7 +41,7 @@ class AjaxController extends Controller
                 $tickets =  Ticket::where('archived',false)->get();
                 break;
         }
-
+        
         $ui = [];
 
         foreach ($tickets as $key => $value)
@@ -61,9 +59,6 @@ class AjaxController extends Controller
         	$ui[$key]->applicant = $value->applicant['first_name']. ' ' . $value->applicant['last_name'];
         	$ui[$key]->created_at = $value->created_at->format('d M Y');
         	$ui[$key]->time_limit = $value->time_limit == null ? "Aucun" : Carbon::parse($value->time_limit)->format('d M Y');
-
-      
-
         }
 
     	return $ui;

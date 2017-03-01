@@ -16,11 +16,9 @@ use Illuminate\Support\Facades\Session;
 class HomeController extends Controller
 {
 
+    protected $layout = "layouts.default";
     
-
-        protected $layout = "layouts.default";
-    
-     public static function index()
+    public static function index()
     {
 
        $user = User::find(session('id'));
@@ -31,7 +29,7 @@ class HomeController extends Controller
         return $sector;
     }
  
-     public static function getSectors()
+    public static function getSectors()
     {
          return Sector::all();
     }
@@ -46,16 +44,15 @@ class HomeController extends Controller
         return User::find(session('id'));
     }
 
-        public static function getContacts()
+    public static function getContacts()
     {
         return Contact::all();
     }
 
-            public static function getCompanies()
+    public static function getCompanies()
     {
         return Company::all();
     }
-
 
     public static function updateProfilPicture(Request $request)
     {

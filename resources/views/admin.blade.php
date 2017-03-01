@@ -153,18 +153,12 @@ $users = AdminController::getUsers();
 			       ?>
 			    </select>
 		  	</div>
-
-		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
-
+	  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
 		{{ Form::close() }}
 		</div>
-
 		<br>
 		<br>
-
-	</div>
-	
-	  
+	</div>  
 	<div id="div-sector" class="tab-pane" role="tabpanel">
 		<table class="table table-hover">
 		  <thead>
@@ -205,13 +199,9 @@ $users = AdminController::getUsers();
 		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
 
 			{{ Form::close() }}
-
-
 		</div>
-		
-		
-	  	</div>
-	  	<div id="div-title" class="tab-pane" role="tabpanel">
+  	</div>
+  	<div id="div-title" class="tab-pane" role="tabpanel">
 		<table class="table table-hover">
 		  <thead>
 		    <tr>

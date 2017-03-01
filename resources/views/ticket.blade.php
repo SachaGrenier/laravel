@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\TicketController;
 
-
+//getting all the data we need on this page
 $ticket = TicketController::getTicket($id);
 
 $applicants = TicketController::getApplicants();
@@ -11,10 +11,13 @@ $sectors = TicketController::getSectors();
 
 $users = TicketController::getUsers();
 
+//creating an empty array
 $output_array = array();
 
-foreach ($applicants as $row) {
-     $output_array[] = array( 
+//fills this empty array with applicant's names and encodes it
+foreach ($applicants as $row) 
+	{
+    	 $output_array[] = array( 
         'id' => $row['id'],
         'value' => $row['first_name'].' '.$row['last_name']
     );
@@ -23,7 +26,6 @@ foreach ($applicants as $row) {
 $output_array = json_encode( $output_array );
 
 ?>
-
 
 @extends('layouts.default')
 
@@ -35,10 +37,10 @@ $output_array = json_encode( $output_array );
 <br>
 <a href="{{route('index')}}"><button class="btn btn-secondary">< Retour aux tickets</button></a>
   
-  <?php 
-  if(!$ticket->archived)
-  {
-echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modifier ticket</button>';
+<?php 
+if(!$ticket->archived)
+{
+	echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modifier ticket</button>';
 }
 ?>
 <br>
@@ -65,19 +67,16 @@ echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modi
 	{{ Form::textarea('note',$ticket->note,['class' => 'form-control','readonly', 'id' =>'note' ]) }}
 	</div>
 	<ul class="list-group">
-  <li class="list-group-item">Délai : <span id="time_limit-text">{{ Carbon\Carbon::parse($ticket->time_limit)->format('d M Y')  ?: "Aucun" }} </span>
-	      <span id="time_limit-checkbox">{{ Form::checkbox('time_limit',true,false,['id' => 'toggle-time-limit']) }}</span>
-      	  
-  	
-  
+  	<li class="list-group-item">Délai : <span id="time_limit-text">{{ Carbon\Carbon::parse($ticket->time_limit)->format('d M Y')  ?: "Aucun" }} </span>
+  	<span id="time_limit-checkbox">{{ Form::checkbox('time_limit',true,false,['id' => 'toggle-time-limit']) }}</span>
   	<span id="time_limit-input">{{ Form::text('time_limit_value','',['id' => 'datepicker', 'class' => 'form-control']) }}</span>
-  </li>
-  <li class="list-group-item">Projet : <span id="project-text"> {{ $ticket->project  ? "Oui" : "Non" }}</span>{{ Form::checkbox('project',true,$ticket->project,['id' => 'project']) }}</li> 
-  <li class="list-group-item">Crée le : {{ $ticket->created_at->format('d M Y') }}</li>
-  <li class="list-group-item">Modifié le : {{ $ticket->updated_at->format('d M Y') }}</li>
-  <li class="list-group-item">Archivé :  {{ $ticket->archived  ? "Oui" : "Non" }}</li>
-  <li class="list-group-item">Secteur : <span id="sector-text">{{ $ticket->sector_id  ?  $ticket->sector->name : "Aucun" }}</span> 
-  <select class="form-control" name="sector_id" id="sector">
+  	</li>
+  	<li class="list-group-item">Projet : <span id="project-text"> {{ $ticket->project  ? "Oui" : "Non" }}</span>{{ Form::checkbox('project',true,$ticket->project,['id' => 'project']) }}</li> 
+  	<li class="list-group-item">Crée le : {{ $ticket->created_at->format('d M Y') }}</li>
+  	<li class="list-group-item">Modifié le : {{ $ticket->updated_at->format('d M Y') }}</li>
+  	<li class="list-group-item">Archivé :  {{ $ticket->archived  ? "Oui" : "Non" }}</li>
+  	<li class="list-group-item">Secteur : <span id="sector-text">{{ $ticket->sector_id  ?  $ticket->sector->name : "Aucun" }}</span> 
+  	<select class="form-control" name="sector_id" id="sector">
       
       <?php
       
@@ -92,8 +91,8 @@ echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modi
       	}
        ?>
     </select></li>
-  <li class="list-group-item">Utilisateur assigné : <span id="user-text">{{ $ticket->user_id  ? $ticket->user->first_name . " " . $ticket->user->last_name : "Aucun" }}</span>
-  <select class="form-control" name="user_id" id="user">
+  	<li class="list-group-item">Utilisateur assigné : <span id="user-text">{{ $ticket->user_id  ? $ticket->user->first_name . " " . $ticket->user->last_name : "Aucun" }}</span>
+  	<select class="form-control" name="user_id" id="user">
       <option value="">Aucun</option>
       <?php
       	foreach ($users as $user)
@@ -107,10 +106,10 @@ echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modi
 
        ?>
     </select></li>
-</ul>
-<br>
+	</ul>
+	<br>
 
-<div class="row">
+	<div class="row">
     <div class="col">
 	  	{{ Form::hidden('id', $ticket->id)}}
 	    <button type="submit" class="btn btn-primary" id="apply-modifications">Appliquer les modifications</button>
@@ -118,34 +117,31 @@ echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modi
     </div>
     <div class="col">
 
-  <?php
+  	<?php
 
-  if(!$ticket->archived)
-  {
-  	echo Form::open(array('url' => 'archiveticket','method'=>'POST','class' => 'form-group','style' => 'display:iniline-block'));
-  	echo Form::hidden('id', $ticket->id);
-  	echo '<button type="submit" class="btn btn-danger" style="display:block;margin:auto">Archiver</button>';
-  	echo Form::close();
-  }
-  ?>
+  	if(!$ticket->archived)
+  	{
+	  	echo Form::open(array('url' => 'archiveticket','method'=>'POST','class' => 'form-group','style' => 'display:iniline-block'));
+	  	echo Form::hidden('id', $ticket->id);
+	  	echo '<button type="submit" class="btn btn-danger" style="display:block;margin:auto">Archiver</button>';
+	  	echo Form::close();
+  	}
+  	?>
     </div>
     <div class="col">
-     <button type="button" class="btn btn-secondary" id="cancel-modifications" style="float:right">Annuler les modifications</button>
+    <button type="button" class="btn btn-secondary" id="cancel-modifications" style="float:right">Annuler les modifications</button>
     </div>
- 
-
+    
 </div>
  
-  
-
 </div>
 <script>
-//TODO -> GERER SI LE DELAI EXISTE DEJA (rip me)
+//TODO -> GERER SI LE DELAI EXISTE DEJA
 //initialize date picker
 $( "#datepicker" ).datepicker();
 //change date picker date format
 $( "#datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy" );
-
+//when page loads, hide many inputs used to edit the ticket
 $(document ).ready(function() {
 	$('#apply-modifications').hide();
 	$('#cancel-modifications').hide();
@@ -155,6 +151,7 @@ $(document ).ready(function() {
 	$('#time_limit-input').hide();
 	$('#time_limit-checkbox').hide();
 });
+//when edit ticket button is clicked, show all inputs and unhide some of them 
 $('#edit-ticket').click(function(){
 	$('#content').removeAttr( "readonly");
 	$('#note').removeAttr( "readonly");
@@ -174,10 +171,8 @@ $('#edit-ticket').click(function(){
 	$('#toggle-time-limit').show(100);
 	$('#time_limit-checkbox').show(100);
 	$('#time_limit-text').hide();
-
-
-
 });
+
 $('#cancel-modifications').click(function() {
     location.reload();
 });

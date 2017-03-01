@@ -8,6 +8,5 @@ class Sector extends Model
 {
     protected $table = 'sector';
      public $timestamps = false;
-    
 
 }

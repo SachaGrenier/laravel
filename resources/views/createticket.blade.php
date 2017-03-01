@@ -20,8 +20,6 @@ $output_array = json_encode( $output_array );
 
 ?>
 
-
-
 @extends('layouts.default')
 
 @section('title', 'ManageTicket - Ticket')
@@ -73,7 +71,7 @@ $output_array = json_encode( $output_array );
 	    </div>
 	    <div class="form-group">
 	    	{{ Form::label('Numéro de téléphone', '') }}
-		    {{ Form::Text('phone_number','',['class' => 'form-control']) }}
+		    {{ Form::Text('phone_number','',['class' => 'form-control', 'placeholder' => 'Ex: 0217918384']) }}
 	    </div>
 		{{ Form::button('Annuler',['class' => 'btn btn-secondary','id' => 'hide-applicant-form']) }}    
       </div>

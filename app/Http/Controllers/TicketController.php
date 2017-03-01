@@ -91,6 +91,18 @@ class TicketController extends Controller
         $ticket = Ticket::find($request->id);
         $ticket->archived = 1;
         $ticket->save();
+
+        if($ticket->save())
+        {
+            Session::flash('status', 'Ticket archivé !'); 
+            Session::flash('class', 'alert-success'); 
+        }
+        else
+        {
+            Session::flash('status', 'Désolé, impossible d\'archiver l\'élément'); 
+            Session::flash('class', 'alert-danger'); 
+        }
+         return redirect('index');
     }
 
     public static function updateticket(Request $request)

@@ -1,9 +1,7 @@
-
 .jumbotron-form
 {
   margin-top: 20px;
 }
-
 .logonavbar
 {
 	width:45px;
@@ -19,20 +17,17 @@
 }
 #my-table_filter
 {
-
   margin-left:10px; 
 }
 #my-table_paginate
 {
-  margin-left:50%; 
-  
+  margin-left:50%;  
 }
 .filters
 {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-
 .footer 
 {
   position: fixed;
@@ -43,22 +38,20 @@
   line-height: 60px; /* Vertically center the text there */
   background-color: #f5f5f5;
 }
-
-body {
+body 
+{
   position: relative;
   margin: 0;
   padding-bottom: 6rem;
   min-height: 100%;
   font-family: "Helvetica Neue", Arial, sans-serif;
 }
-
 .imagelogo
 {
   width:400px;
   display: block;
   margin : auto;
 }
-
 .imageprofil
 {
   width:200px;
@@ -66,22 +59,18 @@ body {
   margin : auto;
   border-radius: 10px;
 }
-
-
 #logincontainer
 {
   margin: auto;
   height: 100px;
   width: 300px;
 }
-
 .input-sm
 {
-    margin-right:10px;
+  margin-right:10px;
   margin-left:10px;
 
 }
-
 .table-profile-picture
 {
   border-radius: 5px;

@@ -16,7 +16,7 @@ $DEBUG = false;
 
 @section('content')   
 
-  <br>
+<br>
 <div class="container">
   <div class="btn-group" data-toggle="buttons">
   <label class="btn btn-primary active">
@@ -38,7 +38,6 @@ $DEBUG = false;
 </div>
 
 <br>
-
   
 <table id="my-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
   <thead class="thead-inverse">
@@ -54,9 +53,7 @@ $DEBUG = false;
   </thead>
   <tbody>
   </tbody>
-
 </table>
-
 <script>
 $(document ).ready(function() {
       getTickets('sector');
@@ -72,10 +69,8 @@ $(document ).ready(function() {
                 assignToEventsColumns(data);
             }
         });
-
         function assignToEventsColumns(data) 
         {
-            
             var table = $('#my-table').dataTable({
             "dom": 'C<"clear">lfrtip',
             "order": [[ 5, "desc" ]],
@@ -101,7 +96,6 @@ $(document ).ready(function() {
                {
                    "aTargets": [0],
                    "mData": "id",
-                   
                },
                {
                    "aTargets": [1], 
@@ -128,12 +122,9 @@ $(document ).ready(function() {
                    "mData": "time_limit"
                }
                 ]});
-           
-
+      
           }
-
        }
-
       $('input[type=radio][name=options]').change(function(){
         var type = $('input[type=radio][name=options]:checked').val();
         $('#my-table').dataTable().fnDestroy();
