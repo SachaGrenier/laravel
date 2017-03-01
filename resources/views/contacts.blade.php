@@ -45,13 +45,14 @@ $companies = ContactController::getCompanies();
 		  <?php
 		  	foreach ($contacts as $contact) 
 		  	{
+		  		
 				echo '<tr>';
 			    echo '<th scope="row">'.$contact->id.'</th>';			    
 			    echo '<td>'.$contact->first_name.'</td>';
 			    echo '<td>'.$contact->last_name.'</td>';
 			    echo '<td>'.$contact->phone_number.'</td>';
 			    echo '<td>'.$contact->email.'</td>'; 
-			    echo '<td>'.$contact->company.'</td>';
+			    echo '<td>'.$contact->company->name.'</td>';
 			   	echo '<td>';
 			    echo Form::open(array('url' => 'deletecontact','method'=>'POST'));
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
@@ -122,7 +123,7 @@ $companies = ContactController::getCompanies();
 		  	{
 				echo '<tr>';
 			    echo '<th scope="row">'.$company->id.'</th>';
-			    echo '<td>'.$company->name.'</td>';
+			    echo '<td><img class="table-profile-picture" src="'.$company->logo_path.'"></td>';
 			    echo '<td>'.$company->name.'</td>';
 			    echo '<td>'.$company->phone_number.'</td>';
 			    echo '<td>';

@@ -35,7 +35,7 @@ class CreateTables extends Migration
 		
         });
 		
-	   Schema::create('contact_company', function (Blueprint $table) {
+	   Schema::create('company', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
 			$table->string('website')->nullable();
@@ -51,9 +51,9 @@ class CreateTables extends Migration
 			$table->string('last_name');
 			$table->string('email');
 			$table->string('phone_number');
-			$table->integer('contact_company_id')->unsigned();
+			$table->integer('company_id')->unsigned();
 			$table->timestamps();
-			$table->foreign('contact_company_id')->references('id')->on('contact_company');
+			$table->foreign('company_id')->references('id')->on('company');
         });
 		
 	

@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-     protected $table = 'contact';
+    protected $table = 'contact';
     
-       	 public function company()
+ 	public function company()
     {
-        return $this->belongsTo('App\Company');
+        return $this->belongsTo('App\Company');       
     }
 }
