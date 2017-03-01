@@ -93,7 +93,7 @@ $compagnies = HomeController::getCompanies();
 		    ?>
 		  </tbody>
 		</table>
-	</div>	
+</div>	
 </div>
 @endsection
   
