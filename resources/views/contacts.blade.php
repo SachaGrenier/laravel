@@ -24,6 +24,7 @@ $compagnies = HomeController::getCompanies();
   <li class="nav-item">
     <a class="nav-link" href="#div-enterprise" data-toggle="tab" role="tab">Enteprises</a>
   </li>
+
 </ul>
   
 <div class="tab-content">
@@ -62,7 +63,6 @@ $compagnies = HomeController::getCompanies();
 		    ?>
 		  </tbody>
 		</table>	
-	</div>
 </div>
 		  
 <div id="div-enterprise" class="tab-pane" role="tabpanel">
