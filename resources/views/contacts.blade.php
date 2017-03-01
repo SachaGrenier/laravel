@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
 
-$contacts = HomeController::getContacts();
+$contacts = ContactController::getContacts();
 
-$companies = HomeController::getCompanies();
+$companies = ContactController::getCompanies();
 
 ?>
 
