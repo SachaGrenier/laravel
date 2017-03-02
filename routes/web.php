@@ -32,6 +32,10 @@ Route::get('edituser/{id}', function ($id) {
     return view('edituser')->with('id', $id);
 })->name('edituser');
 
+Route::get('editcontact/{id}', function ($id) {
+    return view('editcontact')->with('id', $id);
+})->name('editcontact');
+
 Route::get('storeticket', function() {
   return view('createticket');
 });
@@ -59,6 +63,8 @@ Route::post('archiveticket', 'TicketController@archiveticket');
 Route::post('updateticket', 'TicketController@updateticket');
 
 Route::post('updateuser', 'AdminController@updateuser');
+
+Route::post('updatecontact', 'ContactController@updatecontact');
 
 Route::post('resetpassword', 'AdminController@resetpassword');
 

@@ -139,49 +139,81 @@ class AdminController extends Controller
         }
          $users = User::where('sector_id', $request->input('id'))->get();
 
+         $listnames = "";
+            
         foreach ($users as $user)
         {
-            $user->sector_id = null;
-            $user->save();
+            $listnames .= $user->first_name.' '.$user->last_name.',';
         }
-        $sector = Sector::find($request->input('id'));
-         if($sector->delete())
+        $listnames=rtrim($listnames,", ");
+        
+        if (count($users) > 0) 
         {
-            Session::flash('status', 'Le secteur <strong>'. $sector->name. '</strong> à correctement été supprimé'); 
-            Session::flash('class', 'alert-success'); 
-              
+            if(count($users) == 1)
+            Session::flash('status', 'L\'utilisateur '.$listnames.' est actuellement dans ce secteur. Veuillez le modifier!'); 
+            else
+            Session::flash('status', 'Les utilisateurs '.$listnames.' sont actuellement dans ce secteur. Veuillez les modifier!'); 
+
+            Session::flash('class', 'alert-danger');
         }
         else
         {
-            Session::flash('status', 'Une erreur est intervenue'); 
-            Session::flash('class', 'alert-danger');
-        }
+            $sector = Sector::find($request->input('id'));
 
+            if($sector->delete())
+            {
+                Session::flash('status', 'Le secteur <strong>'. $sector->name. '</strong> à correctement été supprimé'); 
+                Session::flash('class', 'alert-success'); 
+                  
+            }
+            else
+            {
+                Session::flash('status', 'Une erreur est intervenue'); 
+                Session::flash('class', 'alert-danger');
+            }
+        }
         return redirect('admin');
 
     }
     public function deletetitle(request $request)
     {
         $users = User::where('title_id', $request->input('id'))->get();
-
+        
+        $listnames = "";
+            
         foreach ($users as $user)
         {
-            $user->title_id = null;
-            $user->save();
+            $listnames .= $user->first_name.' '.$user->last_name.',';
         }
+        $listnames=rtrim($listnames,", ");
 
-        $title = Title::find($request->input('id'));
-        if($title->delete())
+        if (count($users) > 0) 
         {
-            Session::flash('status', 'Le rôle <strong>'. $title->name. '</strong> à correctement été supprimé'); 
-            Session::flash('class', 'alert-success'); 
-              
+            if(count($users) == 1)
+            Session::flash('status', 'L\'utilisateur '.$listnames.' à actuellement ce rôle. Veuillez le modifier!'); 
+            else
+            Session::flash('status', 'Les utilisateurs '.$listnames.' ont actuellement ce rôle. Veuillez les modifier!'); 
+
+            Session::flash('class', 'alert-danger');
         }
         else
         {
-            Session::flash('status', 'Une erreur est intervenue'); 
-            Session::flash('class', 'alert-danger');
+             $title = Title::find($request->input('id'));
+            if($title->delete())
+            {
+                Session::flash('status', 'Le rôle <strong>'. $title->name. '</strong> à correctement été supprimé'); 
+                Session::flash('class', 'alert-success'); 
+                  
+            }
+            else
+            {
+                Session::flash('status', 'Une erreur est intervenue'); 
+                Session::flash('class', 'alert-danger');
+            }
         }
+
+
+       
 
         return redirect('admin');
 

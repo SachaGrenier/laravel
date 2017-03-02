@@ -26,7 +26,15 @@ $companies = ContactController::getCompanies();
   </li>
 
 </ul>
-  
+  <br>
+    <?php
+		   if (Session::get('status'))
+		   {
+			   echo '<div class="alert '.Session::get('class').'">';
+			   echo Session::get('status');
+			   echo '</div>';
+		   }
+		  ?>
 <div class="tab-content">
 	<div id="div-contact" class="tab-pane active" role="tabpanel">
 		<table class="table table-hover">
@@ -38,6 +46,7 @@ $companies = ContactController::getCompanies();
 		      <th>Téléphone</th>
 		      <th>Email</th>
 		      <th>Entreprise</th>
+		      <th>Modifier</th>      
 		      <th>Poubelle !</th>
 		    </tr>
 		  </thead>
@@ -53,6 +62,7 @@ $companies = ContactController::getCompanies();
 			    echo '<td>'.$contact->phone_number.'</td>';
 			    echo '<td>'.$contact->email.'</td>'; 
 			    echo '<td>'.$contact->company->name.'</td>';
+			    echo '<td><a href="/editcontact/'.$contact->id.'">Modifier</a></td>';
 			   	echo '<td>';
 			    echo Form::open(array('url' => 'deletecontact','method'=>'POST'));
 			    echo Form::hidden('id', $contact->id);
@@ -128,7 +138,7 @@ $companies = ContactController::getCompanies();
 			    echo '<td>'.$company->name.'</td>';
 			    echo '<td>'.$company->phone_number.'</td>';
 			    echo '<td>';
-			    echo Form::open(array('url' => 'deletecompany','method'=>'POST'));
+	     	    echo Form::open(array('url' => 'deletecompany','method'=>'POST'));
 			    echo Form::hidden('id', $company->id);
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();

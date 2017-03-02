@@ -15,6 +15,11 @@ class ContactController extends Controller
         return Contact::all();
     }
 
+    public static function getContact($id)
+    {
+        return Contact::find($id);
+    }
+
     public static function getCompanies()
     {
         return Company::all();
@@ -98,6 +103,7 @@ class ContactController extends Controller
 
         return redirect('contact');
     }
+
     public function deletecontact(request $request)
     {
     	$contact = Contact::find($request->input('id'));
@@ -113,5 +119,30 @@ class ContactController extends Controller
         }
 
         return redirect('contact');
+    }
+
+    public function updatecontact(request $request)
+    {
+        $contact = Contact::find($request->input('id'));
+        $contact->first_name = $request->input('first_name');
+        $contact->last_name = $request->input('last_name');
+        $contact->email = $request->input('email');
+        $contact->phone_number = $request->input('phone_number');
+        $contact->company_id = $request->input('company_id');
+        
+        if($contact->save())
+        {
+            Session::flash('status', 'Le profil à correctement été mis à jour'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+
+        return redirect('editcontact/'. $request->input('id'));
+
     }
 }
