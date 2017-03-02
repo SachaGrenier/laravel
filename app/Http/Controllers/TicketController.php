@@ -102,7 +102,7 @@ class TicketController extends Controller
             Session::flash('status', 'Désolé, impossible d\'archiver l\'élément'); 
             Session::flash('class', 'alert-danger'); 
         }
-         return redirect('index');
+         return redirect('index');                                                          
     }
 
     public static function updateticket(Request $request)
