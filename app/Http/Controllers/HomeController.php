@@ -58,6 +58,7 @@ class HomeController extends Controller
                 $name = str_random(mt_rand(15,25)).'.'.$file->getClientOriginalExtension();
                 $currentuser = HomeController::getUser(); 
                 $file->move($destinationPath,$name); 
+                unlink($currentuser->picture_path);
                 $currentuser->picture_path = $destinationPath.$name;
 
                 $currentuser->save();

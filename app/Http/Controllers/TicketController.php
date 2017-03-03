@@ -38,8 +38,6 @@ class TicketController extends Controller
             $ticket->project = $request->input('project'); 
         
         $ticket->title = $request->input('title');
-        
-
 
         if($request->input('applicant_id') && $request->input('applicant_id') != 'none')
             $ticket->applicant_id = $request->input('applicant_id');
@@ -110,28 +108,39 @@ class TicketController extends Controller
             echo '<pre>';
         print_r($request->input());
         echo '</pre>';
-        //TODO applicant
+        
         $ticket = Ticket::find($request->id);
         $ticket->title = $request->input('title');
         $ticket->sector_id = $request->input('sector_id');
         $ticket->content = $request->input('content');
         $ticket->note = $request->input('note');
         $ticket->user_id = $request->input('user_id');
+        $ticket->applicant_id = $request->input('applicant_id');
         //TODO ca marche pas
         if($request->input('project'))
             $ticket->project = $request->input('project'); 
+        if($request->input('project') == null)
+            $ticket->project = 0; 
 
-        if($request->input('time_limit') && $request->input('time_limit') != 'none')
+        if($request->input('time_limit_value') && $request->input('time_limit_value') != 'none')
         {
              //$ticket->time_limit = date('Y-m-d', strtotime(str_replace('-', '/', $request->input('time_limit_value'))));
             $date = $request->input('time_limit_value');
             $date = str_replace('/', '-', $date);
-             $ticket->time_limit = date('Y-m-d', strtotime($date));
+            $ticket->time_limit = date('Y-m-d', strtotime($date));
         }
+        if($ticket->save())
+        {
+            Session::flash('status', 'Ticket modifié avec succès !'); 
+            Session::flash('class', 'alert-success'); 
+        }
+        else
+        {
+            Session::flash('status', 'Désolé, une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger'); 
+        }
+         return redirect('/ticket/'.$ticket->id);  
         $ticket->save();
-            echo '<pre>';
-        print_r($ticket);
-        echo '</pre>';
     }
     public static function getUsersFromSector()
     {

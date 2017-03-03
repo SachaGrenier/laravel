@@ -33,14 +33,26 @@ $output_array = json_encode( $output_array );
 
 <div class="container">
 <br>
+
 <a href="{{route('index')}}"><button class="btn btn-secondary">< Retour aux tickets</button></a>
-  
+
 <?php 
 if(!$ticket->archived)
 {
 	echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modifier ticket</button>';
 }
 ?>
+
+
+<?php
+		   if (Session::get('status'))
+		   {
+			   echo '<br>
+<br><div class="alert '.Session::get('class').'">';
+			   echo Session::get('status');
+			   echo '</div>';
+		   }
+		  ?>
 <br>
 <br>
  {{ Form::open(array('url' => 'updateticket','method'=>'POST','class' => 'form-group')) }}
@@ -55,6 +67,9 @@ if(!$ticket->archived)
 	</div>
 	<div class="form-group">
 	{{ Form::Text('applicant', $ticket->applicant->first_name . ' ' . $ticket->applicant->last_name,['class' => 'form-control','placeholder' => 'Inscrivez le nom de votre demandeur','id' => 'autocomplete','hidden']) }}
+	{{ Form::Text('applicant_id', $ticket->applicant_id,['id' => 'applicant_id','hidden']) }}
+
+
 	</div>
 	<h4>Contenu</h4>
 	<div class="form-group">
@@ -66,8 +81,7 @@ if(!$ticket->archived)
 	</div>
 	<ul class="list-group">
   	<li class="list-group-item">Délai : <span id="time_limit-text">{{ Carbon\Carbon::parse($ticket->time_limit)->format('d M Y')  ?: "Aucun" }} </span>
-  	<span id="time_limit-checkbox">{{ Form::checkbox('time_limit',true,false,['id' => 'toggle-time-limit']) }}</span>
-  	<span id="time_limit-input">{{ Form::text('time_limit_value','',['id' => 'datepicker', 'class' => 'form-control']) }}</span>
+  	<span id="time_limit-input">{{ Form::text('time_limit_value',$ticket->time_limit,['id' => 'datepicker', 'class' => 'form-control']) }}</span>
   	</li>
   	<li class="list-group-item">Projet : <span id="project-text"> {{ $ticket->project  ? "Oui" : "Non" }}</span>{{ Form::checkbox('project',true,$ticket->project,['id' => 'project']) }}</li> 
   	<li class="list-group-item">Crée le : {{ $ticket->created_at->format('d M Y') }}</li>
@@ -131,12 +145,18 @@ if(!$ticket->archived)
 </div>
  
 </div>
+<?php $timelimit = Carbon\Carbon::parse($ticket->time_limit)->format('d/m/Y') ?>
+
 <script>
-//TODO -> GERER SI LE DELAI EXISTE DEJA
+var time_limit_value = "{{ $timelimit }}"
+
 //initialize date picker
 $( "#datepicker" ).datepicker();
 //change date picker date format
 $( "#datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy" );
+
+$("#datepicker").datepicker("setDate", time_limit_value );
+
 //when page loads, hide many inputs used to edit the ticket
 $(document ).ready(function() {
 	$('#apply-modifications').hide();
@@ -145,7 +165,6 @@ $(document ).ready(function() {
 	$('#sector').hide();
 	$('#user').hide();
 	$('#time_limit-input').hide();
-	$('#time_limit-checkbox').hide();
 });
 //when edit ticket button is clicked, show all inputs and unhide some of them 
 $('#edit-ticket').click(function(){
@@ -165,15 +184,13 @@ $('#edit-ticket').click(function(){
 	$('#user').show(100);
 	$('#project-text').hide();
 	$('#toggle-time-limit').show(100);
-	$('#time_limit-checkbox').show(100);
 	$('#time_limit-text').hide();
+	$('#time_limit-input').show(100);
+
 });
 
 $('#cancel-modifications').click(function() {
     location.reload();
-});
-$('#toggle-time-limit').click(function () {
-$('#time_limit-input').toggle();
 });
 //set json array for autocomplete function
 <?php echo "var javascript_array = ". $output_array . ";\n"; ?>
