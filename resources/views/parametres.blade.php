@@ -35,9 +35,6 @@ $currentuser = HomeController::getUser();
       <br>
 	  		{{ Form::submit('Modifier',['class' => 'btn btn-primary']) }}
 		{{ Form::close() }}
-
-	
-
   </div>
 
 	<div class="jumbotron">

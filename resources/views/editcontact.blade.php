@@ -45,7 +45,7 @@ $companies = ContactController::getCompanies();
 			    {{ Form::label('Email', '') }}
 				{{ Form::Text('email',$contact->email,['class' => 'form-control']) }}
 		</div>
-		 <div class="form-group">
+		<div class="form-group">
 		     {{ Form::label('Entreprise', '') }}
 			    <select class="form-control" name="company_id">
 			      <option value="">Aucun</option>
@@ -61,7 +61,7 @@ $companies = ContactController::getCompanies();
 
 			       ?>
 			    </select>
-		  	</div>
+		  </div>
 		  	
 				{{ Form::hidden('id',$contact->id) }}
 

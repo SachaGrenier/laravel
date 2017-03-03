@@ -126,6 +126,7 @@ $companies = ContactController::getCompanies();
 		      <th>Entreprise</th>
 		      <th>Téléphone</th>
 		      <th>Site web</th>
+		       <th>Modifier</th>  
 		      <th>Poubelle !</th>
 		    </tr>
 		  </thead>
@@ -139,6 +140,7 @@ $companies = ContactController::getCompanies();
 			    echo '<td>'.$company->name.'</td>';
 			    echo '<td>'.$company->phone_number.'</td>';
 			    echo '<td>'.$company->website.'</td>';
+			    echo '<td><a href="/editcompany/'.$company->id.'">Modifier</a></td>';
 			    echo '<td>';
 	     	    echo Form::open(array('url' => 'deletecompany','method'=>'POST'));
 			    echo Form::hidden('id', $company->id);
