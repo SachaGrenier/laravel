@@ -78,7 +78,7 @@ $output_array = json_encode( $output_array );
 
     <div class="form-group">
 	    {{ Form::label('Titre de la demande*', '') }}
-	    {{ Form::Text('title',                                                                           '',['class' => 'form-control form-control-lg', 'id' => 'title-input']) }}
+	    {{ Form::Text('title','',['class' => 'form-control form-control-lg', 'id' => 'title-input']) }}
     </div>
   	<div class="form-group">
         {{ Form::label('Contenu*', '')}}
@@ -131,14 +131,12 @@ $output_array = json_encode( $output_array );
         {{ Form::checkbox('project',true,false,['class' => 'form-check-input', 'id' => 'check-project']) }}
           Projet
     </div>
-  <div class="form-group">
-	  <label class="custom-file">
-	  {{Form::file('fichier',['class' => 'custom-file-input'])}}
-	  <span class="custom-file-control">Ajouter un fichier</span>
-  	</label>
+    <h3>Ajouter des fichiers </h3>
+  <div class="form-group" >
+  	   <input type='file' id="multiple-files" class="multiple-files" name="file[]">
   </div>
   
- 
+  
   {{Form::submit('Créer',['class' => 'btn btn-primary'])}}
 
 {{ Form::close() }}
@@ -224,5 +222,11 @@ $("#ticket-form").submit(function(){
       $("#title-input").val(title);
   }
 });
+
+$('#multiple-files').change(fileChangeHandler);
+function fileChangeHandler() {
+  var form = $(this).closest('div');
+  $('<input type="file" class="multiple-files" name="file[]">').change(fileChangeHandler).appendTo(form);
+}
 </script>
 @endsection
