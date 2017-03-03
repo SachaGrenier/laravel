@@ -32,6 +32,9 @@ $users = AdminController::getUsers();
   <li class="nav-item">
     <a class="nav-link" href="#div-title" data-toggle="tab" role="tab">Rôles</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#div-applicant" data-toggle="tab" role="tab">Demandeurs</a>
+  </li>
 
 </ul>
   <br>
@@ -245,7 +248,10 @@ $users = AdminController::getUsers();
 		</div>
 	</div>
 </div>
+
 </div>
+
+
 <script>
 $(document ).ready(function() {
 	$('#jumbo-user').hide();
@@ -272,6 +278,7 @@ $(document ).ready(function() {
 	$('#show-jumbo-title').click(function() {
 		$('#jumbo-title').toggle(200);
 	});
+
 	$('.delete_user').submit(function() {
 		var result = prompt("Ecrire 'OK' si vous êtes sur ");
 		if(result == "OK")
