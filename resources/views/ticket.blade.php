@@ -121,9 +121,9 @@ if(!$ticket->archived)
        ?>
     </select></li>
   	<li class="list-group-item">Fichiers : <?php
-  	foreach ($files as $file) 
+  	foreach ($files as $key => $value) 
   	{
-	  	echo '<a href="../'.$file->path.'" target="_blank">truc </a>';
+	  	echo '<button class="btn btn-secondary file-list" ><a href="../'.$value->path.'" target="_blank">Fichier' .($key+1).' .'.$value->ext.' </a></button>';
   	}
   	 ?> </li>
 

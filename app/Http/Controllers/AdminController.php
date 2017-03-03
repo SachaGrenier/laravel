@@ -114,6 +114,7 @@ class AdminController extends Controller
         }
 
         $user = User::find($request->input('id'));
+        unlink($user->picture_path);
          if($user->delete())
         {
             Session::flash('status', 'Le profil à correctement été supprimé'); 

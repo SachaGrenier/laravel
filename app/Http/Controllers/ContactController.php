@@ -118,6 +118,7 @@ class ContactController extends Controller
         else
         {
             $company = Company::find($request->input('id'));
+            unlink($company->logo_path);
             if($company->delete())
             {
                 Session::flash('status', 'L\'entreprise à correctement été supprimé'); 
