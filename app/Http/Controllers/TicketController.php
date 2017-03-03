@@ -26,7 +26,7 @@ class TicketController extends Controller
 
     }
     public function store(request $request)
-    {   
+    {  
         $this->validate($request, [
         'title' => 'required|max:255',
         'content' => 'required',
@@ -59,9 +59,6 @@ class TicketController extends Controller
         $ticket->note = $request->input('note');
         $ticket->sector_id = $request->input('sector_id');
 
-
-        
-
        if($request->input('time_limit') && $request->input('time_limit') != 'none')
        {
              //$ticket->time_limit = date('Y-m-d', strtotime(str_replace('-', '/', $request->input('time_limit_value'))));
@@ -69,7 +66,8 @@ class TicketController extends Controller
             $date = str_replace('/', '-', $date);
              $ticket->time_limit = date('Y-m-d', strtotime($date));
         }
-      
+        
+
 
         if($ticket->save())
         {
@@ -80,6 +78,25 @@ class TicketController extends Controller
         {
             Session::flash('status', 'Désolé, il semblerait que quelque chose cloche dans votre requête..'); 
             Session::flash('class', 'alert-danger'); 
+        }
+
+       if(count($request->file('file')) > 0)
+        {
+            foreach ($request->file('file') as $file)
+             {
+                if($file->isValid())
+                {
+                    $destinationPath = 'files/';
+                    $name = str_random(mt_rand(15,25)).'.'.$file->getClientOriginalExtension();
+                    $file->move($destinationPath,$name); 
+                    
+                    $db_file = new File; 
+                    $db_file->path = $destinationPath.$name;
+                    $db_file->ext = $file->getClientOriginalExtension();
+                    $db_file->ticket_id = $ticket->id;
+                    $db_file->save();
+                }   
+            }
         }
          return redirect('createticket');
        
@@ -159,5 +176,9 @@ class TicketController extends Controller
     {
          return User::all();
 
+    }
+    public static function getFiles($id_ticket)
+    {
+        return File::where('ticket_id',$id_ticket)->get();
     }
 }

@@ -11,6 +11,8 @@ $sectors = TicketController::getSectors();
 
 $users = TicketController::getUsers();
 
+$files = TicketController::getFiles($id);
+
 //creating an empty array
 $output_array = array();
 
@@ -118,6 +120,13 @@ if(!$ticket->archived)
 
        ?>
     </select></li>
+  	<li class="list-group-item">Fichiers : <?php
+  	foreach ($files as $file) 
+  	{
+	  	echo '<a href="../'.$file->path.'" target="_blank">truc </a>';
+  	}
+  	 ?> </li>
+
 	</ul>
 	<br>
 	<div class="row">
