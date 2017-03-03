@@ -89,16 +89,39 @@ class ContactController extends Controller
     }
      public function deletecompany(request $request)
     {
-		$company = Company::find($request->input('id'));
-    	if($company->delete())
+
+        $contacts = Contact::where('company_id', $request->input('id'))->get();
+        
+        $listnames = "";
+            
+        foreach ($contacts as $contact)
         {
-            Session::flash('status', 'L\'entreprise à correctement été supprimé'); 
-            Session::flash('class', 'alert-success'); 
+            $listnames .= $contact->first_name.' '.$contact->last_name.',';
+        }
+        $listnames=rtrim($listnames,", ");
+
+        if (count($contacts) > 0) 
+        {
+            if(count($contacts) == 1)
+            Session::flash('status', 'Le contact '.$listnames.' est actuellement assigné à cette entreprise. Veuillez le modifier!'); 
+            else
+            Session::flash('status', 'Les contacts '.$listnames.' sont actuellement assignés à cette entreprise. Veuillez les modifier!'); 
+
+            Session::flash('class', 'alert-danger');
         }
         else
         {
-            Session::flash('status', 'Une erreur est intervenue'); 
-            Session::flash('class', 'alert-danger');
+            $company = Company::find($request->input('id'));
+            if($company->delete())
+            {
+                Session::flash('status', 'L\'entreprise à correctement été supprimé'); 
+                Session::flash('class', 'alert-success'); 
+            }
+            else
+            {
+                Session::flash('status', 'Une erreur est intervenue'); 
+                Session::flash('class', 'alert-danger');
+            }
         }
 
         return redirect('contact');
