@@ -36,6 +36,11 @@ Route::get('editcontact/{id}', function ($id) {
     return view('editcontact')->with('id', $id);
 })->name('editcontact');
 
+Route::get('editcompany/{id}', function ($id) {
+    return view('editcompany')->with('id', $id);
+})->name('editcompany');
+
+
 Route::get('storeticket', function() {
   return view('createticket');
 });
@@ -52,6 +57,8 @@ Route::post('login', 'LoginController@index');
 
 Route::post('storeimage', 'HomeController@updateProfilPicture');
 
+Route::post('updatelogo', 'ContactController@updatelogo');
+
 Route::post('modifypassword', 'HomeController@updatePassword');
 
 Route::post('modifyemail', 'HomeController@updateEmail');
@@ -65,6 +72,8 @@ Route::post('updateticket', 'TicketController@updateticket');
 Route::post('updateuser', 'AdminController@updateuser');
 
 Route::post('updatecontact', 'ContactController@updatecontact');
+
+Route::post('updatecompany', 'ContactController@updatecompany');
 
 Route::post('resetpassword', 'AdminController@resetpassword');
 

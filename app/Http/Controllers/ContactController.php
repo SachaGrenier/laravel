@@ -24,6 +24,12 @@ class ContactController extends Controller
     {
         return Company::all();
     }
+
+    public static function getCompany($id)
+    {
+        return Company::find($id);
+    }
+
     public function storecompany(request $request)
     {
     	$company = new Company;
@@ -89,16 +95,39 @@ class ContactController extends Controller
     }
      public function deletecompany(request $request)
     {
-		$company = Company::find($request->input('id'));
-    	if($company->delete())
+
+        $contacts = Contact::where('company_id', $request->input('id'))->get();
+        
+        $listnames = "";
+            
+        foreach ($contacts as $contact)
         {
-            Session::flash('status', 'L\'entreprise à correctement été supprimé'); 
-            Session::flash('class', 'alert-success'); 
+            $listnames .= $contact->first_name.' '.$contact->last_name.',';
+        }
+        $listnames=rtrim($listnames,", ");
+
+        if (count($contacts) > 0) 
+        {
+            if(count($contacts) == 1)
+            Session::flash('status', 'Le contact '.$listnames.' est actuellement assigné à cette entreprise. Veuillez le modifier!'); 
+            else
+            Session::flash('status', 'Les contacts '.$listnames.' sont actuellement assignés à cette entreprise. Veuillez les modifier!'); 
+
+            Session::flash('class', 'alert-danger');
         }
         else
         {
-            Session::flash('status', 'Une erreur est intervenue'); 
-            Session::flash('class', 'alert-danger');
+            $company = Company::find($request->input('id'));
+            if($company->delete())
+            {
+                Session::flash('status', 'L\'entreprise à correctement été supprimé'); 
+                Session::flash('class', 'alert-success'); 
+            }
+            else
+            {
+                Session::flash('status', 'Une erreur est intervenue'); 
+                Session::flash('class', 'alert-danger');
+            }
         }
 
         return redirect('contact');
@@ -145,4 +174,66 @@ class ContactController extends Controller
         return redirect('editcontact/'. $request->input('id'));
 
     }
+
+    public function updatecompany(request $request)
+    {
+        $company = Company::find($request->input('id'));
+        $company->name = $request->input('name');
+        $company->website = $request->input('website');
+        $company->phone_number = $request->input('phone_number');
+        
+        if($company->save())
+        {
+            Session::flash('status', 'L\'entreprise à correctement été mis à jour'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+
+        return redirect('editcompany/'. $request->input('id'));
+
+    }
+
+    public static function updatelogo(Request $request)
+    {
+        
+        if ($request->hasFile('image'))
+        {
+            $file = $request->image;    
+            if($file->isValid())
+            {
+                $destinationPath = 'img/companylogos/';
+                $name = str_random(mt_rand(15,25)).'.'.$file->getClientOriginalExtension();
+                $company = ContactController::getCompany($request->input('id')); 
+                $file->move($destinationPath,$name); 
+                unlink($company->logo_path);
+                $company->logo_path = $destinationPath.$name;
+
+                $company->save();
+                Session::flash('status', 'La photo de profil à bien été mise à jour'); 
+                Session::flash('class', 'alert-success'); 
+            }
+            else
+            {
+                Session::flash('status', 'Fichier invalide'); 
+                Session::flash('class', 'alert-danger'); 
+            }
+                
+                
+            
+        }
+        else
+        {
+             Session::flash('status', 'Fichier invalide'); 
+            Session::flash('class', 'alert-danger'); 
+        }
+        return redirect('editcompany/'. $request->input('id'));  
+
+
+    }
+    
 }
