@@ -64,7 +64,7 @@ $companies = ContactController::getCompanies();
 			    echo '<td>'.$contact->company->name.'</td>';
 			    echo '<td><a href="/editcontact/'.$contact->id.'">Modifier</a></td>';
 			   	echo '<td>';
-			    echo Form::open(array('url' => 'deletecontact','method'=>'POST'));
+			    echo Form::open(array('url' => 'deletecontact','method'=>'POST','class' => 'delete_contact'));
 			    echo Form::hidden('id', $contact->id);
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();
@@ -138,7 +138,7 @@ $companies = ContactController::getCompanies();
 			    echo '<td>'.$company->name.'</td>';
 			    echo '<td>'.$company->phone_number.'</td>';
 			    echo '<td>';
-	     	    echo Form::open(array('url' => 'deletecompany','method'=>'POST'));
+	     	    echo Form::open(array('url' => 'deletecompany','method'=>'POST','class' => 'delete_company'));
 			    echo Form::hidden('id', $company->id);
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();
@@ -187,6 +187,12 @@ $(document ).ready(function() {
 	});
 	$('#show-jumbo-contact').click(function() {
 		$('#jumbo-contact').toggle(200);
+	});
+	$('.delete_contact').submit(function() {
+			return confirm('Attention ! Ce contact va être supprimé');
+	});
+	$('.delete_company').submit(function() {
+			return confirm('Attention ! Cette entreprise va être supprimé');
 	});
 </script>
 @endsection

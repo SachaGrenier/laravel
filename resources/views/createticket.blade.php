@@ -78,7 +78,7 @@ $output_array = json_encode( $output_array );
 
     <div class="form-group">
 	    {{ Form::label('Titre de la demande*', '') }}
-	    {{ Form::Text('title','',['class' => 'form-control form-control-lg', 'id' => 'title-input']) }}
+	    {{ Form::Text('title',                                                                           '',['class' => 'form-control form-control-lg', 'id' => 'title-input']) }}
     </div>
   	<div class="form-group">
         {{ Form::label('Contenu*', '')}}
@@ -219,7 +219,10 @@ $("#check-project").change(function(){
 });
 
 $("#ticket-form").submit(function(){
-  $("#title-input").val(title);
+  if(title != null)
+  {
+      $("#title-input").val(title);
+  }
 });
 </script>
 @endsection

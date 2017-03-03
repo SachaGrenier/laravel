@@ -16,15 +16,13 @@ $output_array = array();
 
 //fills this empty array with applicant's names and encodes it
 foreach ($applicants as $row) 
-	{
+{
     	 $output_array[] = array( 
         'id' => $row['id'],
-        'value' => $row['first_name'].' '.$row['last_name']
-    );
+        'value' => $row['first_name'].' '.$row['last_name']);
 }
 
 $output_array = json_encode( $output_array );
-
 ?>
 
 @extends('layouts.default')
@@ -108,7 +106,6 @@ if(!$ticket->archived)
     </select></li>
 	</ul>
 	<br>
-
 	<div class="row">
     <div class="col">
 	  	{{ Form::hidden('id', $ticket->id)}}
@@ -116,7 +113,6 @@ if(!$ticket->archived)
   	{{ Form::close() }}
     </div>
     <div class="col">
-
   	<?php
 
   	if(!$ticket->archived)

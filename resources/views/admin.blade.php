@@ -82,7 +82,7 @@ $users = AdminController::getUsers();
 			    echo '</td>';		
 			    echo '<td><a href="edituser/'.$user->id.'">Modifier</a></td>';	    
 			    echo '<td>';
-			    echo Form::open(array('url' => 'deleteuser','method'=>'POST'));
+			    echo Form::open(array('url' => 'deleteuser','method'=>'POST', 'class' => 'delete_user'));
 			    echo Form::hidden('id', $user->id);
 			    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();
@@ -177,7 +177,7 @@ $users = AdminController::getUsers();
 			    echo '<th scope="row">'.$sector->id.'</th>';
 			    echo '<td>'.$sector->name.'</td>';
 			    echo '<td>';
-			    echo Form::open(array('url' => 'deletesector','method'=>'POST'));
+			    echo Form::open(array('url' => 'deletesector','method'=>'POST', 'class' => 'delete_sector'));
 			    echo Form::hidden('id', $sector->id);
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();
@@ -219,7 +219,7 @@ $users = AdminController::getUsers();
 			    echo '<th scope="row">'.$title->id.'</th>';
 			    echo '<td>'.$title->name.'</td>';
 			    echo '<td>';
-			    echo Form::open(array('url' => 'deletetitle','method'=>'POST'));
+			    echo Form::open(array('url' => 'deletetitle','method'=>'POST', 'class' => 'delete_title'));
 			    echo Form::hidden('id', $title->id);
 			    echo '<button type="submit" class="btn btn-secondary"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
 			    echo Form::close();
@@ -272,5 +272,23 @@ $(document ).ready(function() {
 	$('#show-jumbo-title').click(function() {
 		$('#jumbo-title').toggle(200);
 	});
+	$('.delete_user').submit(function() {
+		var result = prompt("Ecrire 'OK' si vous êtes sur ");
+		if(result == "OK")
+		{
+			return confirm('Attention ! Cet utilisateur va être supprimé');
+		}
+		else
+		{
+			return false;
+		}
+	});
+	$('.delete_sector').submit(function() {
+			return confirm('Attention ! Ce secteur va être supprimé');
+	});
+	$('.delete_title').submit(function() {
+			return confirm('Attention ! Ce rôle va être supprimé');
+	});
+
 </script>
 @endsection

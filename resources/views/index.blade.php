@@ -5,9 +5,6 @@ use App\Http\Controllers\HomeController;
 
 $sector = HomeController::index();
 
-//used to show data in $ticket
-$DEBUG = false;
-
 ?>
 
 @extends('layouts.default')

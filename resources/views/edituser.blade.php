@@ -8,7 +8,6 @@ $user = AdminController::getUser($id);
 $sectors = TicketController::getSectors();
 $titles = HomeController::getTitles();
 
-
 ?>
 
 @extends('layouts.default')
@@ -20,7 +19,6 @@ $titles = HomeController::getTitles();
 <div class="container">
 		<br>
 		<a href="{{route('admin')}}"><button class="btn btn-secondary">< Retour aux utilisateurs</button></a>
-
 	    <h1  class="text-center" style=" margin-top: 10px;">{{ $user->first_name}} {{$user->last_name }}</h1>
 	    <div id="imageprofil" style=" margin-bottom: 10px;"> {{ Html::image($user->picture_path,'', array('class'=>'imageprofil')) }}</div>
 		<?php
@@ -66,7 +64,6 @@ $titles = HomeController::getTitles();
 				  		
 			      		echo '>'.$sector->name.'</option>';
 			      	}
-
 			       ?>
 			    </select>
 		  	</div>
@@ -86,16 +83,19 @@ $titles = HomeController::getTitles();
 			       ?>
 			    </select>
 		  	</div>
-				{{ Form::hidden('id',$user->id) }}
-
+			{{ Form::hidden('id',$user->id) }}
 		  	{{ Form::submit('Modifier',['class' => 'btn btn-primary']) }}
 		{{ Form::close() }}
 		
-		{{ Form::open(array('url' => 'resetpassword','method'=>'POST','class' => 'form-group'))}}	
+		{{ Form::open(array('url' => 'resetpassword','method'=>'POST','class' => 'form-group','id' =>'reset_password'))}}	
 			{{ Form::hidden('id',$user->id) }}
 	  		{{ Form::submit('Réinitialiser le mot de passe',['class' => 'btn btn-danger']) }}
 	  	{{ Form::close() }}
 
-
+<script>
+	$('#reset_password').submit(function() {
+		return confirm('Attention ! Le mot de passe va être réinitialisé');
+	});
+</script>
 </div>
 @endsection
