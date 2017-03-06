@@ -19,9 +19,9 @@ $output_array = array();
 //fills this empty array with applicant's names and encodes it
 foreach ($applicants as $row) 
 {
-    	 $output_array[] = array( 
-        'id' => $row['id'],
-        'value' => $row['first_name'].' '.$row['last_name']);
+	 $output_array[] = array( 
+    'id' => $row['id'],
+    'value' => $row['first_name'].' '.$row['last_name']);
 }
 
 $output_array = json_encode( $output_array );
@@ -43,18 +43,14 @@ if(!$ticket->archived)
 {
 	echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modifier ticket</button>';
 }
+
+if (Session::get('status'))
+{
+   echo '<br><br><div class="alert '.Session::get('class').'">';
+   echo Session::get('status');
+   echo '</div>';
+}
 ?>
-
-
-<?php
-		   if (Session::get('status'))
-		   {
-			   echo '<br>
-<br><div class="alert '.Session::get('class').'">';
-			   echo Session::get('status');
-			   echo '</div>';
-		   }
-		  ?>
 <br>
 <br>
  {{ Form::open(array('url' => 'updateticket','method'=>'POST','class' => 'form-group')) }}
@@ -82,50 +78,59 @@ if(!$ticket->archived)
 	{{ Form::textarea('note',$ticket->note,['class' => 'form-control','readonly', 'id' =>'note' ]) }}
 	</div>
 	<ul class="list-group">
-  	<li class="list-group-item">Délai : <span id="time_limit-text">{{ Carbon\Carbon::parse($ticket->time_limit)->format('d M Y')  ?: "Aucun" }} </span>
-  	<span id="time_limit-input">{{ Form::text('time_limit_value',$ticket->time_limit,['id' => 'datepicker', 'class' => 'form-control']) }}</span>
-  	</li>
-  	<li class="list-group-item">Projet : <span id="project-text"> {{ $ticket->project  ? "Oui" : "Non" }}</span>{{ Form::checkbox('project',true,$ticket->project,['id' => 'project']) }}</li> 
-  	<li class="list-group-item">Crée le : {{ $ticket->created_at->format('d M Y') }}</li>
-  	<li class="list-group-item">Modifié le : {{ $ticket->updated_at->format('d M Y') }}</li>
-  	<li class="list-group-item">Archivé :  {{ $ticket->archived  ? "Oui" : "Non" }}</li>
-  	<li class="list-group-item">Secteur : <span id="sector-text">{{ $ticket->sector_id  ?  $ticket->sector->name : "Aucun" }}</span> 
-  	<select class="form-control" name="sector_id" id="sector">
-      
-      <?php
-      
-      echo '<option value="">Aucun</option>';
-      	foreach ($sectors as $sector)
-      	 {
-      		echo '<option value="'.$sector->id.'" ';
-      		if(isset($ticket->sector_id))
-      			echo $ticket->sector->id == $sector->id ? "selected" : "" ;
+	  	<li class="list-group-item">Délai : <span id="time_limit-text">{{ $ticket->time_limit  ? Carbon\Carbon::parse($ticket->time_limit)->format('d M Y') : "Aucun" }} </span>
+	  	<span id="time_limit-input">{{ Form::text('time_limit_value',$ticket->time_limit,['id' => 'datepicker', 'class' => 'form-control']) }}</span>
+	  	</li>
+	  	<li class="list-group-item">Projet : <span id="project-text"> {{ $ticket->project  ? "Oui" : "Non" }}</span>{{ Form::checkbox('project',true,$ticket->project,['id' => 'project']) }}</li> 
+	  	<li class="list-group-item">Crée le : {{ $ticket->created_at->format('d M Y') }}</li>
+	  	<li class="list-group-item">Modifié le : {{ $ticket->updated_at->format('d M Y') }}</li>
+	  	<li class="list-group-item">Archivé :  {{ $ticket->archived  ? "Oui" : "Non" }}</li>
+	  	<li class="list-group-item">Secteur : <span id="sector-text">{{ $ticket->sector_id  ?  $ticket->sector->name : "Aucun" }}</span> 
+	  	<select class="form-control" name="sector_id" id="sector">
+	 
+
+	  	<?php
+	  
+	  	echo '<option value="">Aucun</option>';
+	  	foreach ($sectors as $sector)
+	  	{
+	  		echo '<option value="'.$sector->id.'" ';
+	  		if(isset($ticket->sector_id))
+	  			echo $ticket->sector->id == $sector->id ? "selected" : "" ;
 	  		
-      		echo '>'.$sector->name.'</option>';
-      	}
-       ?>
-    </select></li>
-  	<li class="list-group-item">Utilisateur assigné : <span id="user-text">{{ $ticket->user_id  ? $ticket->user->first_name . " " . $ticket->user->last_name : "Aucun" }}</span>
-  	<select class="form-control" name="user_id" id="user">
-      <option value="">Aucun</option>
-      <?php
-      	foreach ($users as $user)
-      	 {
-      		echo '<option value="'.$user->id.'" ';
-      		if(isset($ticket->user_id))
-      			echo $ticket->user->id == $user->id ? "selected" : "" ;
+	  		echo '>'.$sector->name.'</option>';
+	  	}
+	   	?>
+	    </select></li>
+	  	<li class="list-group-item">Utilisateur assigné : <span id="user-text">{{ $ticket->user_id  ? $ticket->user->first_name . " " . $ticket->user->last_name : "Aucun" }}</span>
+	  	<select class="form-control" name="user_id" id="user">
+	      <option value="">Aucun</option>
+	      <?php
+	      	foreach ($users as $user)
+	      	 {
+	      		echo '<option value="'.$user->id.'" ';
+	      		if(isset($ticket->user_id))
+	      			echo $ticket->user->id == $user->id ? "selected" : "" ;
 
-      		echo '>'.$user->first_name.' '.$user->last_name.'</option>';
-      	}
+	      		echo '>'.$user->first_name.' '.$user->last_name.'</option>';
+	      	}
 
-       ?>
-    </select></li>
-  	<li class="list-group-item">Fichiers : <?php
-  	foreach ($files as $key => $value) 
-  	{
-	  	echo '<button class="btn btn-secondary file-list" ><a href="../'.$value->path.'" target="_blank">Fichier' .($key+1).' .'.$value->ext.' </a></button>';
-  	}
-  	 ?> </li>
+	       ?>
+	    </select></li>
+	  	<li class="list-group-item">Fichiers : <?php
+	  	if(count($files) > 0)
+	  	{
+		  	foreach ($files as $key => $value) 
+		  	{
+			  	echo '<a class="btn btn-secondary file-list" href="../'.$value->path.'" target="_blank">Fichier' .($key+1).' .'.$value->ext.' </a>';
+		  	}	
+	  	}
+	  	else
+	  	{
+	  		echo 'Aucun';
+	  	}
+
+	  	 ?> </li>
 
 	</ul>
 	<br>
@@ -140,7 +145,7 @@ if(!$ticket->archived)
 
   	if(!$ticket->archived)
   	{
-	  	echo Form::open(array('url' => 'archiveticket','method'=>'POST','class' => 'form-group','style' => 'display:iniline-block'));
+	  	echo Form::open(array('url' => 'archiveticket','method'=>'POST','class' => 'form-group', 'id' => 'archiveticket'));
 	  	echo Form::hidden('id', $ticket->id);
 	  	echo '<button type="submit" class="btn btn-danger" style="display:block;margin:auto">Archiver</button>';
 	  	echo Form::close();
@@ -154,7 +159,7 @@ if(!$ticket->archived)
 </div>
  
 </div>
-<?php $timelimit = Carbon\Carbon::parse($ticket->time_limit)->format('d/m/Y') ?>
+<?php $timelimit = $ticket->time_limit ? Carbon\Carbon::parse($ticket->time_limit)->format('d/m/Y') :'' ?>
 
 <script>
 var time_limit_value = "{{ $timelimit }}"
@@ -215,6 +220,8 @@ $('#autocomplete').autocomplete({
         $("#applicant_name").text(ui.item.value+" ");
     },
 });
-
+$('#archiveticket').submit(function() {
+			return confirm('Attention ! Ce ticket va être archivé');
+	});
 </script>
 @endsection

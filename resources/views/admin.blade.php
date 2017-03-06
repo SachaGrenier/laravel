@@ -3,11 +3,18 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 
+$currentuser = HomeController::getUser();
+
+if(!$currentuser->type)
+	return redirect()->route('index');
+
 $sectors =  HomeController::getSectors();
 
 $titles =  HomeController::getTitles();
 
 $users = AdminController::getUsers();
+
+
 
 ?>
 

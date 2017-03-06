@@ -21,9 +21,14 @@ $currentuser = HomeController::getUser();
       <li class="nav-item">
         <a class="nav-link" href="{{route('contact')}}">Prestataires</a>
       </li>      
-      <li class="nav-item">
-        <a class="nav-link" href="{{route('admin')}}">Administrateur</a>
-      </li>
+      <?php
+      if($currentuser->type)
+      {
+        echo'<li class="nav-item">
+          <a class="nav-link" href="'.route('admin').'">Administrateur</a>
+        </li>';
+      } 
+      ?>
       <li class="nav-item">
         <a class="nav-link" href="{{route('createticket')}}">Créer un ticket</a>       
       </li>
