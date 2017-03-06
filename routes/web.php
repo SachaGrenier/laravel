@@ -75,6 +75,8 @@ Route::post('updateticket', 'TicketController@updateticket');
 
 Route::post('updateuser', 'AdminController@updateuser');
 
+Route::post('updateapplicant', 'ContactController@updateapplicant');
+
 Route::post('updatecontact', 'ContactController@updatecontact');
 
 Route::post('updatecompany', 'ContactController@updatecompany');

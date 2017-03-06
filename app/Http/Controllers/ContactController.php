@@ -210,15 +210,15 @@ class ContactController extends Controller
 
     public function updateapplicant(request $request)
     {
-        $applicant = Company::find($request->input('id'));
+        $applicant = Applicant::find($request->input('id'));
         $applicant->first_name = $request->input('first_name');
         $applicant->last_name = $request->input('last_name');
         $applicant->email = $request->input('email');
         $applicant->phone_number = $request->input('phone_number');
         
-        if($company->save())
+        if($applicant->save())
         {
-            Session::flash('status', 'L\'entreprise à correctement été mis à jour'); 
+            Session::flash('status', 'Le demandeur à été mis à jour'); 
             Session::flash('class', 'alert-success'); 
               
         }
@@ -228,7 +228,7 @@ class ContactController extends Controller
             Session::flash('class', 'alert-danger');
         }
 
-        return redirect('editcompany/'. $request->input('id'));
+        return redirect('editapplicant/'. $request->input('id'));
 
     }
     
