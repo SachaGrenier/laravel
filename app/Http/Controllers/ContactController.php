@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Contact;
 use App\Company;
+use App\Applicant;
 use Illuminate\Support\Facades\Session;
 
 
@@ -28,6 +29,15 @@ class ContactController extends Controller
     public static function getCompany($id)
     {
         return Company::find($id);
+    }
+    
+    public static function getApplicants()
+    {
+         return Applicant::all();  
+    }
+        public static function getApplicant($id)
+    {
+        return Applicant::find($id);
     }
 
     public function storecompany(request $request)
@@ -197,6 +207,31 @@ class ContactController extends Controller
         return redirect('editcompany/'. $request->input('id'));
 
     }
+
+    public function updateapplicant(request $request)
+    {
+        $applicant = Company::find($request->input('id'));
+        $applicant->first_name = $request->input('first_name');
+        $applicant->last_name = $request->input('last_name');
+        $applicant->email = $request->input('email');
+        $applicant->phone_number = $request->input('phone_number');
+        
+        if($company->save())
+        {
+            Session::flash('status', 'L\'entreprise à correctement été mis à jour'); 
+            Session::flash('class', 'alert-success'); 
+              
+        }
+        else
+        {
+            Session::flash('status', 'Une erreur est intervenue'); 
+            Session::flash('class', 'alert-danger');
+        }
+
+        return redirect('editcompany/'. $request->input('id'));
+
+    }
+    
 
     public static function updatelogo(Request $request)
     {

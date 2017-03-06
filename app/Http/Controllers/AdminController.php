@@ -8,6 +8,7 @@ use App\User;
 use App\Title;
 use App\Ticket;
 use App\Sector;
+
 use Illuminate\Support\Facades\Session;
 
 
@@ -103,6 +104,7 @@ class AdminController extends Controller
     {
         return User::find($id);
     }
+
     public function deleteuser(request $request)
     {
         $tickets = Ticket::where('user_id', $request->input('id'))->get();
@@ -266,4 +268,5 @@ class AdminController extends Controller
             return redirect('edituser/'. $request->input('id'));
 
     }
+
 }

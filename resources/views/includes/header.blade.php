@@ -19,7 +19,7 @@ $currentuser = HomeController::getUser();
         <a class="nav-link" href="{{route('index')}}">Tickets</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{route('contact')}}">Prestataires</a>
+        <a class="nav-link" href="{{route('contact')}}">Contacts</a>
       </li>      
       <li class="nav-item">
         <a class="nav-link" href="{{route('admin')}}">Administrateur</a>

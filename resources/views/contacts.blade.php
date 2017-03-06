@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\ContactController;
 
+
 $contacts = ContactController::getContacts();
 
 $companies = ContactController::getCompanies();
+
+$applicants = ContactController::getApplicants();
 
 ?>
 
@@ -24,7 +27,9 @@ $companies = ContactController::getCompanies();
   <li class="nav-item">
     <a class="nav-link" href="#div-enterprise" data-toggle="tab" role="tab">Enteprises</a>
   </li>
-
+  <li class="nav-item">
+    <a class="nav-link" href="#div-applicant" data-toggle="tab" role="tab">Demandeurs</a>
+  </li>
 </ul>
   <br>
     <?php
@@ -178,7 +183,47 @@ $companies = ContactController::getCompanies();
 		{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
 		{{Form::close()}}
 		</div>
-</div>	
+</div>
+	<div id="div-applicant" class="tab-pane" role="tabpanel">
+			<table class="table table-hover">
+			  <thead>
+			    <tr>
+			      <th>#</th>		      
+			      <th>Prénom</th>
+			      <th>Nom</th>
+			      <th>Email</th>
+			      <th>Téléphone</th>
+			      <th>Modifier</th>
+			      <th>Poubelle !</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			  <?php
+
+			  	foreach ($applicants as $applicant) 
+			  	{
+
+					echo '<tr>';
+				    echo '<th scope="row">'.$applicant->id.'</th>';
+				    
+				    echo '<td>'.$applicant->first_name.'</td>';
+				    echo '<td>'.$applicant->last_name.'</td>';
+				    echo '<td>'.$applicant->email.'</td>';
+				    echo '<td>'.$applicant->phone_number.'</td>';		
+				    echo '<td><a href="editapplicant/'.$applicant->id.'">Modifier</a></td>';	    
+				    echo '<td>';
+				    echo Form::open(array('url' => 'deleteuser','method'=>'POST', 'class' => 'delete_user'));
+				    echo Form::hidden('id', $applicant->id);
+				    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+				    echo Form::close();
+				    echo '</td>';
+				    echo '</tr>';
+				}
+			    ?>
+			  </tbody>
+			</table>
+
+	</div>
 </div>
 </div>
 <script>

@@ -9,6 +9,8 @@ $titles =  HomeController::getTitles();
 
 $users = AdminController::getUsers();
 
+
+
 ?>
 
 @extends('layouts.default')
@@ -32,10 +34,6 @@ $users = AdminController::getUsers();
   <li class="nav-item">
     <a class="nav-link" href="#div-title" data-toggle="tab" role="tab">Rôles</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#div-applicant" data-toggle="tab" role="tab">Demandeurs</a>
-  </li>
-
 </ul>
   <br>
   <?php
@@ -248,7 +246,6 @@ $users = AdminController::getUsers();
 		</div>
 	</div>
 </div>
-
 </div>
 
 

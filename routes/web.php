@@ -36,6 +36,10 @@ Route::get('editcontact/{id}', function ($id) {
     return view('editcontact')->with('id', $id);
 })->name('editcontact');
 
+Route::get('editapplicant/{id}', function ($id) {
+    return view('editapplicant')->with('id', $id);
+})->name('editapplicant');
+
 Route::get('editcompany/{id}', function ($id) {
     return view('editcompany')->with('id', $id);
 })->name('editcompany');
