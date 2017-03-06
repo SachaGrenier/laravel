@@ -11,6 +11,7 @@ use App\Title;
 use App\User;
 use App\Contact;
 use App\Company;
+use App\Applicant;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
@@ -43,6 +44,8 @@ class HomeController extends Controller
     {
         return User::find(session('id'));
     }
+    
+
 
     
 
