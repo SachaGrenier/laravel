@@ -85,3 +85,6 @@ body
 {
   margin-left:10px;
 }
+.ms-container{
+	width: 550px !important;
+}

@@ -4,14 +4,11 @@ use App\Http\Controllers\TicketController;
 
 //getting all the data we need on this page
 $ticket = TicketController::getTicket($id);
-
 $applicants = TicketController::getApplicants();
-
 $sectors = TicketController::getSectors();
-
 $users = TicketController::getUsers();
-
 $files = TicketController::getFiles($id);
+$contacts = TicketController::getContactsFromTicket($id);
 
 //creating an empty array
 $output_array = array();
@@ -96,7 +93,7 @@ if (Session::get('status'))
 	  	{
 	  		echo '<option value="'.$sector->id.'" ';
 	  		if(isset($ticket->sector_id))
-	  			echo $ticket->sector->id == $sector->id ? "selected" : "" ;
+	  			echo $ticket->sector->id == $sector->id ? "selected" : "";
 	  		
 	  		echo '>'.$sector->name.'</option>';
 	  	}
@@ -110,7 +107,7 @@ if (Session::get('status'))
 	      	 {
 	      		echo '<option value="'.$user->id.'" ';
 	      		if(isset($ticket->user_id))
-	      			echo $ticket->user->id == $user->id ? "selected" : "" ;
+	      			echo $ticket->user->id == $user->id ? "selected" : "";
 
 	      		echo '>'.$user->first_name.' '.$user->last_name.'</option>';
 	      	}
@@ -131,6 +128,11 @@ if (Session::get('status'))
 	  	}
 
 	  	 ?> </li>
+	  	 <li class="list-group-item">Contacts :  
+	  	 <?php
+
+	  	 ?>
+	  	 </li>
 
 	</ul>
 	<br>

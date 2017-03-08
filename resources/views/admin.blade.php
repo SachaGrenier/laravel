@@ -6,15 +6,13 @@ use App\Http\Controllers\AdminController;
 $currentuser = HomeController::getUser();
 
 if(!$currentuser->type)
-	return redirect()->route('index');
+	return redirect('/');
 
 $sectors =  HomeController::getSectors();
 
 $titles =  HomeController::getTitles();
 
 $users = AdminController::getUsers();
-
-
 
 ?>
 
@@ -23,8 +21,6 @@ $users = AdminController::getUsers();
 @section('title', 'Administration')
  
 @section('content')  
-
-
 
 <div class="container">
 <br>
@@ -41,130 +37,130 @@ $users = AdminController::getUsers();
   </li>
 </ul>
   <br>
-  <?php
-		   if (Session::get('status'))
-		   {
-			   echo '<div class="alert '.Session::get('class').'">';
-			   echo Session::get('status');
-			   echo '</div>';
-		   }
-		  ?>  
+  	<?php
+		if (Session::get('status'))
+		{
+		   echo '<div class="alert '.Session::get('class').'">';
+		   echo Session::get('status');
+		   echo '</div>';
+		}
+	?>  
 
-<div class="tab-content">
-	<div id="div-user" class="tab-pane active" role="tabpanel">
-		<table class="table table-hover">
-		  <thead>
-		    <tr>
-		      <th>#</th>
-		      <th></th>
-		      <th>Prénom</th>
-		      <th>Nom</th>
-		      <th>Login</th>
-		      <th>Droits</th>
-		      <th>Rôle</th>
-		      <th>Secteur</th>
-		      <th>Modifier</th>
-		      <th>Poubelle !</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		  <?php
+	<div class="tab-content">
+		<div id="div-user" class="tab-pane active" role="tabpanel">
+			<table class="table table-hover">
+		  	<thead>
+		    	<tr>
+			      <th>#</th>
+			      <th></th>
+			      <th>Prénom</th>
+			      <th>Nom</th>
+			      <th>Login</th>
+			      <th>Droits</th>
+			      <th>Rôle</th>
+			      <th>Secteur</th>
+			      <th>Modifier</th>
+			      <th>Poubelle !</th>
+			    </tr>
+			</thead>
+			<tbody>
+			<?php
 
-		  	foreach ($users as $user) 
-		  	{
+			  	foreach ($users as $user) 
+			  	{
 
-				echo '<tr>';
-			    echo '<th scope="row">'.$user->id.'</th>';
-			    echo '<td><img class="table-profile-picture" src="'.$user->picture_path.'"></td>';
-			    echo '<td>'.$user->first_name.'</td>';
-			    echo '<td>'.$user->last_name.'</td>';
-			    echo '<td>'.$user->login.'</td>';
-			    echo '<td>';
-			    echo  $user->type ? "Administrateur" : "Utilisateur" ;
-			    echo '</td>';
-			    echo '<td>'.$user->title->name.'</td>';
-			    echo '<td>';
-			    echo  isset($user->sector) ? $user->sector->name : "Aucun" ;
-			    echo '</td>';		
-			    echo '<td><a href="edituser/'.$user->id.'">Modifier</a></td>';	    
-			    echo '<td>';
-			    echo Form::open(array('url' => 'deleteuser','method'=>'POST', 'class' => 'delete_user'));
-			    echo Form::hidden('id', $user->id);
-			    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
-			    echo Form::close();
-			    echo '</td>';
-			    echo '</tr>';
-			}
+					echo '<tr>';
+				    echo '<th scope="row">'.$user->id.'</th>';
+				    echo '<td><img class="table-profile-picture" src="'.$user->picture_path.'"></td>';
+				    echo '<td>'.$user->first_name.'</td>';
+				    echo '<td>'.$user->last_name.'</td>';
+				    echo '<td>'.$user->login.'</td>';
+				    echo '<td>';
+				    echo  $user->type ? "Administrateur" : "Utilisateur" ;
+				    echo '</td>';
+				    echo '<td>'.$user->title->name.'</td>';
+				    echo '<td>';
+				    echo  isset($user->sector) ? $user->sector->name : "Aucun" ;
+				    echo '</td>';		
+				    echo '<td><a href="edituser/'.$user->id.'">Modifier</a></td>';	    
+				    echo '<td>';
+				    echo Form::open(array('url' => 'deleteuser','method'=>'POST', 'class' => 'delete_user'));
+				    echo Form::hidden('id', $user->id);
+				    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+				    echo Form::close();
+				    echo '</td>';
+				    echo '</tr>';
+				}
 		    ?>
-		  </tbody>
-		</table>
+		  	</tbody>
+			</table>
 
 		
-		<button id="show-jumbo-user" class="btn btn-primary">Ajouter un utilisateur</button>
-		
-		<div class="jumbotron jumbotron-form" id="jumbo-user">
-		<h3>Ajouter un utilisateur</h3>
+			<button id="show-jumbo-user" class="btn btn-primary">Ajouter un utilisateur</button>
+			
+			<div class="jumbotron jumbotron-form" id="jumbo-user">
+			<h3>Ajouter un utilisateur</h3>
 
-		{{ Form::open(array('url' => 'storeuser','method'=>'POST','class' => 'form-group')) }}
-			<div class="form-group">
-			    {{ Form::label('Prénom*', '') }}
-			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'first_name']) }}
+			{{ Form::open(array('url' => 'storeuser','method'=>'POST','class' => 'form-group')) }}
+				<div class="form-group">
+				    {{ Form::label('Prénom*', '') }}
+				    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'first_name']) }}
+				</div>
+
+			    <div class="form-group">
+				    {{ Form::label('Nom*', '') }}
+				    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+				</div>
+
+				<div class="form-group">
+				    {{ Form::label('Username*', '') }}
+				    <p id="username"></p>
+				</div>
+
+
+				<div class="form-group">
+				    {{ Form::label('Email', '') }}
+				    {{ Form::Text('email','',['class' => 'form-control form-control']) }}
+				</div>
+			 	
+			 	<div class="form-check">
+			        {{ Form::label('', '',['class' => 'form-check-label'])}}
+			        {{ Form::checkbox('admin',true,false,['class' => 'form-check-input']) }}
+			          Administrateur
+			    </div>
+
+			    <div class="form-group">
+			     {{ Form::label('Secteur', '') }}
+				    <select class="custom-select" name="sector_id">
+				      <option value="">Aucun</option>
+				      <?php
+				      	foreach ($sectors as $sector)
+				      	 {
+				      		echo '<option value="'.$sector->id.'">'.$sector->name.'</option>';
+				      	}
+
+				       ?>
+				    </select>
+			  	</div>
+
+			  	    <div class="form-group">
+			     {{ Form::label('Rôle*', '') }}
+				    <select class="form-control" name="title_id">
+				      <option value="">Aucun</option>
+				      <?php
+				      	foreach ($titles as $title)
+				      	{
+				      		echo '<option value="'.$title->id.'">'.$title->name.'</option>';
+				      	}
+				       ?>
+				    </select>
+			  	</div>
+		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
+			{{ Form::close() }}
 			</div>
-
-		    <div class="form-group">
-			    {{ Form::label('Nom*', '') }}
-			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
-			</div>
-
-			<div class="form-group">
-			    {{ Form::label('Username*', '') }}
-			    <p id="username"></p>
-			</div>
-
-
-			<div class="form-group">
-			    {{ Form::label('Email', '') }}
-			    {{ Form::Text('email','',['class' => 'form-control form-control']) }}
-			</div>
-		 	
-		 	<div class="form-check">
-		        {{ Form::label('', '',['class' => 'form-check-label'])}}
-		        {{ Form::checkbox('admin',true,false,['class' => 'form-check-input']) }}
-		          Administrateur
-		    </div>
-
-		    <div class="form-group">
-		     {{ Form::label('Secteur', '') }}
-			    <select class="form-control" name="sector_id">
-			      <option value="">Aucun</option>
-			      <?php
-			      	foreach ($sectors as $sector)
-			      	 {
-			      		echo '<option value="'.$sector->id.'">'.$sector->name.'</option>';
-			      	}
-
-			       ?>
-			    </select>
-		  	</div>
-
-		  	    <div class="form-group">
-		     {{ Form::label('Rôle*', '') }}
-			    <select class="form-control" name="title_id">
-			      <option value="">Aucun</option>
-			      <?php
-			      	foreach ($titles as $title)
-			      	{
-			      		echo '<option value="'.$title->id.'">'.$title->name.'</option>';
-			      	}
-			       ?>
-			    </select>
-		  	</div>
-	  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
-		{{ Form::close() }}
-		</div>
-		<br>
-		<br>
-	</div>  
+			<br>
+			<br>
+		</div>  
 	<div id="div-sector" class="tab-pane" role="tabpanel">
 		<table class="table table-hover">
 		  <thead>
