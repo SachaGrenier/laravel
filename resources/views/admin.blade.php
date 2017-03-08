@@ -6,15 +6,13 @@ use App\Http\Controllers\AdminController;
 $currentuser = HomeController::getUser();
 
 if(!$currentuser->type)
-	return redirect()->route('index');
+	return redirect('/');
 
 $sectors =  HomeController::getSectors();
 
 $titles =  HomeController::getTitles();
 
 $users = AdminController::getUsers();
-
-
 
 ?>
 
@@ -23,8 +21,6 @@ $users = AdminController::getUsers();
 @section('title', 'Administration')
  
 @section('content')  
-
-
 
 <div class="container">
 <br>
@@ -95,76 +91,77 @@ $users = AdminController::getUsers();
 			    echo '</td>';
 			    echo '</tr>';
 			}
+
 		    ?>
-		  </tbody>
-		</table>
+		  	</tbody>
+			</table>
 
 		
-		<button id="show-jumbo-user" class="btn btn-primary">Ajouter un utilisateur</button>
-		
-		<div class="jumbotron jumbotron-form" id="jumbo-user">
-		<h3>Ajouter un utilisateur</h3>
+			<button id="show-jumbo-user" class="btn btn-primary">Ajouter un utilisateur</button>
+			
+			<div class="jumbotron jumbotron-form" id="jumbo-user">
+			<h3>Ajouter un utilisateur</h3>
 
-		{{ Form::open(array('url' => 'storeuser','method'=>'POST','class' => 'form-group')) }}
-			<div class="form-group">
-			    {{ Form::label('Prénom*', '') }}
-			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'first_name']) }}
+			{{ Form::open(array('url' => 'storeuser','method'=>'POST','class' => 'form-group')) }}
+				<div class="form-group">
+				    {{ Form::label('Prénom*', '') }}
+				    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'first_name']) }}
+				</div>
+
+			    <div class="form-group">
+				    {{ Form::label('Nom*', '') }}
+				    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+				</div>
+
+				<div class="form-group">
+				    {{ Form::label('Username*', '') }}
+				    <p id="username"></p>
+				</div>
+
+
+				<div class="form-group">
+				    {{ Form::label('Email', '') }}
+				    {{ Form::Text('email','',['class' => 'form-control form-control']) }}
+				</div>
+			 	
+			 	<div class="form-check">
+			        {{ Form::label('', '',['class' => 'form-check-label'])}}
+			        {{ Form::checkbox('admin',true,false,['class' => 'form-check-input']) }}
+			          Administrateur
+			    </div>
+
+			    <div class="form-group">
+			     {{ Form::label('Secteur', '') }}
+				    <select class="custom-select" name="sector_id">
+				      <option value="">Aucun</option>
+				      <?php
+				      	foreach ($sectors as $sector)
+				      	 {
+				      		echo '<option value="'.$sector->id.'">'.$sector->name.'</option>';
+				      	}
+
+				       ?>
+				    </select>
+			  	</div>
+
+			  	    <div class="form-group">
+			     {{ Form::label('Rôle*', '') }}
+				    <select class="form-control" name="title_id">
+				      <option value="">Aucun</option>
+				      <?php
+				      	foreach ($titles as $title)
+				      	{
+				      		echo '<option value="'.$title->id.'">'.$title->name.'</option>';
+				      	}
+				       ?>
+				    </select>
+			  	</div>
+		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
+			{{ Form::close() }}
 			</div>
-
-		    <div class="form-group">
-			    {{ Form::label('Nom*', '') }}
-			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
-			</div>
-
-			<div class="form-group">
-			    {{ Form::label('Username*', '') }}
-			    <p id="username"></p>
-			</div>
-
-
-			<div class="form-group">
-			    {{ Form::label('Email', '') }}
-			    {{ Form::Text('email','',['class' => 'form-control form-control']) }}
-			</div>
-		 	
-		 	<div class="form-check">
-		        {{ Form::label('', '',['class' => 'form-check-label'])}}
-		        {{ Form::checkbox('admin',true,false,['class' => 'form-check-input']) }}
-		          Administrateur
-		    </div>
-
-		    <div class="form-group">
-		     {{ Form::label('Secteur', '') }}
-			    <select class="form-control" name="sector_id">
-			      <option value="">Aucun</option>
-			      <?php
-			      	foreach ($sectors as $sector)
-			      	 {
-			      		echo '<option value="'.$sector->id.'">'.$sector->name.'</option>';
-			      	}
-
-			       ?>
-			    </select>
-		  	</div>
-
-		  	    <div class="form-group">
-		     {{ Form::label('Rôle*', '') }}
-			    <select class="form-control" name="title_id">
-			      <option value="">Aucun</option>
-			      <?php
-			      	foreach ($titles as $title)
-			      	{
-			      		echo '<option value="'.$title->id.'">'.$title->name.'</option>';
-			      	}
-			       ?>
-			    </select>
-		  	</div>
-	  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
-		{{ Form::close() }}
-		</div>
-		<br>
-		<br>
-	</div>  
+			<br>
+			<br>
+		</div>  
 	<div id="div-sector" class="tab-pane" role="tabpanel">
 		<table class="table table-hover">
 		  <thead>

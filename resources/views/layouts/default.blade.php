@@ -21,11 +21,18 @@
 	{{ Html::script('js/tether.min.js') }}
 	{{ Html::script('js/bootstrap.min.js') }}
 
+	<!-- Scripts MultiSelect -->
+	{{ Html::style('css/multi-select.css') }}
+	{{ Html::script('js/jquery.multi-select.js') }}
+	
+
+
 	<!-- Scripts DataTable -->
 	<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap4.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap4.min.css">
+
 
 	<script type="text/javascript">
 	$(document).ready(function() {
