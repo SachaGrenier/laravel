@@ -88,12 +88,12 @@ $applicants = ContactController::getApplicants();
 		{{ Form::open(array('url'=>'storecontact' , 'method'=>'POST' , 'class'=>'form-group', 'files'=> true))}}
 
 		<div class="form-group">
-			    {{ Form::label('Nom*', '') }}
-			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+			    {{ Form::label('Prénom*', '') }}
+			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
 		</div>
 		<div class="form-group">
-			    {{ Form::label('Prénom*', '') }}
-			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'First_name']) }}
+			    {{ Form::label('Nom*', '') }}
+			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'First_name']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Téléphone*', '') }}
@@ -231,12 +231,12 @@ $applicants = ContactController::getApplicants();
 		{{ Form::open(array('url'=>'storeapplicant' , 'method'=>'POST' , 'class'=>'form-group', 'files'=> true))}}
 
 		<div class="form-group">
-			    {{ Form::label('Nom*', '') }}
-			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+			    {{ Form::label('Prénom*', '') }}
+			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
 		</div>
 		<div class="form-group">
-			    {{ Form::label('Prénom', '') }}
-			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+			    {{ Form::label('Nom*', '') }}
+			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'First_name']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Téléphone*', '') }}
