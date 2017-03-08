@@ -2,14 +2,17 @@
 
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
 
 $sectors =  HomeController::getSectors();
 $users =  TicketController::getUsersFromSector();
 $applicants = TicketController::getApplicants();
+$contacts = ContactController::getContacts();
 
 $output_array = array();
 
-foreach ($applicants as $row) {
+foreach ($applicants as $row) 
+{
      $output_array[] = array( 
         'id' => $row['id'],
         'value' => $row['first_name'].' '.$row['last_name']
@@ -25,7 +28,6 @@ $output_array = json_encode( $output_array );
 @section('title', 'ManageTicket - Ticket')
  
 @section('content')  
-
 <div class="container">
 
 <h1>Ajouter un ticket</h1>
@@ -97,45 +99,53 @@ $output_array = json_encode( $output_array );
       <option value="">Aucun</option>
       <?php
       	foreach ($sectors as $sector)
-      	 {
+      	{
       		echo '<option value="'.$sector->id.'">'.$sector->name.'</option>';
       	}
-
-       ?>
-    </select>
+      ?>
+  </select>
   </div>
   <div class="form-group">
      {{ Form::label('Assigner un utilisateur', '') }}
     <select class="form-control" name="user_id">
     <option value="">Aucun</option>
-      <?php
+    <?php
       	foreach ($users as $user)
-      	 {
+      	{
       		echo '<option value="'.$user->id.'">'.$user->first_name.' '.$user->last_name.'</option>';
       	}
-
-       ?>
+    ?>
     </select>
   </div>
   <div class="form-check">
-	      {{ Form::label('', '',['class' => 'form-check-label'])}}
-	      {{ Form::checkbox('time_limit',true,false,['class' => 'form-check-input','id' => 'toggle-time-limit']) }}
-      	  Délai
-  	</div>
+    {{ Form::label('', '',['class' => 'form-check-label'])}}
+    {{ Form::checkbox('time_limit',true,false,['class' => 'form-check-input','id' => 'toggle-time-limit']) }}
+  	  Délai
+  </div>
   <div class="form-group" id="select-timelimit" style="display: none">
    	{{ Form::label('Définir une date', '')}}
     {{ Form::text('time_limit_value','',['id' => 'datepicker', 'class' => 'form-control']) }}
   </div>
-    <div class="form-check">
-        {{ Form::label('', '',['class' => 'form-check-label'])}}
-        {{ Form::checkbox('project',true,false,['class' => 'form-check-input', 'id' => 'check-project']) }}
-          Projet
-    </div>
-    <h3>Ajouter des fichiers </h3>
-  <div class="form-group" >
-  	   <input type='file' id="multiple-files" class="multiple-files" name="file[]">
+  <div class="form-check">
+    {{ Form::label('', '',['class' => 'form-check-label'])}}
+    {{ Form::checkbox('project',true,false,['class' => 'form-check-input', 'id' => 'check-project']) }}
+      Projet
   </div>
-  
+  <h3>Ajouter contacts prestataires </h3>
+  <div class="form-group" >
+  <select multiple="multiple" id="my-select" name="contacts[]">
+    <?php
+        foreach ($contacts as $contact)
+        {
+          echo '<option value="'.$contact->id.'">'.$contact->first_name.' '.$contact->last_name.' ('.$contact->company->name.')</option>';
+        }
+    ?>
+    </select>
+  </div>
+  <h3>Ajouter des fichiers </h3>
+  <div class="form-group" >
+  	<input type='file' id="multiple-files" class="multiple-files" name="file[]">
+  </div>
   
   {{Form::submit('Créer',['class' => 'btn btn-primary'])}}
 
@@ -143,7 +153,10 @@ $output_array = json_encode( $output_array );
 </div>
 
 <script type="text/javascript">
-
+$('#my-select').multiSelect({
+    selectableHeader: "<div class='custom-header'>Liste des contacts</div>",
+  selectionHeader: "<div class='custom-header'>Contacts séléctionnés</div>",
+});
 //initialize date picker
 $( "#datepicker" ).datepicker();
 //change date picker date format

@@ -9,6 +9,7 @@ use App\User;
 use App\Applicant;
 use App\Redirect;
 use App\File;
+use App\Ticket_Contact;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
@@ -31,6 +32,9 @@ class TicketController extends Controller
         'title' => 'required|max:255',
         'content' => 'required',
             ]);
+        echo '<pre>';
+        print_r($request->input());
+        echo '</pre>';
 
         $ticket = new Ticket;
 
@@ -98,6 +102,16 @@ class TicketController extends Controller
                 }   
             }
         }
+        if(count($request->input('contacts') > 0))
+        {
+            foreach ($request->input('contacts') as $contact)
+             {
+                $input = new Ticket_Contact;
+                $input->contact_id = $contact;
+                $input->ticket_id = $ticket->id;
+                $input->save();
+             }
+        }
          return redirect('createticket');
        
     }
@@ -117,7 +131,7 @@ class TicketController extends Controller
             Session::flash('status', 'Désolé, impossible d\'archiver l\'élément'); 
             Session::flash('class', 'alert-danger'); 
         }
-         return redirect('index');                                                          
+         return redirect('/');                                                          
     }
 
     public static function updateticket(Request $request)
@@ -185,6 +199,9 @@ class TicketController extends Controller
     public static function getTicketsFromApplicant($applicant_id)
     {
         return Ticket::where('applicant_id',$applicant_id)->where('archived',false)->get();
-
+    }
+    public static function getContactsFromTicket($id_ticket)
+    {
+        return Ticket_Contact::where('ticket_id',$id_ticket)->get();
     }
 }
