@@ -93,7 +93,7 @@ class ContactController extends Controller
 	  
 	  	if($contact->save())
         {
-        	Session::flash('status', 'Contact ajoutée avec succès'); 
+        	Session::flash('status', 'Contact ajouté avec succès'); 
                 Session::flash('class', 'alert-success'); 
         }
      	else
@@ -103,6 +103,26 @@ class ContactController extends Controller
         }
             return redirect('contact'); 
     }
+        public function storeapplicant(request $request)
+    {
+        $applicant = new Applicant;
+        $applicant->last_name = $request->input('last_name');
+        $applicant->first_name = $request->input('first_name');
+        $applicant->phone_number = $request->input('phone_number');
+        $applicant->email = $request->input('email');
+      
+        if($applicant->save())
+        {
+            Session::flash('status', 'Demandeur ajouté avec succès'); 
+                Session::flash('class', 'alert-success'); 
+        }
+        else
+        {
+            Session::flash('status', 'Fichier invalide'); 
+            Session::flash('class', 'alert-danger'); 
+        }
+            return redirect('contact'); 
+    }  
      public function deletecompany(request $request)
     {
 
@@ -271,5 +291,7 @@ class ContactController extends Controller
 
 
     }
+
+
     
 }

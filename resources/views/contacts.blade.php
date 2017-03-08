@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TicketController;
 
 
 $contacts = ContactController::getContacts();
@@ -52,7 +53,7 @@ $applicants = ContactController::getApplicants();
 		      <th>Email</th>
 		      <th>Entreprise</th>
 		      <th>Modifier</th>      
-		      <th>Poubelle !</th>
+		      <th>Supprimer !</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -132,7 +133,7 @@ $applicants = ContactController::getApplicants();
 		      <th>Téléphone</th>
 		      <th>Site web</th>
 		       <th>Modifier</th>  
-		      <th>Poubelle !</th>
+		      <th>Supprimer !</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -193,8 +194,8 @@ $applicants = ContactController::getApplicants();
 			      <th>Nom</th>
 			      <th>Email</th>
 			      <th>Téléphone</th>
+			      <th>Tickets ouverts</th>
 			      <th>Modifier</th>
-			      <th>Poubelle !</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -202,26 +203,53 @@ $applicants = ContactController::getApplicants();
 
 			  	foreach ($applicants as $applicant) 
 			  	{
-
+			  		$tickets = TicketController::getTicketsFromApplicant($applicant->id);
 					echo '<tr>';
 				    echo '<th scope="row">'.$applicant->id.'</th>';
-				    
 				    echo '<td>'.$applicant->first_name.'</td>';
 				    echo '<td>'.$applicant->last_name.'</td>';
 				    echo '<td>'.$applicant->email.'</td>';
-				    echo '<td>'.$applicant->phone_number.'</td>';		
-				    echo '<td><a href="editapplicant/'.$applicant->id.'">Modifier</a></td>';	    
+				    echo '<td>'.$applicant->phone_number.'</td>';
 				    echo '<td>';
-				    echo Form::open(array('url' => 'deleteuser','method'=>'POST', 'class' => 'delete_user'));
-				    echo Form::hidden('id', $applicant->id);
-				    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
-				    echo Form::close();
+				    foreach ($tickets as $key => $value) 
+				    {    	
+					    echo '<a href="ticket/'.$value->id.'" title="'.$value->title.'">'.$value->id.'</a>';
+					    echo count($tickets) == $key+1 ? "" : ",";
+				    }
 				    echo '</td>';
+
+				    echo '<td><a href="editapplicant/'.$applicant->id.'">Modifier</a></td>';  
+
 				    echo '</tr>';
 				}
 			    ?>
 			  </tbody>
 			</table>
+		<button id="show-jumbo-applicant" class="btn btn-primary">Ajouter un demandeur</button>
+		<div class="jumbotron jumbotron-form" id="jumbo-applicant">
+		<h3>Ajouter un demandeur</h3>
+		{{ Form::open(array('url'=>'storeapplicant' , 'method'=>'POST' , 'class'=>'form-group', 'files'=> true))}}
+
+		<div class="form-group">
+			    {{ Form::label('Nom*', '') }}
+			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+		</div>
+		<div class="form-group">
+			    {{ Form::label('Prénom', '') }}
+			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+		</div>
+		<div class="form-group">
+			    {{ Form::label('Téléphone*', '') }}
+			    {{ Form::Text('phone_number','',['class' => 'form-control form-control','id' => 'Phone_number' , 'placeholder' => 'Ex: 0217918384']) }}
+		</div>
+		<div class="form-group">
+			    {{ Form::label('Email*', '') }}
+			    {{ Form::Text('email','',['class' => 'form-control form-control','id' => 'Phone_number']) }}
+		</div>
+
+		{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
+		{{Form::close()}}
+		</div>
 
 	</div>
 </div>
@@ -230,12 +258,16 @@ $applicants = ContactController::getApplicants();
 $(document ).ready(function() {
 	$('#jumbo-enterprise').hide();
 	$('#jumbo-contact').hide();
+	$('#jumbo-applicant').hide();
 });
 	$('#show-jumbo-enterprise').click(function() {
 		$('#jumbo-enterprise').toggle(200);
 	});
 	$('#show-jumbo-contact').click(function() {
 		$('#jumbo-contact').toggle(200);
+	});
+	$('#show-jumbo-applicant').click(function() {
+		$('#jumbo-applicant').toggle(200);
 	});
 	$('.delete_contact').submit(function() {
 			return confirm('Attention ! Ce contact va être supprimé');

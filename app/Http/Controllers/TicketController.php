@@ -109,7 +109,7 @@ class TicketController extends Controller
 
         if($ticket->save())
         {
-            Session::flash('status', 'Ticket archivé !'); 
+                              Session::flash('status', 'Ticket archivé !'); 
             Session::flash('class', 'alert-success'); 
         }
         else
@@ -180,5 +180,11 @@ class TicketController extends Controller
     public static function getFiles($id_ticket)
     {
         return File::where('ticket_id',$id_ticket)->get();
+    }
+
+    public static function getTicketsFromApplicant($applicant_id)
+    {
+        return Ticket::where('applicant_id',$applicant_id)->where('archived',false)->get();
+
     }
 }

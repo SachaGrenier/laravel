@@ -91,6 +91,8 @@ Route::post('storecontact', 'ContactController@storecontact');
 
 Route::post('storecompany', 'ContactController@storecompany');
 
+Route::post('storeapplicant', 'ContactController@storeapplicant');
+
 Route::post('deletecompany', 'ContactController@deletecompany');
 
 Route::post('deletecontact', 'ContactController@deletecontact');

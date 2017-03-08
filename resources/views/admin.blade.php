@@ -64,7 +64,7 @@ $users = AdminController::getUsers();
 		      <th>Rôle</th>
 		      <th>Secteur</th>
 		      <th>Modifier</th>
-		      <th>Poubelle !</th>
+		      <th>Supprimer !</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -171,7 +171,7 @@ $users = AdminController::getUsers();
 		    <tr>
 		      <th>#</th>
 		      <th>Secteur</th>
-		      <th>Poubelle !</th>
+		      <th>Supprimer !</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -213,7 +213,7 @@ $users = AdminController::getUsers();
 		    <tr>
 		      <th>#</th>
 		      <th>Rôles</th>
-		      <th>Poubelle !</th>
+		      <th>Supprimer !</th>
 		    </tr>
 		  </thead>
 		  <tbody>
