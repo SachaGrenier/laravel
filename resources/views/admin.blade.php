@@ -37,60 +37,61 @@ $users = AdminController::getUsers();
   </li>
 </ul>
   <br>
-  	<?php
-		if (Session::get('status'))
-		{
-		   echo '<div class="alert '.Session::get('class').'">';
-		   echo Session::get('status');
-		   echo '</div>';
-		}
-	?>  
+  <?php
+		   if (Session::get('status'))
+		   {
+			   echo '<div class="alert '.Session::get('class').'">';
+			   echo Session::get('status');
+			   echo '</div>';
+		   }
+		  ?>  
 
-	<div class="tab-content">
-		<div id="div-user" class="tab-pane active" role="tabpanel">
-			<table class="table table-hover">
-		  	<thead>
-		    	<tr>
-			      <th>#</th>
-			      <th></th>
-			      <th>Prénom</th>
-			      <th>Nom</th>
-			      <th>Login</th>
-			      <th>Droits</th>
-			      <th>Rôle</th>
-			      <th>Secteur</th>
-			      <th>Modifier</th>
-			      <th>Poubelle !</th>
-			    </tr>
-			</thead>
-			<tbody>
-			<?php
+<div class="tab-content">
+	<div id="div-user" class="tab-pane active" role="tabpanel">
+		<table class="table table-hover">
+		  <thead>
+		    <tr>
+		      <th>#</th>
+		      <th></th>
+		      <th>Prénom</th>
+		      <th>Nom</th>
+		      <th>Login</th>
+		      <th>Droits</th>
+		      <th>Rôle</th>
+		      <th>Secteur</th>
+		      <th>Modifier</th>
+		      <th>Supprimer !</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  <?php
 
-			  	foreach ($users as $user) 
-			  	{
+		  	foreach ($users as $user) 
+		  	{
 
-					echo '<tr>';
-				    echo '<th scope="row">'.$user->id.'</th>';
-				    echo '<td><img class="table-profile-picture" src="'.$user->picture_path.'"></td>';
-				    echo '<td>'.$user->first_name.'</td>';
-				    echo '<td>'.$user->last_name.'</td>';
-				    echo '<td>'.$user->login.'</td>';
-				    echo '<td>';
-				    echo  $user->type ? "Administrateur" : "Utilisateur" ;
-				    echo '</td>';
-				    echo '<td>'.$user->title->name.'</td>';
-				    echo '<td>';
-				    echo  isset($user->sector) ? $user->sector->name : "Aucun" ;
-				    echo '</td>';		
-				    echo '<td><a href="edituser/'.$user->id.'">Modifier</a></td>';	    
-				    echo '<td>';
-				    echo Form::open(array('url' => 'deleteuser','method'=>'POST', 'class' => 'delete_user'));
-				    echo Form::hidden('id', $user->id);
-				    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
-				    echo Form::close();
-				    echo '</td>';
-				    echo '</tr>';
-				}
+				echo '<tr>';
+			    echo '<th scope="row">'.$user->id.'</th>';
+			    echo '<td><img class="table-profile-picture" src="'.$user->picture_path.'"></td>';
+			    echo '<td>'.$user->first_name.'</td>';
+			    echo '<td>'.$user->last_name.'</td>';
+			    echo '<td>'.$user->login.'</td>';
+			    echo '<td>';
+			    echo  $user->type ? "Administrateur" : "Utilisateur" ;
+			    echo '</td>';
+			    echo '<td>'.$user->title->name.'</td>';
+			    echo '<td>';
+			    echo  isset($user->sector) ? $user->sector->name : "Aucun" ;
+			    echo '</td>';		
+			    echo '<td><a href="edituser/'.$user->id.'">Modifier</a></td>';	    
+			    echo '<td>';
+			    echo Form::open(array('url' => 'deleteuser','method'=>'POST', 'class' => 'delete_user'));
+			    echo Form::hidden('id', $user->id);
+			    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+			    echo Form::close();
+			    echo '</td>';
+			    echo '</tr>';
+			}
+
 		    ?>
 		  	</tbody>
 			</table>
@@ -167,7 +168,7 @@ $users = AdminController::getUsers();
 		    <tr>
 		      <th>#</th>
 		      <th>Secteur</th>
-		      <th>Poubelle !</th>
+		      <th>Supprimer !</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -209,7 +210,7 @@ $users = AdminController::getUsers();
 		    <tr>
 		      <th>#</th>
 		      <th>Rôles</th>
-		      <th>Poubelle !</th>
+		      <th>Supprimer !</th>
 		    </tr>
 		  </thead>
 		  <tbody>
