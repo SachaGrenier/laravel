@@ -8,7 +8,10 @@ $applicants = TicketController::getApplicants();
 $sectors = TicketController::getSectors();
 $users = TicketController::getUsers();
 $files = TicketController::getFiles($id);
-$contacts = TicketController::getContactsFromTicket($id);
+//$contacts = TicketController::getContactsFromTicket($id);
+
+
+
 
 //creating an empty array
 $output_array = array();
@@ -114,27 +117,37 @@ if (Session::get('status'))
 
 	       ?>
 	    </select></li>
-	  	<li class="list-group-item">Fichiers : <?php
+
+	  	<?php
 	  	if(count($files) > 0)
 	  	{
+	  	
+	  		echo '<li class="list-group-item">Fichiers : ';
 		  	foreach ($files as $key => $value) 
 		  	{
 			  	echo '<a class="btn btn-secondary file-list" href="../'.$value->path.'" target="_blank">Fichier' .($key+1).' .'.$value->ext.' </a>';
 		  	}	
-	  	}
-	  	else
-	  	{
-	  		echo 'Aucun';
+		  	echo '</li>';
 	  	}
 
-	  	 ?> </li>
-	  	 <li class="list-group-item">Contacts :  
+	  	 ?> 
+	  	 
 	  	 <?php
+	  	 if(count($ticket->contact) > 0)
+	  	 {
+	  	 	echo '<li class="list-group-item">Contacts :  ';
+  	 		foreach ($ticket->contact as $key => $contact) 
+  	 		{
+				echo $contact->first_name.' '.$contact->last_name.'('.$contact->company->name.')';
+				echo count($contact) == $key+1 ? "," : "";
+			}
+			echo '</li>';
+		}
 
 	  	 ?>
-	  	 </li>
-
-	</ul>
+	  	 
+</ul>
+	
 	<br>
 	<div class="row">
     <div class="col">

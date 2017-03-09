@@ -125,6 +125,8 @@ Route::get('ajax',function(){
 
 Route::get('/gettickets/{type}', ['uses' =>'AjaxController@index']);
 
+Route::get('/getusers/{sector}', ['uses' =>'AjaxController@getUsers']);
+
 
 Route::get('logout', function () {
     session()->flush();

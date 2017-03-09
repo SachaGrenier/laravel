@@ -20,6 +20,10 @@ class Ticket extends Model
     {
         return $this->belongsTo('App\Applicant');
     }
+    public function contact()
+    {
+         return $this->belongsToMany('App\Contact','ticket_contact', 'ticket_id', 'contact_id');
+    }
  
 }
 

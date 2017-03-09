@@ -11,7 +11,7 @@
 	        <h1 class="appname">Manage Tickets</h1>
           {{ Form::open(array('url' => 'login','method'=>'POST','class' => 'form-signin')) }}	        
 	        {{ Form::Text('login','',['class' => 'form-control','placeholder' => 'Login', 'autofocus']) }}       
-	        {{ Form::password('password',['class' => 'form-control', 'placeholder'=>'Password']) }}
+	        {{ Form::password('password',['class' => 'form-control', 'placeholder'=>'Mot de passe']) }}
 	        <br>
 	        {{ Form::submit('Se connecter',['class' => 'btn btn-primary btn-lg btn-block']) }}
 	        {{ Form::close() }}

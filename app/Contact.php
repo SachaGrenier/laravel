@@ -12,4 +12,8 @@ class Contact extends Model
     {
         return $this->belongsTo('App\Company');       
     }
+    public function ticket()
+    {
+    	return $this->belongsToMany('App\Contact','ticket_contact', 'contact_id', 'ticket_id');
+    }
 }
