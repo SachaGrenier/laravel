@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Contact;
 use App\Company;
 use App\Applicant;
+use App\Ticket;
 use Illuminate\Support\Facades\Session;
 
 
@@ -167,16 +168,42 @@ class ContactController extends Controller
     public function deletecontact(request $request)
     {
     	$contact = Contact::find($request->input('id'));
-    	if($contact->delete())
+        //check if contact is set on tickets
+        $tickets = Ticket::all();
+        $listTickets ="";
+        foreach ($tickets as $ticket) 
         {
-            Session::flash('status', 'Le contact à correctement été supprimé'); 
-            Session::flash('class', 'alert-success'); 
+ 
+            foreach ($ticket->contact as $value) 
+            {
+                if($value->id == $contact->id)
+                {
+                    $listTickets .= '<a href="/ticket/'.$ticket->id.'">'.$ticket->id.'</a> ,';
+                }
+            }
+          
+        }
+        $listTickets=rtrim($listTickets,", ");
+
+        if($listTickets != "")
+        {   
+            Session::flash('status', 'Une erreur est intervenue, le contact '.$contact->first_name.' '.$contact->last_name.' est actuellement attribué aux tickets '.$listTickets); 
+            Session::flash('class', 'alert-danger');
         }
         else
         {
-            Session::flash('status', 'Une erreur est intervenue'); 
-            Session::flash('class', 'alert-danger');
+            if($contact->delete())
+            {
+                Session::flash('status', 'Le contact à correctement été supprimé'); 
+                Session::flash('class', 'alert-success'); 
+            }
+            else
+            {
+                Session::flash('status', 'Une erreur est intervenue'); 
+                Session::flash('class', 'alert-danger');
+            }
         }
+    
 
         return redirect('contact');
     }

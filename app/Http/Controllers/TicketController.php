@@ -9,7 +9,6 @@ use App\User;
 use App\Applicant;
 use App\Redirect;
 use App\File;
-use App\Ticket_Contact;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
@@ -84,6 +83,7 @@ class TicketController extends Controller
             Session::flash('class', 'alert-danger'); 
         }
 
+        $ticket->contact()->attach($request->input('contacts'));
        if(count($request->file('file')) > 0)
         {
             foreach ($request->file('file') as $file)
@@ -102,7 +102,7 @@ class TicketController extends Controller
                 }   
             }
         }
-        if(count($request->input('contacts') > 0))
+        /*if(count($request->input('contacts') > 0))
         {
             foreach ($request->input('contacts') as $contact)
              {
@@ -111,7 +111,7 @@ class TicketController extends Controller
                 $input->ticket_id = $ticket->id;
                 $input->save();
              }
-        }
+        }*/
          return redirect('createticket');
        
     }
@@ -200,8 +200,5 @@ class TicketController extends Controller
     {
         return Ticket::where('applicant_id',$applicant_id)->where('archived',false)->get();
     }
-    public static function getContactsFromTicket($id_ticket)
-    {
-        return Ticket_Contact::where('ticket_id',$id_ticket)->get();
-    }
+
 }

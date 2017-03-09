@@ -7,12 +7,14 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Ticket;
 use App\User;
+use App\Sector;
 use Carbon\Carbon;
 
 
 class AjaxController extends Controller
 {
-    public function index($type){
+    public function index($type)
+    {
       
       switch ($type) 
         {
@@ -62,6 +64,18 @@ class AjaxController extends Controller
         }
 
     	return $ui;
+   }
+   public function getUsers($sector_id)
+   {
+        if($sector_id == "all")
+        {
+              return User::all();
+        }
+        else
+        {
+             return User::where('sector_id',$sector_id)->get();
+        }
+
    }
 }
 

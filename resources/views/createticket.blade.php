@@ -95,7 +95,7 @@ $output_array = json_encode( $output_array );
  
   	<div class="form-group">
      {{ Form::label('Secteur', '') }}
-    <select class="form-control" name="sector_id">
+    <select class="form-control" name="sector_id" id="sector_id">
       <option value="">Aucun</option>
       <?php
       	foreach ($sectors as $sector)
@@ -107,14 +107,8 @@ $output_array = json_encode( $output_array );
   </div>
   <div class="form-group">
      {{ Form::label('Assigner un utilisateur', '') }}
-    <select class="form-control" name="user_id">
+    <select class="form-control" name="user_id" id="user_id">
     <option value="">Aucun</option>
-    <?php
-      	foreach ($users as $user)
-      	{
-      		echo '<option value="'.$user->id.'">'.$user->first_name.' '.$user->last_name.'</option>';
-      	}
-    ?>
     </select>
   </div>
   <div class="form-check">
@@ -241,5 +235,35 @@ function fileChangeHandler() {
   var form = $(this).closest('div');
   $('<input type="file" class="multiple-files" name="file[]">').change(fileChangeHandler).appendTo(form);
 }
+
+var type="all";
+
+$('#sector_id').change(function() {
+
+    type = $('#sector_id').val();    
+    $.ajax({
+            url: '/getusers/'+type,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                setSelect(data);
+            }
+        });
+        function setSelect(data) 
+        {
+          $('#user_id')
+            .find('option')
+            .remove()
+            .end();
+
+            for (var i = data.length - 1; i >= 0; i--) 
+            {
+              $('#user_id').append($('<option>', {
+                  value: data[i]['id'],
+                  text: data[i]['first_name'] + ' ' + data[i]['last_name'] 
+              }));
+          }
+        }
+});
 </script>
 @endsection

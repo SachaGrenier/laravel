@@ -132,7 +132,7 @@ $users = AdminController::getUsers();
 
 			    <div class="form-group">
 			     {{ Form::label('Secteur', '') }}
-				    <select class="custom-select" name="sector_id">
+				    <select class="form-control" name="sector_id">
 				      <option value="">Aucun</option>
 				      <?php
 				      	foreach ($sectors as $sector)
