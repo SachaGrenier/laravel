@@ -68,8 +68,10 @@ class ContactController extends Controller
         }
         else
         {
-             Session::flash('status', 'Fichier invalide'); 
-            Session::flash('class', 'alert-danger'); 
+             Session::flash('status', 'Logo absent'); 
+             Session::flash('class', 'alert-danger');
+
+             return redirect('contact');
         }
         if($company->save())
         {

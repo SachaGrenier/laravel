@@ -137,7 +137,7 @@ $users 	  =   AdminController::getUsers();
 				      <option value="">Aucun</option>
 				      <?php
 				      	foreach ($sectors as $sector)
-				      	 {
+				      	{
 				      		echo '<option value="'.$sector->id.'">'.$sector->name.'</option>';
 				      	}
 
@@ -145,7 +145,7 @@ $users 	  =   AdminController::getUsers();
 				    </select>
 			  	</div>
 
-			  	    <div class="form-group">
+			  	 <div class="form-group">
 			     {{ Form::label('Rôle*', '') }}
 				    <select class="form-control" name="title_id">
 				      <option value="">Aucun</option>
@@ -174,7 +174,6 @@ $users 	  =   AdminController::getUsers();
 		  </thead>
 		  <tbody>
 		  <?php
-
 		  	foreach ($sectors as $sector) 
 		  	{
 				echo '<tr>';
@@ -198,7 +197,7 @@ $users 	  =   AdminController::getUsers();
 			{{ Form::open(array('url' => 'storesector','method'=>'POST','class' => 'form-group')) }}
 				<div class="form-group">
 				    {{ Form::label('Nom', '') }}
-				    {{ Form::Text('name','',['class' => 'form-control form-control']) }}
+				    {{ Form::Text('name','',['class' => 'form-control form-control','id' => 'sector_name']) }}
 				</div>
 		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
 
@@ -240,7 +239,7 @@ $users 	  =   AdminController::getUsers();
 			{{ Form::open(array('url' => 'storetitle','method'=>'POST','class' => 'form-group')) }}
 				<div class="form-group">
 				    {{ Form::label('Nom', '') }}
-				    {{ Form::Text('name','',['class' => 'form-control form-control']) }}
+				    {{ Form::Text('name','',['class' => 'form-control form-control','id' => 'title_name']) }}
 				</div>
 		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
 
@@ -262,21 +261,26 @@ $(document ).ready(function() {
 
 
 	$('#first_name').change(function() {
-		$('#username').text($('#first_name').val().toLowerCase()+ '_'+$('#last_name').val().toLowerCase());
+		$('#username').text($('#first_name').val().toLowerCase() + '_'+ $('#last_name').val().toLowerCase());
 	});	
 
 	$('#last_name').change(function() {
-		$('#username').text($('#first_name').val().toLowerCase()+ '_'+$('#last_name').val().toLowerCase());
+		$('#username').text($('#first_name').val().toLowerCase() + '_'+ $('#last_name').val().toLowerCase());
 	});	
 
 	$('#show-jumbo-user').click(function() {
 		$('#jumbo-user').toggle(200);
+		$('#first_name').focus();
 	});
 	$('#show-jumbo-sector').click(function() {
 		$('#jumbo-sector').toggle(200);
+		$('#sector_name').focus();
+
 	});
 	$('#show-jumbo-title').click(function() {
 		$('#jumbo-title').toggle(200);
+		$('#title_name').focus();
+
 	});
 
 	$('.delete_user').submit(function() {

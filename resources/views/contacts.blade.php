@@ -87,19 +87,19 @@ $applicants = 	ContactController::getApplicants();
 
 		<div class="form-group">
 			    {{ Form::label('Nom*', '') }}
-			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+			    {{ Form::Text('last_name','',['class' => 'form-control form-control', 'id' => 'last_name']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Prénom*', '') }}
-			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'First_name']) }}
+			    {{ Form::Text('first_name','',['class' => 'form-control form-control']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Téléphone*', '') }}
-			    {{ Form::Text('phone_number','',['class' => 'form-control form-control','id' => 'Phone_number' , 'placeholder' => 'Ex: 0217918384']) }}
+			    {{ Form::Text('phone_number','',['class' => 'form-control form-control', 'placeholder' => 'Ex: 0217918384']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Email*', '') }}
-			    {{ Form::Text('email','',['class' => 'form-control form-control','id' => 'Email']) }}
+			    {{ Form::Text('email','',['class' => 'form-control form-control']) }}
 		</div>
 		<div class="form-group">
 		     {{ Form::label('Entreprise', '') }}
@@ -164,15 +164,15 @@ $applicants = 	ContactController::getApplicants();
 
 		<div class="form-group">
 			    {{ Form::label('Nom*', '') }}
-			    {{ Form::Text('name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+			    {{ Form::Text('name','',['class' => 'form-control form-control','id' => 'company_name']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Site web*', '') }}
-			    {{ Form::Text('website','',['class' => 'form-control form-control','id' => 'last_name' , 'placeholder' => 'Ex: www.exemple.com']) }}
+			    {{ Form::Text('website','',['class' => 'form-control form-control', 'placeholder' => 'Ex: www.exemple.com']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Téléphone*', '') }}
-			    {{ Form::Text('phone_number','',['class' => 'form-control form-control','id' => 'Phone_number' , 'placeholder' => 'Ex: 0217918384']) }}
+			    {{ Form::Text('phone_number','',['class' => 'form-control form-control', 'placeholder' => 'Ex: 0217918384']) }}
 		</div>
 		<div class="form-group">
 			<label class="custom-file">
@@ -230,19 +230,19 @@ $applicants = 	ContactController::getApplicants();
 
 		<div class="form-group">
 			    {{ Form::label('Nom*', '') }}
-			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'applicant_last_name']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Prénom', '') }}
-			    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
+			    {{ Form::Text('first_name','',['class' => 'form-control form-control']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Téléphone*', '') }}
-			    {{ Form::Text('phone_number','',['class' => 'form-control form-control','id' => 'Phone_number' , 'placeholder' => 'Ex: 0217918384']) }}
+			    {{ Form::Text('phone_number','',['class' => 'form-control form-control', 'placeholder' => 'Ex: 0217918384']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Email*', '') }}
-			    {{ Form::Text('email','',['class' => 'form-control form-control','id' => 'Phone_number']) }}
+			    {{ Form::Text('email','',['class' => 'form-control form-control']) }}
 		</div>
 
 		{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
@@ -260,12 +260,17 @@ $(document ).ready(function() {
 });
 	$('#show-jumbo-enterprise').click(function() {
 		$('#jumbo-enterprise').toggle(200);
+		$('#company_name').focus();
+
 	});
 	$('#show-jumbo-contact').click(function() {
 		$('#jumbo-contact').toggle(200);
+		$('#last_name').focus();
 	});
 	$('#show-jumbo-applicant').click(function() {
 		$('#jumbo-applicant').toggle(200);
+		$('#applicant_last_name').focus();
+
 	});
 	$('.delete_contact').submit(function() {
 			return confirm('Attention ! Ce contact va être supprimé');
