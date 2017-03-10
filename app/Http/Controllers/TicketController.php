@@ -60,7 +60,8 @@ class TicketController extends Controller
 
         $ticket->content = $request->input('content');
         $ticket->note = $request->input('note');
-        $ticket->sector_id = $request->input('sector_id');
+        if($request->input('sector_id') != "null")
+            $ticket->sector_id = $request->input('sector_id');
 
        if($request->input('time_limit') && $request->input('time_limit') != 'none')
        {
