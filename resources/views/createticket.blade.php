@@ -4,10 +4,10 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 
-$sectors =  HomeController::getSectors();
-$users =  TicketController::getUsersFromSector();
-$applicants = TicketController::getApplicants();
-$contacts = ContactController::getContacts();
+$sectors    =   HomeController::getSectors();
+$users      =   TicketController::getUsersFromSector();
+$applicants =   TicketController::getApplicants();
+$contacts   =   ContactController::getContacts();
 
 $output_array = array();
 
@@ -96,7 +96,7 @@ $output_array = json_encode( $output_array );
   	<div class="form-group">
      {{ Form::label('Secteur', '') }}
     <select class="form-control" name="sector_id" id="sector_id">
-      <option value="">Aucun</option>
+      <option value="null">Aucun</option>
       <?php
       	foreach ($sectors as $sector)
       	{
@@ -239,7 +239,16 @@ function fileChangeHandler() {
 var type="all";
 
 $('#sector_id').change(function() {
-
+  if($('#sector_id').val() == "null")
+  {
+      $('#user_id')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="null">Aucun</option>');
+  }
+  else
+  {
     type = $('#sector_id').val();    
     $.ajax({
             url: '/getusers/'+type,
@@ -264,6 +273,7 @@ $('#sector_id').change(function() {
               }));
           }
         }
+      }
 });
 </script>
 @endsection
