@@ -4,11 +4,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TicketController;
 
 
-$contacts = ContactController::getContacts();
-
-$companies = ContactController::getCompanies();
-
-$applicants = ContactController::getApplicants();
+$contacts 	= 	ContactController::getContacts();
+$companies 	= 	ContactController::getCompanies();
+$applicants = 	ContactController::getApplicants();
 
 ?>
 

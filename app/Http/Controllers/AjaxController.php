@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
@@ -10,13 +11,14 @@ use App\User;
 use App\Sector;
 use Carbon\Carbon;
 
-
 class AjaxController extends Controller
 {
+    ///index
+    //returns JSON array of tickets
+    //parameter $type, used to know what kind of information we need
     public function index($type)
-    {
-      
-      switch ($type) 
+    { 
+        switch ($type) 
         {
             case 'sector':
                 $user = User::find(session('id'));            

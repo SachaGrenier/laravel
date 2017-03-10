@@ -4,9 +4,7 @@ use App\Http\Controllers\HomeController;
 
 $currentuser = HomeController::getUser();
 
-
 ?>
-
 
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +34,7 @@ $currentuser = HomeController::getUser();
     <ul class="navbar-nav mr-right">  
       <a class="nav-link"> {{ $currentuser->login}} </a> 
       <a id="logonavbar"> {{ Html::image($currentuser->picture_path,'', array('class'=>'logonavbar')) }}</a>
-      <div  class="dropdown">
+      <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i>   
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">

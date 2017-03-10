@@ -4,9 +4,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\HomeController;
 
-$user = AdminController::getUser($id);
-$sectors = TicketController::getSectors();
-$titles = HomeController::getTitles();
+$user 	 = 	AdminController::getUser($id);
+$sectors = 	TicketController::getSectors();
+$titles  = 	HomeController::getTitles();
 
 ?>
 

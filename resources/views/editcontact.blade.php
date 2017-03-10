@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\ContactController;
 
-$contact = ContactController::getContact($id);
-$companies = ContactController::getCompanies();
+$contact 	= ContactController::getContact($id);
+$companies 	= ContactController::getCompanies();
 
 
 

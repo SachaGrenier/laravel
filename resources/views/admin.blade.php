@@ -8,11 +8,9 @@ $currentuser = HomeController::getUser();
 if(!$currentuser->type)
 	return redirect('/');
 
-$sectors =  HomeController::getSectors();
-
-$titles =  HomeController::getTitles();
-
-$users = AdminController::getUsers();
+$sectors  =   HomeController::getSectors();
+$titles   =   HomeController::getTitles();
+$users 	  =   AdminController::getUsers(); 
 
 ?>
 
@@ -84,10 +82,13 @@ $users = AdminController::getUsers();
 			    echo '</td>';		
 			    echo '<td><a href="edituser/'.$user->id.'">Modifier</a></td>';	    
 			    echo '<td>';
-			    echo Form::open(array('url' => 'deleteuser','method'=>'POST', 'class' => 'delete_user'));
-			    echo Form::hidden('id', $user->id);
-			    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
-			    echo Form::close();
+			    if($user->id != session('id'))
+			    {
+				    echo Form::open(array('url' => 'deleteuser','method'=>'POST', 'class' => 'delete_user'));
+				    echo Form::hidden('id', $user->id);
+				    echo '<button class="btn btn-secondary" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+				    echo Form::close();
+				}
 			    echo '</td>';
 			    echo '</tr>';
 			}

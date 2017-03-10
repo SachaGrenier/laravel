@@ -3,15 +3,12 @@
 use App\Http\Controllers\TicketController;
 
 //getting all the data we need on this page
-$ticket = TicketController::getTicket($id);
-$applicants = TicketController::getApplicants();
-$sectors = TicketController::getSectors();
-$users = TicketController::getUsers();
-$files = TicketController::getFiles($id);
+$ticket  	=	TicketController::getTicket($id);
+$applicants = 	TicketController::getApplicants();
+$sectors 	=	TicketController::getSectors();
+$users 		=	TicketController::getUsers();
+$files 	    =	TicketController::getFiles($id);
 //$contacts = TicketController::getContactsFromTicket($id);
-
-
-
 
 //creating an empty array
 $output_array = array();
@@ -39,17 +36,17 @@ $output_array = json_encode( $output_array );
 <a href="{{route('index')}}"><button class="btn btn-secondary">< Retour aux tickets</button></a>
 
 <?php 
-if(!$ticket->archived)
-{
-	echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modifier ticket</button>';
-}
+	if(!$ticket->archived)
+	{
+		echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modifier ticket</button>';
+	}
 
-if (Session::get('status'))
-{
-   echo '<br><br><div class="alert '.Session::get('class').'">';
-   echo Session::get('status');
-   echo '</div>';
-}
+	if (Session::get('status'))
+	{
+	   echo '<br><br><div class="alert '.Session::get('class').'">';
+	   echo Session::get('status');
+	   echo '</div>';
+	}
 ?>
 <br>
 <br>
@@ -66,7 +63,6 @@ if (Session::get('status'))
 	<div class="form-group">
 	{{ Form::Text('applicant', $ticket->applicant->first_name . ' ' . $ticket->applicant->last_name,['class' => 'form-control','placeholder' => 'Inscrivez le nom de votre demandeur','id' => 'autocomplete','hidden']) }}
 	{{ Form::Text('applicant_id', $ticket->applicant_id,['id' => 'applicant_id','hidden']) }}
-
 
 	</div>
 	<h4>Contenu</h4>
@@ -139,7 +135,7 @@ if (Session::get('status'))
   	 		foreach ($ticket->contact as $key => $contact) 
   	 		{
 				echo $contact->first_name.' '.$contact->last_name.'('.$contact->company->name.')';
-				echo count($contact) == $key+1 ? "," : "";
+				echo count($ticket->contact ) == $key+1 ? "" : ",";
 			}
 			echo '</li>';
 		}
