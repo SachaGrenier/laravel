@@ -27,14 +27,6 @@ class TicketController extends Controller
     }
     public function store(request $request)
     {  
-        $this->validate($request, [
-        'title' => 'required|max:255',
-        'content' => 'required',
-            ]);
-        echo '<pre>';
-        print_r($request->input());
-        echo '</pre>';
-
         $ticket = new Ticket;
 
         if($request->input('project'))
