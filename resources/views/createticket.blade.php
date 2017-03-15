@@ -20,7 +20,6 @@ foreach ($applicants as $row)
 }
 
 $output_array = json_encode( $output_array );
-
 ?>
 
 @extends('layouts.default')
@@ -31,11 +30,6 @@ $output_array = json_encode( $output_array );
 <div class="container">
 
 <h1>Ajouter un ticket</h1>
-<ul>
-    @foreach($errors->all() as $error)
-        <li>{{ $error }}</li>
-    @endforeach
-</ul>
  <?php
    if (Session::get('status'))
    {
@@ -43,7 +37,9 @@ $output_array = json_encode( $output_array );
      echo Session::get('status');
      echo '</div>';
    }
-  ?>  
+
+  ?>
+  <div id="truc"></div>  
 <br>
 {{ Form::open(array('url' => 'storeticket','method'=>'POST','class' => 'form-group', 'files' => true , 'id' => 'ticket-form')) }}
 	<div class="form-group" id="applicant_box">
@@ -61,15 +57,15 @@ $output_array = json_encode( $output_array );
 	 <h3>Ajouter un demandeur</h3>
 	       <div class="form-group">
 	    	{{ Form::label('Prénom*', '') }}
-		    {{ Form::Text('first_name','',['class' => 'form-control']) }}
+		    {{ Form::Text('first_name','',['class' => 'form-control','id' => 'applicant_first_name']) }}
 	    </div>
 	    <div class="form-group">
 	    	{{ Form::label('Nom*', '') }}
-		    {{ Form::Text('last_name','',['class' => 'form-control']) }}
+		    {{ Form::Text('last_name','',['class' => 'form-control','id' => 'applicant_last_name']) }}
 	    </div>
 	    <div class="form-group">
 	    	{{ Form::label('Email', '') }}
-		    {{ Form::Text('email','',['class' => 'form-control']) }}
+		    {{ Form::Text('email','',['class' => 'form-control','id' => 'applicant_email']) }}
 	    </div>
 	    <div class="form-group">
 	    	{{ Form::label('Numéro de téléphone', '') }}
@@ -84,7 +80,7 @@ $output_array = json_encode( $output_array );
     </div>
   	<div class="form-group">
         {{ Form::label('Contenu*', '')}}
-	    {{ Form::textarea('content','',['class' => 'form-control']) }}
+	    {{ Form::textarea('content','',['class' => 'form-control','id' => 'content']) }}
   	</div>
     {{ Form::button('Ajouter des notes',['class' => 'btn btn-secondary','id' => 'show-note-box']) }}
   	<div class="form-group" id="note_box" style="display: none">
@@ -172,20 +168,21 @@ $('#autocomplete').autocomplete({
         $("#applicant_rem").text('Déséléctionner');
     },
 });
-
+var applicant_using_form = false;
 $("#show-applicant-form").click(function(){
   //show add applicant form
   $("#applicant-form").show(200);
   $("#autocomplete").val('');
   $( "#applicant_rem" ).trigger( "click" );
   $("#applicant_box").hide(200);
-
+  applicant_using_form = true;
 });
 
 $("#hide-applicant-form").click(function(){ 
   
   $("#applicant-form").hide(200);
   $("#applicant_box").show(200);
+  applicant_using_form = false;
 });
 
 $("#toggle-time-limit").click(function(){
@@ -216,17 +213,10 @@ $("#check-project").change(function(){
 
   if ($(this).is(":checked")) {  
     title =  $("#title-input").val();
-    $("#title-input").val("[PROJET] "+title);
+    $("#title-input").val("[PROJET] "+ title);
   }
   else{
     $("#title-input").val(title);
-  }
-});
-
-$("#ticket-form").submit(function(){
-  if(title != null)
-  {
-      $("#title-input").val(title);
   }
 });
 
@@ -264,7 +254,7 @@ $('#sector_id').change(function() {
             .find('option')
             .remove()
             .end();
-
+            $('#user_id').append('<option value="">Aucun</option>');
             for (var i = data.length - 1; i >= 0; i--) 
             {
               $('#user_id').append($('<option>', {
@@ -274,6 +264,52 @@ $('#sector_id').change(function() {
           }
         }
       }
+});
+
+$("#ticket-form").submit(function( event){
+  if(title != null)
+  {
+      $("#title-input").val(title);
+  }
+
+  //TODO check form before submit, and cancel submit with inforamtion if there are errors
+  var errors = [];
+  if(!$("#title-input").val())
+  {
+    errors.push('Le champ "Titre de la demande" est vide.');
+  }
+  if(!$("#content").val())
+  {
+    errors.push('Le champ "Contenu" est vide.');
+  }
+  if(applicant_using_form)
+  {
+      if(!$('#applicant_first_name').val() || !$('#applicant_last_name').val())
+    {
+      errors.push('Formulaire demandeur non complété.');
+    }
+  }
+  else
+  {
+    if(!$("#applicant_id").val())
+    {
+       errors.push("Demandeur non choisi.");
+    }
+  }
+  if(errors.length > 0)
+  {
+    var html = '<div class="alert alert-danger">';
+    for (var i =  errors.length - 1; i >= 0; i--) 
+    {
+        html+= errors[i]+'<br>';
+    }
+    html += '</div>';
+    $('#truc').html(html);
+    window.scrollTo(0,0);
+    event.preventDefault();     
+  }
+  
+
 });
 </script>
 @endsection
