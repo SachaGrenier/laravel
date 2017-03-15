@@ -135,12 +135,16 @@ class TicketController extends Controller
         
         $ticket = Ticket::find($request->id);
         $ticket->title = $request->input('title');
-        $ticket->sector_id = $request->input('sector_id');
+
+
         $ticket->content = $request->input('content');
         $ticket->note = $request->input('note');
         $ticket->user_id = $request->input('user_id');
         $ticket->applicant_id = $request->input('applicant_id');
-        //TODO ca marche pas
+        if($request->input('sector_id') != "null")
+            $ticket->sector_id = $request->input('sector_id');
+        else
+            $ticket->sector_id = null;    
         if($request->input('project'))
             $ticket->project = $request->input('project'); 
         if($request->input('project') == null)

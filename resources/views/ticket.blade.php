@@ -21,7 +21,7 @@ foreach ($applicants as $row)
     'value' => $row['first_name'].' '.$row['last_name']);
 }
 
-$output_array = json_encode( $output_array );
+$output_array = json_encode($output_array);
 ?>
 
 @extends('layouts.default')
@@ -87,7 +87,7 @@ $output_array = json_encode( $output_array );
 
 	  	<?php
 	  
-	  	echo '<option value="">Aucun</option>';
+	  	echo '<option value="null">Aucun</option>';
 	  	foreach ($sectors as $sector)
 	  	{
 	  		echo '<option value="'.$sector->id.'" ';
@@ -99,19 +99,9 @@ $output_array = json_encode( $output_array );
 	   	?>
 	    </select></li>
 	  	<li class="list-group-item">Utilisateur assigné : <span id="user-text">{{ $ticket->user_id  ? $ticket->user->first_name . " " . $ticket->user->last_name : "Aucun" }}</span>
+	  	<input id="user_id" value="{{ $ticket->user_id }}" hidden>
 	  	<select class="form-control" name="user_id" id="user">
 	      <option value="">Aucun</option>
-	      <?php
-	      	foreach ($users as $user)
-	      	 {
-	      		echo '<option value="'.$user->id.'" ';
-	      		if(isset($ticket->user_id))
-	      			echo $ticket->user->id == $user->id ? "selected" : "";
-
-	      		echo '>'.$user->first_name.' '.$user->last_name.'</option>';
-	      	}
-
-	       ?>
 	    </select></li>
 
 	  	<?php
@@ -134,7 +124,7 @@ $output_array = json_encode( $output_array );
 	  	 	echo '<li class="list-group-item">Contacts :  ';
   	 		foreach ($ticket->contact as $key => $contact) 
   	 		{
-				echo $contact->first_name.' '.$contact->last_name.'('.$contact->company->name.')';
+				echo '<a href="../editcontact/'.$contact->id.'">'.$contact->first_name.' '.$contact->last_name.'('.$contact->company->name.')</a>';
 				echo count($ticket->contact ) == $key+1 ? "" : ",";
 			}
 			echo '</li>';
@@ -190,6 +180,9 @@ $(document ).ready(function() {
 	$('#sector').hide();
 	$('#user').hide();
 	$('#time_limit-input').hide();
+
+	$('#sector').trigger('change');
+
 });
 //when edit ticket button is clicked, show all inputs and unhide some of them 
 $('#edit-ticket').click(function(){
@@ -232,7 +225,51 @@ $('#autocomplete').autocomplete({
     },
 });
 $('#archiveticket').submit(function() {
-			return confirm('Attention ! Ce ticket va être archivé');
-	});
+	return confirm('Attention ! Ce ticket va être archivé');
+});
+
+var type="all";
+
+$('#sector').change(function() {
+  if($('#sector').val() == "null")
+  {
+      $('#user')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="">Aucun</option>');
+  }
+  else
+  {
+    type = $('#sector').val();    
+    $.ajax({
+            url: '/getusers/'+type,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                setSelect(data);
+            }
+        });
+        function setSelect(data) 
+        {
+          $('#user')
+            .find('option')
+            .remove()
+            .end();
+            $('#user').append('<option value="">Aucun</option>');
+            for (var i = data.length - 1; i >= 0; i--) 
+            {
+              $('#user').append($('<option>', {
+                  value: data[i]['id'],
+                  text: data[i]['first_name'] + ' ' + data[i]['last_name'] 
+              }));
+            }
+            if($('#user_id').val())
+            {
+            	$('#user').val($('#user_id').val());
+            }
+        }
+      }
+});
 </script>
 @endsection

@@ -20,7 +20,6 @@ foreach ($applicants as $row)
 }
 
 $output_array = json_encode( $output_array );
-
 ?>
 
 @extends('layouts.default')
@@ -255,7 +254,7 @@ $('#sector_id').change(function() {
             .find('option')
             .remove()
             .end();
-
+            $('#user_id').append('<option value="">Aucun</option>');
             for (var i = data.length - 1; i >= 0; i--) 
             {
               $('#user_id').append($('<option>', {
