@@ -89,6 +89,8 @@ Route::post('deletetitle', 'AdminController@deletetitle');
 
 Route::post('storecontact', 'ContactController@storecontact');
 
+Route::post('pdfview', 'ItemController@pdfview');
+
 Route::post('storecompany', 'ContactController@storecompany');
 
 Route::post('storeapplicant', 'ContactController@storeapplicant');
@@ -133,3 +135,5 @@ Route::get('logout', function () {
     return redirect()->route('login');
 })->name('logout');
 
+
+Route::get('pdfview',array('as'=>'pdfview','uses'=>'ItemController@pdfview'));
