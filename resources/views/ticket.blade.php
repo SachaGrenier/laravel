@@ -1,18 +1,18 @@
 <?php 
 
 use App\Http\Controllers\TicketController;
-
 //getting all the data we need on this page
 $ticket  	=	TicketController::getTicket($id);
 $applicants = 	TicketController::getApplicants();
 $sectors 	=	TicketController::getSectors();
 $users 		=	TicketController::getUsers();
+$contacts 	=	TicketController::getContacts();
 $files 	    =	TicketController::getFiles($id);
-//$contacts = TicketController::getContactsFromTicket($id);
+
+setLocale(LC_TIME,config('app.locale'));
 
 //creating an empty array
 $output_array = array();
-
 //fills this empty array with applicant's names and encodes it
 foreach ($applicants as $row) 
 {
@@ -50,7 +50,7 @@ $output_array = json_encode($output_array);
 ?>
 <br>
 <br>
- {{ Form::open(array('url' => 'updateticket','method'=>'POST','class' => 'form-group')) }}
+ {{ Form::open(array('url' => 'updateticket','method'=>'POST','class' => 'form-group', 'files' => true )) }}
 	<h1 id="title">{{ $ticket->archived ? "[ARCHIVE] " : "" }} {{ $ticket->project ? "[PROJET] " : "" }}{{ $ticket->title }}</h1>
 	<div class="form-group">
 
@@ -74,18 +74,16 @@ $output_array = json_encode($output_array);
 	{{ Form::textarea('note',$ticket->note,['class' => 'form-control','readonly', 'id' =>'note' ]) }}
 	</div>
 	<ul class="list-group">
-	  	<li class="list-group-item">Délai : <span id="time_limit-text">{{ $ticket->time_limit  ? Carbon\Carbon::parse($ticket->time_limit)->format('d M Y') : "Aucun" }} </span>
+	  	<li class="list-group-item">Délai : <span id="time_limit-text">{{ $ticket->time_limit  ? Carbon\Carbon::parse($ticket->time_limit)->formatLocalized('%d %B %Y') : "Aucun" }} </span>
 	  	<span id="time_limit-input">{{ Form::text('time_limit_value',$ticket->time_limit,['id' => 'datepicker', 'class' => 'form-control']) }}</span>
 	  	</li>
 	  	<li class="list-group-item">Projet : <span id="project-text"> {{ $ticket->project  ? "Oui" : "Non" }}</span>{{ Form::checkbox('project',true,$ticket->project,['id' => 'project']) }}</li> 
-	  	<li class="list-group-item">Crée le : {{ $ticket->created_at->format('d M Y') }}</li>
-	  	<li class="list-group-item">Modifié le : {{ $ticket->updated_at->format('d M Y') }}</li>
+	  	<li class="list-group-item">Crée le : {{ $ticket->created_at->formatLocalized('%d %B %Y') }}</li>
+	  	<li class="list-group-item">Modifié le : {{ $ticket->updated_at->formatLocalized('%d %B %Y') }}</li>
 	  	<li class="list-group-item">Archivé :  {{ $ticket->archived  ? "Oui" : "Non" }}</li>
 	  	<li class="list-group-item">Secteur : <span id="sector-text">{{ $ticket->sector_id  ?  $ticket->sector->name : "Aucun" }}</span> 
 	  	<select class="form-control" name="sector_id" id="sector">
-	 
-
-	  	<?php
+	   	<?php
 	  
 	  	echo '<option value="null">Aucun</option>';
 	  	foreach ($sectors as $sector)
@@ -105,33 +103,80 @@ $output_array = json_encode($output_array);
 	    </select></li>
 
 	  	<?php
-	  	if(count($files) > 0)
-	  	{
+	
 	  	
 	  		echo '<li class="list-group-item">Fichiers : ';
-		  	foreach ($files as $key => $value) 
+	  		if(count($files) > 0)
+	  		{
+			  	echo '<div id="show-files">';
+
+			  	foreach ($files as $key => $value) 
+			  	{
+				  	echo '<a class="btn btn-secondary file-list" href="../'.$value->path.'" target="_blank">Fichier' .($key+1).' .'.$value->ext.' </a></i>';
+			  	}	
+			  	echo '</div>';
+			  	echo '<div id="delete-files">';
+			  	foreach ($files as $key => $value) 
+			  	{
+				  	echo '<button class="btn btn-secondary" type="button" onclick="deletefile(this)" value="'.$value->id.'">Fichier' .($key+1).' .'.$value->ext.' <i class="fa fa-times-circle" aria-hidden="true"></button></i>';
+			  	}
+			  		  	echo '</div>';	
+		  	}
+		  	else
 		  	{
-			  	echo '<a class="btn btn-secondary file-list" href="../'.$value->path.'" target="_blank">Fichier' .($key+1).' .'.$value->ext.' </a>';
-		  	}	
+		  		echo 'Aucun';
+		  	}
+		  	echo '<div class="form-group" id="add-files">
+		    	  <label>Ajouter des fichiers</label><br>';
+		  	echo '<input type="file" name="files[]" multiple>';
+	
+		  	echo '</div>';
 		  	echo '</li>';
-	  	}
-
-	  	 ?> 
-	  	 
-	  	 <?php
-	  	 if(count($ticket->contact) > 0)
-	  	 {
-	  	 	echo '<li class="list-group-item">Contacts :  ';
-  	 		foreach ($ticket->contact as $key => $contact) 
+	  	  	 
+  	 		echo '<li class="list-group-item">Contacts :  ';
+ 			if(count($ticket->contact) > 0)
   	 		{
-				echo '<a href="../editcontact/'.$contact->id.'">'.$contact->first_name.' '.$contact->last_name.'('.$contact->company->name.')</a>';
-				echo count($ticket->contact ) == $key+1 ? "" : ",";
-			}
-			echo '</li>';
-		}
+	  			echo '<div id="show-contact">';
 
+  	 			foreach ($ticket->contact as $key => $contact) 
+  	 			{
+					echo '<a href="../editcontact/'.$contact->id.'">'.$contact->first_name.' '.$contact->last_name.'('.$contact->company->name.')</a>';
+					echo count($ticket->contact ) == ++$key ? "" : ",";
+				}
+		  		echo '</div>';
+		  		echo '<div id="delete-contact">';
+
+				foreach ($ticket->contact as $key => $contact) 
+  	 			{
+					echo '<button class="btn btn-secondary" type="button" onclick="deletecontact(this)" value="'.$contact->id.'">'.$contact->first_name.' '.$contact->last_name.'('.$contact->company->name.') <i class="fa fa-times-circle" aria-hidden="true"></button></i></button>';
+				}
+				echo '</div>';
+				
+			}
+			else
+			{
+				echo 'Aucun';
+			}
+			echo '<div class="form-group" id="add-contact">
+		    		<label>Ajouter des contacts</label>
+		    		<select multiple class="form-control" name="contacts[]">';
+	      	foreach ($contacts as $contact) 
+	      	{
+					$useit = true;
+
+	      		foreach ($ticket->contact as $ticketcontact) 
+						{
+							if($contact->id == $ticketcontact->id)
+								$useit = false;
+						}
+						if($useit)
+							echo '<option value="'.$contact->id.'">'.$contact->first_name.' '.$contact->last_name.' ('.$contact->company->name.')</option>';	
+
+	    	}
+		    echo '</select>
+				 </div>';
+			echo '</li>';
 	  	 ?>
-	  	 
 </ul>
 	
 	<br>
@@ -164,6 +209,7 @@ $output_array = json_encode($output_array);
 
 <script>
 var time_limit_value = "{{ $timelimit }}"
+var id_ticket = "{{ $ticket->id }}";
 
 //initialize date picker
 $( "#datepicker" ).datepicker();
@@ -182,6 +228,10 @@ $(document ).ready(function() {
 	$('#time_limit-input').hide();
 
 	$('#sector').trigger('change');
+	$('#delete-files').hide();
+	$('#delete-contact').hide();
+	$('#add-contact').hide();
+	$('#add-files').hide();
 
 });
 //when edit ticket button is clicked, show all inputs and unhide some of them 
@@ -204,6 +254,13 @@ $('#edit-ticket').click(function(){
 	$('#toggle-time-limit').show(100);
 	$('#time_limit-text').hide();
 	$('#time_limit-input').show(100);
+	$('#delete-files').show(100);
+	$('#delete-contact').show(100);
+	$('#show-files').hide();
+	$('#show-contact').hide();
+	$('#add-contact').show(100);
+	$('#add-files').show(100);
+	
 
 });
 
@@ -271,5 +328,42 @@ $('#sector').change(function() {
         }
       }
 });
+
+function deletefile(file)
+{
+	if(confirm('Etes-vous sûr ?'))
+	{
+		$.ajax({
+            url: '/deletefile/'+file.value,
+            type: 'GET',
+            dataType: 'json',
+            success: function () {
+                file.remove();;
+            }
+        });
+	}
+	else
+	{
+		return;
+	}
+}
+function deletecontact(contact)
+{
+	if(confirm('Etes-vous sûr ?'))
+	{
+		$.ajax({
+            url: '/deletecontact/'+contact.value+'&'+id_ticket,
+            type: 'GET',
+            dataType: 'json',
+            success: function () {
+                contact.remove();;
+            }
+        });
+	}
+	else
+	{
+		return;
+	}
+}
 </script>
 @endsection

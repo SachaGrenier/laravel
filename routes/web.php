@@ -127,6 +127,9 @@ Route::get('/gettickets/{type}', ['uses' =>'AjaxController@index']);
 
 Route::get('/getusers/{sector}', ['uses' =>'AjaxController@getUsers']);
 
+Route::get('/deletefile/{file}', ['uses' =>'AjaxController@deletefile']);
+
+Route::get('/deletecontact/{contact_ticket}', ['uses' =>'AjaxController@deletecontact']);
 
 Route::get('logout', function () {
     session()->flush();

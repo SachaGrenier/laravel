@@ -8,6 +8,7 @@ use App\Ticket;
 use App\User;
 use App\Applicant;
 use App\Redirect;
+use App\Contact;
 use App\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
@@ -76,7 +77,7 @@ class TicketController extends Controller
             Session::flash('class', 'alert-danger'); 
         }
 
-        $ticket->contact()->attach($request->input('contacts'));
+       $ticket->contact()->attach($request->input('contacts'));
        if(count($request->file('file')) > 0)
         {
             foreach ($request->file('file') as $file)
@@ -95,16 +96,6 @@ class TicketController extends Controller
                 }   
             }
         }
-        /*if(count($request->input('contacts') > 0))
-        {
-            foreach ($request->input('contacts') as $contact)
-             {
-                $input = new Ticket_Contact;
-                $input->contact_id = $contact;
-                $input->ticket_id = $ticket->id;
-                $input->save();
-             }
-        }*/
          return redirect('createticket');
        
     }
@@ -129,8 +120,8 @@ class TicketController extends Controller
 
     public static function updateticket(Request $request)
     {
-            echo '<pre>';
-        print_r($request->input());
+        echo '<pre>';
+        print_r($request->file());
         echo '</pre>';
         
         $ticket = Ticket::find($request->id);
@@ -157,6 +148,28 @@ class TicketController extends Controller
             $date = str_replace('/', '-', $date);
             $ticket->time_limit = date('Y-m-d', strtotime($date));
         }
+
+        $ticket->contact()->attach($request->input('contacts'));
+
+        if(count($request->file('files')) > 0)
+        {
+            foreach ($request->file('files') as $file)
+             {
+                if($file->isValid())
+                {
+                    $destinationPath = 'files/';
+                    $name = str_random(mt_rand(15,25)).'.'.$file->getClientOriginalExtension();
+                    $file->move($destinationPath,$name); 
+                    
+                    $db_file = new File; 
+                    $db_file->path = $destinationPath.$name;
+                    $db_file->ext = $file->getClientOriginalExtension();
+                    $db_file->ticket_id = $ticket->id;
+                    $db_file->save();
+                }   
+            }
+        }
+
         if($ticket->save())
         {
             Session::flash('status', 'Ticket modifié avec succès !'); 
@@ -197,5 +210,10 @@ class TicketController extends Controller
     {
         return Ticket::where('applicant_id',$applicant_id)->where('archived',false)->get();
     }
+    public static function getContacts()
+    {
+        return Contact::all();
+    }
+
 
 }

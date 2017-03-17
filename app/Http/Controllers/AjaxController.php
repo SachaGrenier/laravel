@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Ticket;
 use App\User;
 use App\Sector;
+use App\File;
+use App\Contact;
 use Carbon\Carbon;
 
 class AjaxController extends Controller
@@ -47,6 +49,8 @@ class AjaxController extends Controller
         }
         
         $ui = [];
+        
+        setLocale(LC_TIME,config('app.locale'));
 
         foreach ($tickets as $key => $value)
         {
@@ -61,8 +65,8 @@ class AjaxController extends Controller
         	$ui[$key]->sector = $value->sector['name'];
         	$ui[$key]->user = $value->user['first_name']. ' ' . $value->user['last_name'];
         	$ui[$key]->applicant = $value->applicant['first_name']. ' ' . $value->applicant['last_name'];
-        	$ui[$key]->created_at = $value->created_at->format('d M Y');
-        	$ui[$key]->time_limit = $value->time_limit == null ? "Aucun" : Carbon::parse($value->time_limit)->format('d M Y');
+        	$ui[$key]->created_at = $value->created_at->formatLocalized('%d %B %Y');
+        	$ui[$key]->time_limit = $value->time_limit == null ? "Aucun" : Carbon::parse($value->time_limit)->formatLocalized('%d %B %Y');
         }
 
     	return $ui;
@@ -79,6 +83,26 @@ class AjaxController extends Controller
         }
 
    }
+    public function deletefile($id_file)
+    {
+        $file = File::find($id_file);
+        unlink($file->path);
+        if($file->delete())
+        {
+            return response(200);
+        }
+    }
+    public function deletecontact($id_contact_id_ticket)
+    {
+        $terms = explode("&", $id_contact_id_ticket);
+        $ticket= Ticket::find($terms[1]);
+        
+        if($ticket->contact()->detach($terms[0]))
+        {
+            return response(200);
+        }
+    }
+
 }
 
 
