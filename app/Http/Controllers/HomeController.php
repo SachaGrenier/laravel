@@ -61,9 +61,10 @@ class HomeController extends Controller
                 $name = str_random(mt_rand(15,25)).'.'.$file->getClientOriginalExtension();
                 $currentuser = HomeController::getUser(); 
                 $file->move($destinationPath,$name); 
-                if($currentuser->picture_path != "img/profilepictures/default.jpg" || $currentuser->picture_path != null)
-                {
-                    unlink($currentuser->picture_path);
+                if($currentuser->picture_path != "img/profilepictures/default.jpg")
+                {   
+                    if($currentuser->picture_path != null)
+                        unlink($currentuser->picture_path);
                 }
                 $currentuser->picture_path = $destinationPath.$name;
 
