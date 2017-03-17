@@ -40,10 +40,10 @@ $output_array = json_encode($output_array);
 	{
 		echo '<button class="btn btn-primary" style="float:right;display:inline-block;" id="edit-ticket">Modifier ticket</button>';
 	}
-	
+
      echo Form::open(array('url' => 'pdfview','method'=>'POST'));
   	 echo Form::hidden('id', $ticket->id);
-  	 echo '<button type="submit" class="btn btn-secondary" style="float:right;display:inline-block;">PDF</button>';
+  	 echo '<button type="submit" class="btn btn-secondary" style="float:right;display:inline-block;">Imprimer</button>';
   	 echo Form::close();
 
 	if (Session::get('status'))
