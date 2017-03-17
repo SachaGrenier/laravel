@@ -1,6 +1,5 @@
 <link rel="stylesheet" type="text/css" href="{{ ltrim(elixir('css/bootstrap.min.css'), '/') }}" />
 	{{ Html::script('js/jquery.min.js') }}
-
 <div class="container">
 
     {{ Html::image('img/logoMT.png','', array('class'=>'','width' => '100')) }}
@@ -10,7 +9,8 @@
 
 		<?php
 
-		//print_r($ticket);
+		setLocale(LC_TIME,config('app.locale'));
+
 		?>
 		<table class="table">
 		<tbody>
@@ -37,7 +37,7 @@
 			</tr>
 			<tr>
 				<th>Délai</th>
-				<td>{{ $ticket->time_limit ? Carbon\Carbon::parse($ticket->time_limit)->format('d M Y') : "Aucun" }}</td>
+				<td>{{ $ticket->time_limit ? Carbon\Carbon::parse($ticket->time_limit)->formatLocalized('%d %B %Y') : "Aucun" }}</td>
 			</tr>
 			<tr>
 				<th>Projet</th>
@@ -47,11 +47,11 @@
 			</tr>
 			<tr>
 				<th>Date création</th>
-				<td>{{ Carbon\Carbon::parse($ticket->created_at)->format('d M Y') }}</td>
+				<td>{{ Carbon\Carbon::parse($ticket->created_at)->formatLocalized('%d %B %Y') }}</td>
 			</tr>
 			<tr>
 				<th>Date modification</th>
-				<td>{{ Carbon\Carbon::parse($ticket->updated_at)->format('d M Y') }}</td>
+				<td>{{ Carbon\Carbon::parse($ticket->updated_at)->formatLocalized('%d %B %Y') }}</td>
 			</tr>
 			<tr>
 				<th>Secteur</th>
