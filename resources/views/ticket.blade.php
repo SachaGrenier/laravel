@@ -43,7 +43,7 @@ $output_array = json_encode($output_array);
 
      echo Form::open(array('url' => 'pdfview','method'=>'POST'));
   	 echo Form::hidden('id', $ticket->id);
-  	 echo '<button type="submit" class="btn btn-secondary" style="float:right;display:inline-block;">Imprimer</button>';
+  	 echo '<button type="submit" class="btn btn-secondary" style="float:right;display:inline-block; margin-top:5px;">Imprimer</button>';
   	 echo Form::close();
 
 	if (Session::get('status'))
