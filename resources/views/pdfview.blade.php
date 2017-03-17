@@ -92,21 +92,10 @@
 	</tbody>
 	</table>
 	<div id="links">
-	<a href="{{ route('pdfview',['download'=>'pdf','id' => $ticket->id]) }}"><button type="button" class="btn btn-info" id="download">Télécharger PDF</button></a>
-	<a href="javascript:window.print()"><button type="button" class="btn btn-info">Imprimer</button> </a>
+	<a href="{{ route('pdfview',['download'=>'pdf','id' => $ticket->id]) }}"><button type="button" class="btn btn-info" style="margin-top: 5px;">Télécharger PDF</button></a>
+	<a href="javascript:window.print()"><button type="button" class="btn btn-info" ">Imprimer</button> </a>
 	</div>
-	<footer class="footer">
-	    <!--@include('includes.footer')-->
-        <span class="text-muted" style="width: 100%;position: relative;vertical-align: 50%;">ManageTickets 2017 - ETML</span>	
-	</footer>
 
 </div>
-
-<script>
-	$('#download').click(function(){
-		$('#links').hide();
-	});
-
-</script>
 
 	
