@@ -38,8 +38,13 @@ $output_array = json_encode($output_array);
 <?php 
 	if(!$ticket->archived)
 	{
-		echo '<button class="btn btn-primary" style="float:right;" id="edit-ticket">Modifier ticket</button>';
+		echo '<button class="btn btn-primary" style="float:right;display:inline-block;" id="edit-ticket">Modifier ticket</button>';
 	}
+
+     echo Form::open(array('url' => 'pdfview','method'=>'POST'));
+  	 echo Form::hidden('id', $ticket->id);
+  	 echo '<button type="submit" class="btn btn-secondary" style="float:right;display:inline-block;">Imprimer</button>';
+  	 echo Form::close();
 
 	if (Session::get('status'))
 	{
@@ -200,7 +205,11 @@ $output_array = json_encode($output_array);
     </div>
     <div class="col">
     <button type="button" class="btn btn-secondary" id="cancel-modifications" style="float:right">Annuler les modifications</button>
+
+
+
     </div>
+
     
 </div>
  
