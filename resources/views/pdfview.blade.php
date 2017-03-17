@@ -47,11 +47,11 @@
 			</tr>
 			<tr>
 				<th>Date création</th>
-				<td>{{ $ticket->created_at ? Carbon\Carbon::parse($ticket->created_at)->format('d M Y') : "Aucun" }}</td>
+				<td>{{ Carbon\Carbon::parse($ticket->created_at)->format('d M Y') }}</td>
 			</tr>
 			<tr>
 				<th>Date modification</th>
-				<td>{{ $ticket->updtated_at }}</td>
+				<td>{{ Carbon\Carbon::parse($ticket->updated_at)->format('d M Y') }}</td>
 			</tr>
 			<tr>
 				<th>Secteur</th>
