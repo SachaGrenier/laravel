@@ -70,19 +70,24 @@ class AjaxController extends Controller
         }
 
     	return $ui;
-   }
-   public function getUsers($sector_id)
-   {
+    }
+    ///getUsers
+    //get all the users that are in a specified sector, expect if the parameter is all.
+    //returns array of objects with all the users asked
+    public function getUsers($sector_id)
+    {
         if($sector_id == "all")
         {
-              return User::all();
+            return User::all();
         }
         else
         {
-             return User::where('sector_id',$sector_id)->get();
+            return User::where('sector_id',$sector_id)->get();
         }
-
-   }
+    }
+    ///deletefile
+    //find the file with id submited and deletes it. It also removes the line in the database
+    //return success(200) if everything went good
     public function deletefile($id_file)
     {
         $file = File::find($id_file);
@@ -92,6 +97,9 @@ class AjaxController extends Controller
             return response(200);
         }
     }
+    ///deletecontact
+    //find the contact with id submited and removes the line in the database
+    //return success(200) if everything went good
     public function deletecontact($id_contact_id_ticket)
     {
         $terms = explode("&", $id_contact_id_ticket);
@@ -102,7 +110,6 @@ class AjaxController extends Controller
             return response(200);
         }
     }
-
 }
 
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 
 $currentuser = HomeController::getUser();
 
+//check if logged user is admin
 if(!$currentuser->type)
 	return redirect('/');
 
@@ -36,13 +37,14 @@ $users 	  =   AdminController::getUsers();
 </ul>
   <br>
   <?php
-		   if (Session::get('status'))
-		   {
-			   echo '<div class="alert '.Session::get('class').'">';
-			   echo Session::get('status');
-			   echo '</div>';
-		   }
-		  ?>  
+  	   	//bar to show information if needed
+	   	if (Session::get('status'))
+	   	{
+		   echo '<div class="alert '.Session::get('class').'">';
+		   echo Session::get('status');
+		   echo '</div>';
+	   	}
+  ?>  
 
 <div class="tab-content">
 	<div id="div-user" class="tab-pane active" role="tabpanel">
@@ -63,7 +65,7 @@ $users 	  =   AdminController::getUsers();
 		  </thead>
 		  <tbody>
 		  <?php
-
+		  	//put all the users into the table
 		  	foreach ($users as $user) 
 		  	{
 
@@ -82,6 +84,7 @@ $users 	  =   AdminController::getUsers();
 			    echo '</td>';		
 			    echo '<td><a href="edituser/'.$user->id.'">Modifier</a></td>';	    
 			    echo '<td>';
+			    //used to prevent self destruct
 			    if($user->id != session('id'))
 			    {
 				    echo Form::open(array('url' => 'deleteuser','method'=>'POST', 'class' => 'delete_user'));
@@ -259,47 +262,47 @@ $(document ).ready(function() {
 
 });
 
+//show login with firstname_lastname 
+$('#first_name').change(function() {
+	$('#username').text($('#first_name').val().toLowerCase() + '_'+ $('#last_name').val().toLowerCase());
+});	
 
-	$('#first_name').change(function() {
-		$('#username').text($('#first_name').val().toLowerCase() + '_'+ $('#last_name').val().toLowerCase());
-	});	
+$('#last_name').change(function() {
+	$('#username').text($('#first_name').val().toLowerCase() + '_'+ $('#last_name').val().toLowerCase());
+});	
 
-	$('#last_name').change(function() {
-		$('#username').text($('#first_name').val().toLowerCase() + '_'+ $('#last_name').val().toLowerCase());
-	});	
+$('#show-jumbo-user').click(function() {
+	$('#jumbo-user').toggle(200);
+	$('#first_name').focus();
+});
+$('#show-jumbo-sector').click(function() {
+	$('#jumbo-sector').toggle(200);
+	$('#sector_name').focus();
 
-	$('#show-jumbo-user').click(function() {
-		$('#jumbo-user').toggle(200);
-		$('#first_name').focus();
-	});
-	$('#show-jumbo-sector').click(function() {
-		$('#jumbo-sector').toggle(200);
-		$('#sector_name').focus();
+});
+$('#show-jumbo-title').click(function() {
+	$('#jumbo-title').toggle(200);
+	$('#title_name').focus();
 
-	});
-	$('#show-jumbo-title').click(function() {
-		$('#jumbo-title').toggle(200);
-		$('#title_name').focus();
-
-	});
-
-	$('.delete_user').submit(function() {
-		var result = prompt("Ecrire 'OK' si vous êtes sur ");
-		if(result == "OK")
-		{
-			return confirm('Attention ! Cet utilisateur va être supprimé');
-		}
-		else
-		{
-			return false;
-		}
-	});
-	$('.delete_sector').submit(function() {
-			return confirm('Attention ! Ce secteur va être supprimé');
-	});
-	$('.delete_title').submit(function() {
-			return confirm('Attention ! Ce rôle va être supprimé');
-	});
+});
+//check if user really wants to delete the user 
+$('.delete_user').submit(function() {
+	var result = prompt("Ecrire 'OK' si vous êtes sur ");
+	if(result == "OK")
+	{
+		return confirm('Attention ! Cet utilisateur va être supprimé');
+	}
+	else
+	{
+		return false;
+	}
+});
+$('.delete_sector').submit(function() {
+		return confirm('Attention ! Ce secteur va être supprimé');
+});
+$('.delete_title').submit(function() {
+		return confirm('Attention ! Ce rôle va être supprimé');
+});
 
 </script>
 @endsection

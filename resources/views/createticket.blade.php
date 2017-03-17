@@ -134,7 +134,7 @@ $output_array = json_encode( $output_array );
   </div>
   <h3>Ajouter des fichiers </h3>
   <div class="form-group" >
-  	<input type='file' id="multiple-files" class="multiple-files" name="file[]">
+  	<input type='file' class="multiple-files" name="file[]" multiple>
   </div>
   
   {{Form::submit('Créer',['class' => 'btn btn-primary'])}}
@@ -220,11 +220,6 @@ $("#check-project").change(function(){
   }
 });
 
-$('#multiple-files').change(fileChangeHandler);
-function fileChangeHandler() {
-  var form = $(this).closest('div');
-  $('<input type="file" class="multiple-files" name="file[]">').change(fileChangeHandler).appendTo(form);
-}
 
 var type="all";
 
