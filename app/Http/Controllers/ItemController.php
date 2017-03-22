@@ -9,8 +9,6 @@ use PDF;
 
 class ItemController extends Controller
 {
-
-
     public function pdfview(Request $request)
     {
         $ticket = Ticket::find($request->input('id'));
@@ -27,5 +25,19 @@ class ItemController extends Controller
         }
 
         return view('pdfview');
+    }
+
+    public function pdfviewlist(Request $request)
+    {
+        $tickets = Ticket::where('archived',false)->get();
+       
+        view()->share('tickets',$tickets);
+
+        if($request->has('download'))
+        {
+            $pdf = PDF::loadView('pdfviewlist')->setPaper('A4', 'landscape');
+            return $pdf->download('list_tickets.pdf');
+        }
+        return view('pdfviewlist');
     }
 }

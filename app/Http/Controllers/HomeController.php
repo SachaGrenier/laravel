@@ -21,37 +21,30 @@ class HomeController extends Controller
     
     public static function index()
     {
-
        $user = User::find(session('id'));
 
-       $sector = Sector::find($user->sector->id);
-             
+       $sector = Sector::find($user->sector->id);        
 
-        return $sector;
+       return $sector;
     }
- 
+    
     public static function getSectors()
     {
          return Sector::all();
     }
-
+    
     public static function getTitles()
     {
          return Title::all();
     }
-
+    
     public static function getUser()
     {
         return User::find(session('id'));
     }
-    
-
-
-    
 
     public static function updateProfilPicture(Request $request)
     {
-        
         if ($request->hasFile('image'))
         {
             $file = $request->image;    
@@ -77,18 +70,13 @@ class HomeController extends Controller
                 Session::flash('status', 'Fichier invalide'); 
                 Session::flash('class', 'alert-danger'); 
             }
-                
-                
-            
         }
         else
         {
-             Session::flash('status', 'Fichier invalide'); 
+            Session::flash('status', 'Fichier invalide'); 
             Session::flash('class', 'alert-danger'); 
         }
         return redirect('settings');  
-
-
     }
 
     //get user and update his email
@@ -100,16 +88,13 @@ class HomeController extends Controller
             $user->email = $request->email;
             $user->save();
             Session::flash('status', 'Adresse email modifiée avec succès'); 
-            Session::flash('class', 'alert-success'); 
-               
+            Session::flash('class', 'alert-success');       
         }
         else
         {
             Session::flash('status', 'Adresse email incorrecte'); 
             Session::flash('class', 'alert-danger'); 
         }
-        
-
         return redirect()->route('settings'); 
     }
     
@@ -124,22 +109,19 @@ class HomeController extends Controller
                 $currentuser->password = Hash::make($request->new_password);   
                 $currentuser->save(); 
                 Session::flash('status', 'Mot de passe modifié avec succès'); 
-                Session::flash('class', 'alert-success'); 
-                            
+                Session::flash('class', 'alert-success');           
             }
             else   
             {            
                 Session::flash('status', 'Ancien mot de passe <strong>erroné</strong>'); 
                 Session::flash('class', 'alert-danger'); 
             }
-           
         }
         else
         {
             Session::flash('status', 'Les mots de passes ne correspondent pas!'); 
             Session::flash('class', 'alert-danger'); 
-           
         }
-         return redirect('settings');
+        return redirect('settings');
     }
 }

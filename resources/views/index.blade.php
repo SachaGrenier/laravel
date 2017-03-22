@@ -33,9 +33,17 @@ $sector = HomeController::index();
   </label>
 
 </div>
+<div style="float:right;">
+  
+  <?php
+     echo Form::open(array('url' => 'pdfviewlist','method'=>'POST'));
+     echo '<button type="submit" class="btn btn-secondary" style="float:right;display:inline-block; margin-top:0px;"><i class="fa fa-print" aria-hidden="true"></i></button>';
+     echo Form::close();
+?>
+</div>
 
 <br>
-  
+
 <table id="my-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
   <thead class="thead-inverse">
     <tr>
@@ -51,6 +59,7 @@ $sector = HomeController::index();
   <tbody>
   </tbody>
 </table>
+
 <script>
 $(document ).ready(function() {
       getTickets('sector');
@@ -119,7 +128,6 @@ $(document ).ready(function() {
                    "mData": "time_limit"
                }
                 ]});
-      
           }
        }
       $('input[type=radio][name=options]').change(function(){

@@ -12,21 +12,15 @@ class LoginController extends Controller
 {
     public function index(Request $request)
     {
-    	/*
-    	  echo '<pre>';
-        print_r($request->input());
-        echo '</pre>';
-      */
          $this->validate($request, [
         'login' => 'required|max:50',
         'password' => 'required',
             ]);
 
-
         $user = User::where('login', $request->input('login'))->get();
 
         if (isset($user[0]))
-          
+        { 
           if (Hash::check($request->input('password'), $user[0]->password))         	
           	{ 
           		$request->session()->put('id', $user[0]->id);
@@ -35,6 +29,7 @@ class LoginController extends Controller
           	}
           	else          	
           		return redirect('login')->with('status', 'Login ou mot de passe <strong>erronés</strong>');          	
+        }
         else          
             	return redirect('login')->with('status', 'Login ou mot de passe <strong>erronés</strong>');
     }

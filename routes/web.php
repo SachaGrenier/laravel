@@ -91,6 +91,8 @@ Route::post('storecontact', 'ContactController@storecontact');
 
 Route::post('pdfview', 'ItemController@pdfview');
 
+Route::post('pdfviewlist', 'ItemController@pdfviewlist');
+
 Route::post('storecompany', 'ContactController@storecompany');
 
 Route::post('storeapplicant', 'ContactController@storeapplicant');
@@ -140,3 +142,5 @@ Route::get('logout', function () {
 
 
 Route::get('pdfview',array('as'=>'pdfview','uses'=>'ItemController@pdfview'));
+
+Route::get('pdfviewlist',array('as'=>'pdfviewlist','uses'=>'ItemController@pdfviewlist'));

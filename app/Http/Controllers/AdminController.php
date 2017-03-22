@@ -71,7 +71,6 @@ class AdminController extends Controller
         {
             Session::flash('status', 'Le rôle <strong>'.$title->name.'</strong> à bien été  crée'); 
             Session::flash('class', 'alert-success'); 
-              
         }
         else
         {
@@ -93,14 +92,13 @@ class AdminController extends Controller
         {
             Session::flash('status', 'Le secteur <strong>'.$sector->name.'</strong> à bien été  crée'); 
             Session::flash('class', 'alert-success'); 
-              
         }
         else
         {
             Session::flash('status', 'Une erreur est intervenue'); 
             Session::flash('class', 'alert-danger');
         }
-            return redirect('admin');
+        return redirect('admin');
     }
     ///getUsers
     //returns all the users from the database
@@ -131,11 +129,10 @@ class AdminController extends Controller
 
         $user = User::find($request->input('id'));
         unlink($user->picture_path);
-         if($user->delete())
+        if($user->delete())
         {
             Session::flash('status', 'Le profil à correctement été supprimé'); 
-            Session::flash('class', 'alert-success'); 
-              
+            Session::flash('class', 'alert-success');       
         }
         else
         {
@@ -160,9 +157,9 @@ class AdminController extends Controller
             $ticket->sector_id = null;
             $ticket->save();
         }
-         $users = User::where('sector_id', $request->input('id'))->get();
+        $users = User::where('sector_id', $request->input('id'))->get();
 
-         $listnames = "";
+        $listnames = "";
             
         foreach ($users as $user)
         {
@@ -173,9 +170,9 @@ class AdminController extends Controller
         if (count($users) > 0) 
         {
             if(count($users) == 1)
-            Session::flash('status', 'L\'utilisateur '.$listnames.' est actuellement dans ce secteur. Veuillez le modifier!'); 
+                Session::flash('status', 'L\'utilisateur '.$listnames.' est actuellement dans ce secteur. Veuillez le modifier!'); 
             else
-            Session::flash('status', 'Les utilisateurs '.$listnames.' sont actuellement dans ce secteur. Veuillez les modifier!'); 
+                Session::flash('status', 'Les utilisateurs '.$listnames.' sont actuellement dans ce secteur. Veuillez les modifier!'); 
 
             Session::flash('class', 'alert-danger');
         }
@@ -186,8 +183,7 @@ class AdminController extends Controller
             if($sector->delete())
             {
                 Session::flash('status', 'Le secteur <strong>'. $sector->name. '</strong> à correctement été supprimé'); 
-                Session::flash('class', 'alert-success'); 
-                  
+                Session::flash('class', 'alert-success');   
             }
             else
             {
@@ -226,7 +222,7 @@ class AdminController extends Controller
         }
         else
         {
-             $title = Title::find($request->input('id'));
+            $title = Title::find($request->input('id'));
             if($title->delete())
             {
                 Session::flash('status', 'Le rôle <strong>'. $title->name. '</strong> à correctement été supprimé'); 
@@ -252,6 +248,7 @@ class AdminController extends Controller
         $user->login = $request->input('login');
         $user->sector_id = $request->input('sector_id');
         $user->title_id = $request->input('title_id');
+        
         if ($request->input('admin')) 
             $user->type = $request->input('admin');
         else
@@ -277,6 +274,7 @@ class AdminController extends Controller
     {
         $user = User::find($request->input('id'));
         $user->password = Hash::make('secret');
+        
         if($user->save())
         {
             Session::flash('status', 'Le mot de passe à bien été réinitialisé'); 

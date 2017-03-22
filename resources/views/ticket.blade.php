@@ -43,7 +43,7 @@ $output_array = json_encode($output_array);
 
      echo Form::open(array('url' => 'pdfview','method'=>'POST'));
   	 echo Form::hidden('id', $ticket->id);
-  	 echo '<button type="submit" class="btn btn-secondary" style="float:right;display:inline-block; margin-top:5px;">Imprimer</button>';
+  	 echo '<button type="submit" class="btn btn-secondary" style="float:right;display:inline-block; margin-top:5px;"><i class="fa fa-print" aria-hidden="true"></i></button>';
   	 echo Form::close();
 
 	if (Session::get('status'))
@@ -134,7 +134,6 @@ $output_array = json_encode($output_array);
 		  	echo '<div class="form-group" id="add-files">
 		    	  <label>Ajouter des fichiers</label><br>';
 		  	echo '<input type="file" name="files[]" multiple>';
-	
 		  	echo '</div>';
 		  	echo '</li>';
 	  	  	 
@@ -145,7 +144,7 @@ $output_array = json_encode($output_array);
 
   	 			foreach ($ticket->contact as $key => $contact) 
   	 			{
-					echo '<a href="../editcontact/'.$contact->id.'">'.$contact->first_name.' '.$contact->last_name.'('.$contact->company->name.')</a>';
+					echo '<a href="../editcontact/'.$contact->id.'" target="_blank" >'.$contact->first_name.' '.$contact->last_name.'('.$contact->company->name.')</a>';
 					echo count($ticket->contact ) == ++$key ? "" : ",";
 				}
 		  		echo '</div>';
@@ -167,16 +166,15 @@ $output_array = json_encode($output_array);
 		    		<select multiple class="form-control" name="contacts[]">';
 	      	foreach ($contacts as $contact) 
 	      	{
-					$useit = true;
+				$useit = true;
 
 	      		foreach ($ticket->contact as $ticketcontact) 
-						{
-							if($contact->id == $ticketcontact->id)
-								$useit = false;
-						}
-						if($useit)
-							echo '<option value="'.$contact->id.'">'.$contact->first_name.' '.$contact->last_name.' ('.$contact->company->name.')</option>';	
-
+					{
+						if($contact->id == $ticketcontact->id)
+							$useit = false;
+					}
+					if($useit)
+						echo '<option value="'.$contact->id.'">'.$contact->first_name.' '.$contact->last_name.' ('.$contact->company->name.')</option>';	
 	    	}
 		    echo '</select>
 				 </div>';
@@ -204,13 +202,8 @@ $output_array = json_encode($output_array);
   	?>
     </div>
     <div class="col">
-    <button type="button" class="btn btn-secondary" id="cancel-modifications" style="float:right">Annuler les modifications</button>
-
-
-
+    	<button type="button" class="btn btn-secondary" id="cancel-modifications" style="float:right">Annuler les modifications</button>
     </div>
-
-    
 </div>
  
 </div>
@@ -269,7 +262,6 @@ $('#edit-ticket').click(function(){
 	$('#show-contact').hide();
 	$('#add-contact').show(100);
 	$('#add-files').show(100);
-	
 
 });
 

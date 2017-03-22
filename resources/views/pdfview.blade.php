@@ -1,5 +1,4 @@
 <link rel="stylesheet" type="text/css" href="{{ ltrim(elixir('css/bootstrap.min.css'), '/') }}" />
-	{{ Html::script('js/jquery.min.js') }}
 <div class="container">
 
     {{ Html::image('img/logoMT.png','', array('class'=>'','width' => '100')) }}

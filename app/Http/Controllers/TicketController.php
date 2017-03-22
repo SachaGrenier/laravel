@@ -13,8 +13,6 @@ use App\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
-
-
 class TicketController extends Controller
 {
     public static function getTicket($id)
@@ -22,9 +20,6 @@ class TicketController extends Controller
         $ticket = Ticket::find($id);
         
         return $ticket ?: redirect()->route('index');
-  
-
-
     }
     public function store(request $request)
     {  
@@ -48,24 +43,20 @@ class TicketController extends Controller
             $ticket->applicant_id = $applicant->id;
         }
         
-        
         $ticket->user_id = $request->input('user_id');
-
         $ticket->content = $request->input('content');
         $ticket->note = $request->input('note');
+
         if($request->input('sector_id') != "null")
             $ticket->sector_id = $request->input('sector_id');
 
-       if($request->input('time_limit') && $request->input('time_limit') != 'none')
-       {
-             //$ticket->time_limit = date('Y-m-d', strtotime(str_replace('-', '/', $request->input('time_limit_value'))));
+        if($request->input('time_limit') && $request->input('time_limit') != 'none')
+        {
             $date = $request->input('time_limit_value');
             $date = str_replace('/', '-', $date);
-             $ticket->time_limit = date('Y-m-d', strtotime($date));
+            $ticket->time_limit = date('Y-m-d', strtotime($date));
         }
         
-
-
         if($ticket->save())
         {
             Session::flash('status', 'Ticket crée avec succès! <a href="ticket/'. $ticket->id .'">Afficher le ticket</a>'); 
@@ -77,8 +68,9 @@ class TicketController extends Controller
             Session::flash('class', 'alert-danger'); 
         }
 
-       $ticket->contact()->attach($request->input('contacts'));
-       if(count($request->file('file')) > 0)
+        $ticket->contact()->attach($request->input('contacts'));
+       
+        if(count($request->file('file')) > 0)
         {
             foreach ($request->file('file') as $file)
              {
@@ -96,8 +88,7 @@ class TicketController extends Controller
                 }   
             }
         }
-         return redirect('createticket');
-       
+        return redirect('createticket');
     }
     public static function archiveticket(Request $request)
     {
