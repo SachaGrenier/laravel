@@ -92,7 +92,7 @@
 	</tbody>
 	</table>
 	<div id="links">
-	<a href="{{ route('pdfview',['download'=>'pdf','id' => $ticket->id]) }}"><button type="button" class="btn btn-info" style="margin-top: 5px;">Télécharger PDF</button></a>
+	<a href="{{ route('pdfview',['download'=>'pdf','id' => $ticket->id]) }}"><button type="button" class="btn btn-info";">Télécharger PDF</button></a>
 	<a href="javascript:window.print()"><button type="button" class="btn btn-info" ">Imprimer</button> </a>
 	</div>
 
