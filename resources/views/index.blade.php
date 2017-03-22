@@ -37,7 +37,7 @@ $sector = HomeController::index();
   
   <?php
      echo Form::open(array('url' => 'pdfviewlist','method'=>'POST'));
-     echo '<button type="submit" class="btn btn-secondary" style="float:right;display:inline-block; margin-top:0px;"><i class="fa fa-print" aria-hidden="true"></i></button>';
+     echo '<button type="submit" class="btn btn-secondary" style="float:right;display:inline-block; margin-top:0px;" title="Imprimer tous les tickets"><i class="fa fa-print" aria-hidden="true"></i></button>';
      echo Form::close();
 ?>
 </div>

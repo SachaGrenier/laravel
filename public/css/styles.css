@@ -19,9 +19,19 @@
 {
   margin-left:10px; 
 }
+.dataTables_info
+{
+  width: 50%;
+}
+.pagination
+{
+  float:right;
+}
 #my-table_paginate
 {
-  margin-left:50%;  
+  margin-top:5px;
+  width: 50%;
+
 }
 .filters
 {

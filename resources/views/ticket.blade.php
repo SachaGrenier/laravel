@@ -3,7 +3,7 @@
 use App\Http\Controllers\TicketController;
 //getting all the data we need on this page
 $ticket  	=	TicketController::getTicket($id);
-$applicants = 	TicketController::getApplicants();
+$applicants =   TicketController::getApplicants();
 $sectors 	=	TicketController::getSectors();
 $users 		=	TicketController::getUsers();
 $contacts 	=	TicketController::getContacts();

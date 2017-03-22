@@ -35,7 +35,7 @@ class ItemController extends Controller
 
         if($request->has('download'))
         {
-            $pdf = PDF::loadView('pdfviewlist')->setPaper('A4', 'landscape');
+            $pdf = PDF::loadView('pdfviewlist')->setPaper('A4','landscape');
             return $pdf->download('list_tickets.pdf');
         }
         return view('pdfviewlist');

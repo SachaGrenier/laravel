@@ -42,7 +42,10 @@ class HomeController extends Controller
     {
         return User::find(session('id'));
     }
-
+    ///updateProfilePicture
+    //updates the user's profile pircutre
+    //removes the old picture from diretory
+    //returns flashed data with result of the request(good, error)
     public static function updateProfilPicture(Request $request)
     {
         if ($request->hasFile('image'))

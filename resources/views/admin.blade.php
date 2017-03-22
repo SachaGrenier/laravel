@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
-
+use App\Redirect;
 $currentuser = HomeController::getUser();
 
 //check if logged user is admin
 if(!$currentuser->type)
-	return redirect('/');
+	return redirect()->route('index');
 
 $sectors  =   HomeController::getSectors();
 $titles   =   HomeController::getTitles();
