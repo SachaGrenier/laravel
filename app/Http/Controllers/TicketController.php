@@ -94,11 +94,10 @@ class TicketController extends Controller
     {
         $ticket = Ticket::find($request->id);
         $ticket->archived = 1;
-        $ticket->save();
 
         if($ticket->save())
         {
-                              Session::flash('status', 'Ticket archivé !'); 
+            Session::flash('status', 'Ticket archivé !'); 
             Session::flash('class', 'alert-success'); 
         }
         else
@@ -112,7 +111,7 @@ class TicketController extends Controller
     public static function updateticket(Request $request)
     {
         echo '<pre>';
-        print_r($request->file());
+        print_r($request->input());
         echo '</pre>';
         
         $ticket = Ticket::find($request->id);
@@ -171,8 +170,11 @@ class TicketController extends Controller
             Session::flash('status', 'Désolé, une erreur est intervenue'); 
             Session::flash('class', 'alert-danger'); 
         }
-         return redirect('/ticket/'.$ticket->id);  
-        $ticket->save();
+        if($request->input('archive'))
+            TicketController::archiveticket($request);
+              
+        return redirect('/ticket/'.$ticket->id);  
+        
     }
     public static function getUsersFromSector()
     {

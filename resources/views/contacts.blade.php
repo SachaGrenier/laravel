@@ -230,11 +230,11 @@ $applicants = 	ContactController::getApplicants();
 
 		<div class="form-group">
 			    {{ Form::label('Prénom*', '') }}
-			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'applicant_last_name']) }}
+			    {{ Form::Text('first_name','',['class' => 'form-control form-control']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Nom*', '') }}
-			    {{ Form::Text('first_name','',['class' => 'form-control form-control']) }}
+			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'applicant_last_name']) }}
 		</div>
 		<div class="form-group">
 			    {{ Form::label('Téléphone*', '') }}

@@ -15,6 +15,15 @@ $sector = HomeController::index();
 
 <br>
 <div class="container">
+
+<?php 
+  if (Session::get('status'))
+  {
+     echo '<br><br><div class="alert '.Session::get('class').'">';
+     echo Session::get('status');
+     echo '</div>';
+  }
+?>
   <div class="btn-group" data-toggle="buttons">
   <label class="btn btn-primary active">
     <input type="radio" name="options" id="option1" checked autocomplete="off" value="sector">Tickets {{ $sector->name }}

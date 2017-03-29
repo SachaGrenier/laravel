@@ -186,18 +186,23 @@ $output_array = json_encode($output_array);
 	<div class="row">
     <div class="col">
 	  	{{ Form::hidden('id', $ticket->id)}}
-	    <button type="submit" class="btn btn-primary" id="apply-modifications">Appliquer les modifications</button>
-  	{{ Form::close() }}
+
+	    <button type="submit" class="btn btn-primary" id="apply-modifications" >Appliquer les modifications</button>
+
+	
     </div>
     <div class="col">
+        <button type="submit" class="btn btn-danger" style="display:block;margin:auto" id="archiveupdateticket" name="archive" value="1" >Enregistrer & archiver</button>
+  	{{ Form::close() }}
   	<?php
 
   	if(!$ticket->archived)
   	{
 	  	echo Form::open(array('url' => 'archiveticket','method'=>'POST','class' => 'form-group', 'id' => 'archiveticket'));
-	  	echo Form::hidden('id', $ticket->id);
+	  	echo Form::hidden('id', $ticket->id);	
 	  	echo '<button type="submit" class="btn btn-danger" style="display:block;margin:auto">Archiver</button>';
 	  	echo Form::close();
+	  	
   	}
   	?>
     </div>
@@ -234,6 +239,7 @@ $(document ).ready(function() {
 	$('#delete-contact').hide();
 	$('#add-contact').hide();
 	$('#add-files').hide();
+	$('#archiveupdateticket').hide();
 
 });
 //when edit ticket button is clicked, show all inputs and unhide some of them 
@@ -262,6 +268,8 @@ $('#edit-ticket').click(function(){
 	$('#show-contact').hide();
 	$('#add-contact').show(100);
 	$('#add-files').show(100);
+	$('#archiveupdateticket').show(100);
+	$('#archiveticket').hide();
 
 });
 
@@ -281,6 +289,10 @@ $('#autocomplete').autocomplete({
         $("#applicant_id").val(ui.item.id);
         $("#applicant_name").text(ui.item.value+" ");
     },
+});
+$('#archiveupdateticket').submit(function() {
+	return confirm('Attention ! Ce ticket va être archivé');
+
 });
 $('#archiveticket').submit(function() {
 	return confirm('Attention ! Ce ticket va être archivé');

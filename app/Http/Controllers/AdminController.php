@@ -119,16 +119,23 @@ class AdminController extends Controller
     //removes user from database
     public function deleteuser(request $request)
     {
+        $user = User::find($request->input('id'));    
         $tickets = Ticket::where('user_id', $request->input('id'))->get();
 
         foreach ($tickets as $ticket)
         {
+            $ticket->note .= "\nAncien utilisateur assigné : ".$user->first_name.' '.$user->last_name;
             $ticket->user_id = null;
             $ticket->save();
         }
 
-        $user = User::find($request->input('id'));
-        unlink($user->picture_path);
+        if($user->picture_path != "img/profilepictures/default.jpg")
+        {
+            if($user->picture_path != null)
+                unlink($user->picture_path);
+        }
+
+
         if($user->delete())
         {
             Session::flash('status', 'Le profil à correctement été supprimé'); 
