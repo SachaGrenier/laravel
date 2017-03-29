@@ -15,6 +15,7 @@
 	{{ Html::script('js/jquery.min.js') }}
 	{{ Html::script('js/jquery-ui.js') }}
 	{{ Html::style('css/jquery-ui.css') }}
+	{{ Html::script('js/datepicker-fr-CH.js') }}
 
 	<!-- Script Bootstrap -->
 

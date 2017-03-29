@@ -9,6 +9,9 @@ use PDF;
 
 class ItemController extends Controller
 {
+    ///pdfview
+    //returns ticket data to the pdf view from given id
+    //returns view to pdf if request has the "download" parameter
     public function pdfview(Request $request)
     {
         $ticket = Ticket::find($request->input('id'));
@@ -26,7 +29,9 @@ class ItemController extends Controller
 
         return view('pdfview');
     }
-
+    ///pdfview
+    //returns the full list of tickets to the pdf view
+    //returns view to pdf if request has the "download" parameter
     public function pdfviewlist(Request $request)
     {
         $tickets = Ticket::where('archived',false)->get();

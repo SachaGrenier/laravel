@@ -12,35 +12,46 @@ use Illuminate\Support\Facades\Session;
 
 class ContactController extends Controller
 {
+    ///getContacts
+    //returns all contacts from database
     public static function getContacts()
     {
         return Contact::all();
     }
-
+    ///getContact
+    //returns specified contact from database
     public static function getContact($id)
     {
         return Contact::find($id);
     }
-
+    ///getCompanies
+    //returns all companies from database
     public static function getCompanies()
     {
         return Company::all();
     }
-
+    ///getCompany
+    //returns specified company from database
     public static function getCompany($id)
     {
         return Company::find($id);
     }
-    
+    ///getApplicants
+    //returns all applicants from database
     public static function getApplicants()
     {
          return Applicant::all();  
     }
+    ///getApplicant
+    //returns specified applicant from database
     public static function getApplicant($id)
     {
         return Applicant::find($id);
     }
-
+    ///storecompany
+    //stores company with data requested
+    //stores company logo into server files
+    //returns with flashed data (success/failure)
     public function storecompany(request $request)
     {
     	$company = new Company;
@@ -83,6 +94,9 @@ class ContactController extends Controller
         }
         return redirect('contact'); 
     }
+    ///storecontact
+    //stores contact with data requested
+    //returns with flashed data (success/failure)
     public function storecontact(request $request)
     {
     	$contact = new Contact;
@@ -104,6 +118,9 @@ class ContactController extends Controller
         }
         return redirect('contact'); 
     }
+    ///storeapplicant
+    //stores applicant with data requested
+    //returns with flashed data (success/failure)
     public function storeapplicant(request $request)
     {
         $applicant = new Applicant;
@@ -124,6 +141,11 @@ class ContactController extends Controller
         }
         return redirect('contact'); 
     }  
+    ///deletecompany
+    //deletes company with id requested
+    //creates a list of contacts attached to the company to prevent foreign key errors
+    //removes the company's logo from server files
+    //returns with flashed data (success/failure, with the list of attached companies)
     public function deletecompany(request $request)
     {
         $contacts = Contact::where('company_id', $request->input('id'))->get();
@@ -164,7 +186,10 @@ class ContactController extends Controller
         }
         return redirect('contact');
     }
-
+    ///deletecontact
+    //deletes contact with id requested
+    //creates a list of tickets attached to the contact to prevent foreign key errors
+    //returns with flashed data (success/failure, with the list of attached contacts)
     public function deletecontact(request $request)
     {
     	$contact = Contact::find($request->input('id'));
@@ -203,7 +228,9 @@ class ContactController extends Controller
         }
         return redirect('contact');
     }
-
+    ///updatecontact
+    //updates contact with data requested
+    //returns with flashed data (success/failure)
     public function updatecontact(request $request)
     {
         $contact = Contact::find($request->input('id'));
@@ -227,7 +254,9 @@ class ContactController extends Controller
         return redirect('editcontact/'. $request->input('id'));
 
     }
-
+    ///updatecontact
+    //updates contact with data requested
+    //returns with flashed data (success/failure)
     public function updatecompany(request $request)
     {
         $company = Company::find($request->input('id'));
@@ -248,7 +277,9 @@ class ContactController extends Controller
 
         return redirect('editcompany/'. $request->input('id'));
     }
-
+    ///updateapplicant
+    //updates applicant with data requested
+    //returns with flashed data (success/failure)
     public function updateapplicant(request $request)
     {
         $applicant = Applicant::find($request->input('id'));
@@ -269,8 +300,10 @@ class ContactController extends Controller
         }
         return redirect('editapplicant/'. $request->input('id'));
     }
-    
-
+    ///updatelogo
+    //updates company's logo with file requested
+    //gets company from database, replaces the picture in server files and in the database
+    //returns with flashed data (success/failure)
     public static function updatelogo(Request $request)
     {
         if ($request->hasFile('image'))
@@ -302,7 +335,4 @@ class ContactController extends Controller
         }
         return redirect('editcompany/'. $request->input('id'));  
     }
-
-
-    
 }

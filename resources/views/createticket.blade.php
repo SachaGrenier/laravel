@@ -147,10 +147,15 @@ $('#my-select').multiSelect({
     selectableHeader: "<div class='custom-header'>Liste des contacts</div>",
   selectionHeader: "<div class='custom-header'>Contacts séléctionnés</div>",
 });
-//initialize date picker
-$( "#datepicker" ).datepicker();
-//change date picker date format
-$( "#datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy" );
+
+$( function() {
+    //set langage for datepicker
+    $.datepicker.setDefaults($.datepicker.regional["fr-CH"]);
+    //initialize date picker with date format
+    $('#datepicker').datepicker({ dateFormat: 'dd/mm/yy' })
+});
+
+
 
 //set json array for autocomplete function
 <?php echo "var javascript_array = ". $output_array . ";\n"; ?>

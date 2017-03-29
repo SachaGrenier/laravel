@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
+    ///index
+    //checks if given login exists
+    //checks if the password matches with the password given
+    //returns with flashed data if failure
+    //log in the user if everything is good
     public function index(Request $request)
     {
          $this->validate($request, [

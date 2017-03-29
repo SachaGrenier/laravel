@@ -48,7 +48,7 @@ class AjaxController extends Controller
                 break;
         }
         
-        $ui = [];
+        $array = [];
         
         setLocale(LC_TIME,config('app.locale'));
 
@@ -59,17 +59,17 @@ class AjaxController extends Controller
             $isproject2 = $value->project ? 'style="color:green"' : "";
             $isarchived2 = $value->archived ? 'style="color:red"' : "";
 
-        	$ui[] = new \stdClass();
-        	$ui[$key]->id = $value->id;
-        	$ui[$key]->title = '<a href="ticket/' . $value->id.'" '.$isarchived2.' '.$isproject2.'>'.$isarchived.' '.$isproject.''.$value->title.'</a>';
-        	$ui[$key]->sector = $value->sector['name'];
-        	$ui[$key]->user = $value->user['first_name']. ' ' . $value->user['last_name'];
-        	$ui[$key]->applicant = $value->applicant['first_name']. ' ' . $value->applicant['last_name'];
-        	$ui[$key]->created_at = $value->created_at->formatLocalized('%d %B %Y');
-        	$ui[$key]->time_limit = $value->time_limit == null ? "Aucun" : Carbon::parse($value->time_limit)->formatLocalized('%d %B %Y');
+        	$array[] = new \stdClass();
+        	$array[$key]->id = $value->id;
+        	$array[$key]->title = '<a href="ticket/' . $value->id.'" '.$isarchived2.' '.$isproject2.'>'.$isarchived.' '.$isproject.''.$value->title.'</a>';
+        	$array[$key]->sector = $value->sector['name'];
+        	$array[$key]->user = $value->user['first_name']. ' ' . $value->user['last_name'];
+        	$array[$key]->applicant = $value->applicant['first_name']. ' ' . $value->applicant['last_name'];
+        	$array[$key]->created_at = $value->created_at->formatLocalized('%d %B %Y');
+        	$array[$key]->time_limit = $value->time_limit == null ? "Aucun" : Carbon::parse($value->time_limit)->formatLocalized('%d %B %Y');
         }
 
-    	return $ui;
+    	return $array;
     }
     ///getUsers
     //get all the users that are in a specified sector, expect if the parameter is all.

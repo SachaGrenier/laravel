@@ -15,12 +15,20 @@ use Illuminate\Support\Facades\Session;
 
 class TicketController extends Controller
 {
+    ///getTicket
+    //returns ticket with id given 
+    //if the ticket doesnt exists, redirects to the main page
     public static function getTicket($id)
-    {
-        $ticket = Ticket::find($id);
-        
-        return $ticket ?: redirect()->route('index');
+    {      
+        return Ticket::find($id) ?: redirect()->route('index');
     }
+    ///store
+    //stores ticket to database
+    //if applicant isn't choosen, creates it
+    //formats the limit date for the database format
+    //attachs the contacts to the ticket
+    //store files requested into the server files and db
+    //returns with flashed data (success/failure)
     public function store(request $request)
     {  
         $ticket = new Ticket;
@@ -90,6 +98,9 @@ class TicketController extends Controller
         }
         return redirect('createticket');
     }
+    ///archiveticket
+    //simply archives ticket by changing the archived field to -> 1 (true) 
+    //returns with flashed data (success/failure)
     public static function archiveticket(Request $request)
     {
         $ticket = Ticket::find($request->id);
@@ -107,13 +118,14 @@ class TicketController extends Controller
         }
          return redirect('/');                                                          
     }
-
+    ///updateticket
+    //finds the ticket with given id
+    //updates all fields given with request data
+    //attach contacts to the ticket if needed
+    //stores files if needed
+    //returns with flashed data (success/failure)
     public static function updateticket(Request $request)
     {
-        echo '<pre>';
-        print_r($request->input());
-        echo '</pre>';
-        
         $ticket = Ticket::find($request->id);
         $ticket->title = $request->input('title');
 
@@ -133,7 +145,6 @@ class TicketController extends Controller
 
         if($request->input('time_limit_value') && $request->input('time_limit_value') != 'none')
         {
-             //$ticket->time_limit = date('Y-m-d', strtotime(str_replace('-', '/', $request->input('time_limit_value'))));
             $date = $request->input('time_limit_value');
             $date = str_replace('/', '-', $date);
             $ticket->time_limit = date('Y-m-d', strtotime($date));
@@ -174,35 +185,46 @@ class TicketController extends Controller
             TicketController::archiveticket($request);
               
         return redirect('/ticket/'.$ticket->id);  
-        
     }
+    ///getUsersFromSector
+    //returns all users from logged user's sector 
     public static function getUsersFromSector()
     {
         $user = User::find(session('id'));
     	return User::where('sector_id',$user->sector_id)->get();
     }
+     ///getApplicants
+    //returns all applicants from database
     public static function getApplicants()
     {
     	return Applicant::all();
     }
+     ///getSectors
+    //returns all sectors from database
     public static function getSectors()
     {
          return Sector::all();
     }
+    ///getUsers
+    //returns all users from database
     public static function getUsers()
     {
          return User::all();
-
     }
+    ///getFiles
+    //returns all files from specified ticket
     public static function getFiles($id_ticket)
     {
         return File::where('ticket_id',$id_ticket)->get();
     }
-
+    ///getTicketsFromApplicant
+    //returns all applicants where tickets aren't archived
     public static function getTicketsFromApplicant($applicant_id)
     {
         return Ticket::where('applicant_id',$applicant_id)->where('archived',false)->get();
     }
+    ///getContacts
+    //returns all contacts from database
     public static function getContacts()
     {
         return Contact::all();

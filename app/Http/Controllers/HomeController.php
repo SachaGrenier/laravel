@@ -18,7 +18,9 @@ class HomeController extends Controller
 {
 
     protected $layout = "layouts.default";
-    
+
+    ///index
+    //returns the sector attached to the logged user
     public static function index()
     {
        $user = User::find(session('id'));
@@ -26,18 +28,21 @@ class HomeController extends Controller
        $sector = Sector::find($user->sector->id);        
 
        return $sector;
-    }
-    
+    } 
+    ///getSectors
+    //returns all the sectors from the database
     public static function getSectors()
     {
          return Sector::all();
     }
-    
+    ///getTitles
+    //returns all the titles from the database
     public static function getTitles()
     {
          return Title::all();
     }
-    
+    ///getTitles
+    //returns logged user's data
     public static function getUser()
     {
         return User::find(session('id'));
@@ -45,7 +50,7 @@ class HomeController extends Controller
     ///updateProfilePicture
     //updates the user's profile pircutre
     //removes the old picture from diretory
-    //returns flashed data with result of the request(good, error)
+    //returns flashed data with result of the request(success, failure)
     public static function updateProfilPicture(Request $request)
     {
         if ($request->hasFile('image'))
@@ -81,8 +86,8 @@ class HomeController extends Controller
         }
         return redirect('settings');  
     }
-
-    //get user and update his email
+    ///updateEmail
+    //gets logged user and updates his email
     public static function updateEmail(Request $request)
     {
         $user = User::find(session('id'));
@@ -100,7 +105,10 @@ class HomeController extends Controller
         }
         return redirect()->route('settings'); 
     }
-    
+    ///updatePassword
+    //updates the logged user's password
+    //checks if the passwords given maches and hashes assword
+    //returns flashed data with result of the request(success, failure)
     public static function updatePassword(Request $request)
     {
         $currentuser = HomeController::getUser(); 
