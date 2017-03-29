@@ -43,7 +43,7 @@
 	</table>
 
 <div id="links">
-	<a href="{{ route('pdfviewlist',['download'=>'pdf']) }}"><button type="button" class="btn btn-info" style="margin-top: 5px;">Télécharger PDF</button></a>
+	<a href="{{ route('pdfviewlist',['download'=>'pdf']) }}"><button type="button" class="btn btn-info">Télécharger PDF</button></a>
 	<a href="javascript:window.print()"><button type="button" class="btn btn-info" ">Imprimer</button> </a>
 	</div>
 </div>
