@@ -64,7 +64,6 @@ class TicketController extends Controller
             $date = str_replace('/', '-', $date);
             $ticket->time_limit = date('Y-m-d', strtotime($date));
         }
-        
         if($ticket->save())
         {
             Session::flash('status', 'Ticket crée avec succès! <a href="ticket/'. $ticket->id .'">Afficher le ticket</a>'); 
@@ -128,18 +127,19 @@ class TicketController extends Controller
     {
         $ticket = Ticket::find($request->id);
         $ticket->title = $request->input('title');
-
-
         $ticket->content = $request->input('content');
         $ticket->note = $request->input('note');
         $ticket->user_id = $request->input('user_id');
         $ticket->applicant_id = $request->input('applicant_id');
+        
         if($request->input('sector_id') != "null")
             $ticket->sector_id = $request->input('sector_id');
         else
             $ticket->sector_id = null;    
+        
         if($request->input('project'))
             $ticket->project = $request->input('project'); 
+        
         if($request->input('project') == null)
             $ticket->project = 0; 
 
@@ -181,6 +181,7 @@ class TicketController extends Controller
             Session::flash('status', 'Désolé, une erreur est intervenue'); 
             Session::flash('class', 'alert-danger'); 
         }
+
         if($request->input('archive'))
             TicketController::archiveticket($request);
               
@@ -191,6 +192,7 @@ class TicketController extends Controller
     public static function getUsersFromSector()
     {
         $user = User::find(session('id'));
+        
     	return User::where('sector_id',$user->sector_id)->get();
     }
      ///getApplicants

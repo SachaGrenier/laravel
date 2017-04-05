@@ -23,7 +23,6 @@ $users 	  =   AdminController::getUsers();
 
 <div class="container">
 <br>
-
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" href="#div-user" data-toggle="tab" role="tab">Utilisateurs</a>
@@ -35,17 +34,16 @@ $users 	  =   AdminController::getUsers();
     <a class="nav-link" href="#div-title" data-toggle="tab" role="tab">Rôles</a>
   </li>
 </ul>
-  <br>
-  <?php
-  	   	//bar to show information if needed
-	   	if (Session::get('status'))
-	   	{
-		   echo '<div class="alert '.Session::get('class').'">';
-		   echo Session::get('status');
-		   echo '</div>';
-	   	}
-  ?>  
-
+<br>
+<?php
+	//bar to show information if needed
+	if (Session::get('status'))
+	{
+		echo '<div class="alert '.Session::get('class').'">';
+		echo Session::get('status');
+		echo '</div>';
+	}
+?>  
 <div class="tab-content">
 	<div id="div-user" class="tab-pane active" role="tabpanel">
 		<table class="table table-hover">
@@ -68,7 +66,6 @@ $users 	  =   AdminController::getUsers();
 		  	//put all the users into the table
 		  	foreach ($users as $user) 
 		  	{
-
 				echo '<tr>';
 			    echo '<th scope="row">'.$user->id.'</th>';
 			    echo '<td><img class="table-profile-picture" src="'.$user->picture_path.'"></td>';
@@ -99,8 +96,6 @@ $users 	  =   AdminController::getUsers();
 		    ?>
 		  	</tbody>
 			</table>
-
-		
 			<button id="show-jumbo-user" class="btn btn-primary">Ajouter un utilisateur</button>
 			
 			<div class="jumbotron jumbotron-form" id="jumbo-user">
@@ -111,29 +106,24 @@ $users 	  =   AdminController::getUsers();
 				    {{ Form::label('Prénom*', '') }}
 				    {{ Form::Text('first_name','',['class' => 'form-control form-control','id' => 'first_name']) }}
 				</div>
-
 			    <div class="form-group">
 				    {{ Form::label('Nom*', '') }}
 				    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'last_name']) }}
 				</div>
 
 				<div class="form-group">
-				    {{ Form::label('Username*', '') }}
+				    {{ Form::label('Login*', '') }}
 				    <p id="username"></p>
 				</div>
-
-
 				<div class="form-group">
 				    {{ Form::label('Email', '') }}
 				    {{ Form::Text('email','',['class' => 'form-control form-control']) }}
 				</div>
-			 	
 			 	<div class="form-check">
 			        {{ Form::label('', '',['class' => 'form-check-label'])}}
 			        {{ Form::checkbox('admin',true,false,['class' => 'form-check-input']) }}
 			          Administrateur
 			    </div>
-
 			    <div class="form-group">
 			     {{ Form::label('Secteur', '') }}
 				    <select class="form-control" name="sector_id">
@@ -147,7 +137,6 @@ $users 	  =   AdminController::getUsers();
 				       ?>
 				    </select>
 			  	</div>
-
 			  	 <div class="form-group">
 			     {{ Form::label('Rôle*', '') }}
 				    <select class="form-control" name="title_id">
@@ -195,7 +184,6 @@ $users 	  =   AdminController::getUsers();
 		</table>
 		<button id="show-jumbo-sector" class="btn btn-primary">Ajouter un secteur</button>
 		<div class="jumbotron jumbotron-form" id="jumbo-sector">
-
 			<h3>Ajouter un secteur</h3>
 			{{ Form::open(array('url' => 'storesector','method'=>'POST','class' => 'form-group')) }}
 				<div class="form-group">
@@ -218,7 +206,6 @@ $users 	  =   AdminController::getUsers();
 		  </thead>
 		  <tbody>
 		  <?php
-
 		  	foreach ($titles as $title) 
 		  	{
 				echo '<tr>';
@@ -237,7 +224,6 @@ $users 	  =   AdminController::getUsers();
 		</table>
 		<button id="show-jumbo-title" class="btn btn-primary">Ajouter un rôle</button>
 		<div class="jumbotron jumbotron-form" id="jumbo-title">
-
 			<h3>Ajouter un rôle</h3>
 			{{ Form::open(array('url' => 'storetitle','method'=>'POST','class' => 'form-group')) }}
 				<div class="form-group">
@@ -245,14 +231,12 @@ $users 	  =   AdminController::getUsers();
 				    {{ Form::Text('name','',['class' => 'form-control form-control','id' => 'title_name']) }}
 				</div>
 		  	{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
-
 			{{ Form::close() }}
 			
 		</div>
 	</div>
 </div>
 </div>
-
 
 <script>
 $(document ).ready(function() {
@@ -261,7 +245,6 @@ $(document ).ready(function() {
 	$('#jumbo-title').hide();
 
 });
-
 //show login with firstname_lastname 
 $('#first_name').change(function() {
 	$('#username').text($('#first_name').val().toLowerCase() + '_'+ $('#last_name').val().toLowerCase());
@@ -275,16 +258,18 @@ $('#show-jumbo-user').click(function() {
 	$('#jumbo-user').toggle(200);
 	$('#first_name').focus();
 });
+
 $('#show-jumbo-sector').click(function() {
 	$('#jumbo-sector').toggle(200);
 	$('#sector_name').focus();
 
 });
+
 $('#show-jumbo-title').click(function() {
 	$('#jumbo-title').toggle(200);
 	$('#title_name').focus();
-
 });
+
 //check if user really wants to delete the user 
 $('.delete_user').submit(function() {
 	var result = prompt("Ecrire 'OK' si vous êtes sur ");
@@ -297,12 +282,13 @@ $('.delete_user').submit(function() {
 		return false;
 	}
 });
+
 $('.delete_sector').submit(function() {
 		return confirm('Attention ! Ce secteur va être supprimé');
 });
+
 $('.delete_title').submit(function() {
 		return confirm('Attention ! Ce rôle va être supprimé');
 });
-
 </script>
 @endsection

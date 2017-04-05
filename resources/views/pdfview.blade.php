@@ -3,17 +3,12 @@
 
     {{ Html::image('img/logoMT.png','', array('class'=>'','width' => '100')) }}
     <span style="font-size: 25px;">ManageTicket</span>
-
-	
-
-		<?php
-
+	<?php
 		setLocale(LC_TIME,config('app.locale'));
-
-		?>
+	?>
 		<table class="table">
 		<tbody>
-	
+
 			<tr>
 				<th>Numéro de ticket</th>
 				<td>{{ $ticket->id }}</td>
@@ -88,12 +83,12 @@
 				</td>
 			</tr>
 			
-	</tbody>
-	</table>
-	<div id="links">
-	<a href="{{ route('pdfview',['download'=>'pdf','id' => $ticket->id]) }}"><button type="button" class="btn btn-info";">Télécharger PDF</button></a>
-	<a href="javascript:window.print()"><button type="button" class="btn btn-info" ">Imprimer</button> </a>
-	</div>
+		</tbody>
+		</table>
+		<div id="links">
+		<a href="{{ route('pdfview',['download'=>'pdf','id' => $ticket->id]) }}"><button type="button" class="btn btn-info";">Télécharger PDF</button></a>
+		<a href="javascript:window.print()"><button type="button" class="btn btn-info" ">Imprimer</button> </a>
+		</div>
 
 </div>
 

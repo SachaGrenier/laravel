@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,7 +17,6 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
-
     protected $layout = "layouts.default";
 
     ///index
@@ -24,7 +24,6 @@ class HomeController extends Controller
     public static function index()
     {
        $user = User::find(session('id'));
-
        $sector = Sector::find($user->sector->id);        
 
        return $sector;

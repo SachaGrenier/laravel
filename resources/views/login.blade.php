@@ -3,8 +3,7 @@
 
 <body>
     <div class="container">
-      
-      <a  id="imagelogo"> {{ Html::image('img/logoMT.png','', array('class'=>'imagelogo')) }}</a>
+        <a  id="imagelogo"> {{ Html::image('img/logoMT.png','', array('class'=>'imagelogo')) }}</a>
         <div id="logincontainer">
 	        <h1 class="appname">Manage Tickets</h1>
           {{ Form::open(array('url' => 'login','method'=>'POST','class' => 'form-signin')) }}	        

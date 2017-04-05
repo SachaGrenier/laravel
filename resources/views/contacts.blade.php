@@ -18,7 +18,6 @@ $applicants = 	ContactController::getApplicants();
 
 <div class="container">
 <br>
-
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" href="#div-contact" data-toggle="tab" role="tab">Contacts</a>
@@ -30,15 +29,15 @@ $applicants = 	ContactController::getApplicants();
     <a class="nav-link" href="#div-applicant" data-toggle="tab" role="tab">Demandeurs</a>
   </li>
 </ul>
-  <br>
-    <?php
-		   if (Session::get('status'))
-		   {
-			   echo '<div class="alert '.Session::get('class').'">';
-			   echo Session::get('status');
-			   echo '</div>';
-		   }
-		  ?>
+<br>
+<?php
+	if (Session::get('status'))
+	{	
+		echo '<div class="alert '.Session::get('class').'">';
+		echo Session::get('status');
+		echo '</div>';
+	}
+?>
 <div class="tab-content">
 	<div id="div-contact" class="tab-pane active" role="tabpanel">
 		<table class="table table-hover">
@@ -58,7 +57,6 @@ $applicants = 	ContactController::getApplicants();
 		  <?php
 		  	foreach ($contacts as $contact) 
 		  	{
-		  		
 				echo '<tr>';
 			    echo '<th scope="row">'.$contact->id.'</th>';			    
 			    echo '<td>'.$contact->first_name.'</td>';
@@ -75,7 +73,6 @@ $applicants = 	ContactController::getApplicants();
 			    echo '</td>';
 			    echo '</tr>';
 			}
-
 		    ?>
 		  </tbody>
 		</table>
@@ -114,13 +111,10 @@ $applicants = 	ContactController::getApplicants();
 			       ?>
 			    </select>
 		 </div>
-
-
 		{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
 		{{Form::close()}}
 		</div>
 </div>
-		  
 <div id="div-enterprise" class="tab-pane" role="tabpanel">
 		<table class="table table-hover">
 		  <thead>
@@ -156,31 +150,29 @@ $applicants = 	ContactController::getApplicants();
 		    ?>
 		  </tbody>
 		</table>
-
 		<button id="show-jumbo-enterprise" class="btn btn-primary">Ajouter une entreprise</button>
 		<div class="jumbotron jumbotron-form" id="jumbo-enterprise">
-		<h3>Ajouter une entreprise</h3>
-		{{ Form::open(array('url'=>'storecompany' , 'method'=>'POST' , 'class'=>'form-group', 'files'=> true))}}
-
-		<div class="form-group">
+			<h3>Ajouter une entreprise</h3>
+			{{ Form::open(array('url'=>'storecompany' , 'method'=>'POST' , 'class'=>'form-group', 'files'=> true))}}
+			<div class="form-group">
 			    {{ Form::label('Nom*', '') }}
 			    {{ Form::Text('name','',['class' => 'form-control form-control','id' => 'company_name']) }}
-		</div>
-		<div class="form-group">
+			</div>
+			<div class="form-group">
 			    {{ Form::label('Site web*', '') }}
 			    {{ Form::Text('website','',['class' => 'form-control form-control', 'placeholder' => 'Ex: www.exemple.com']) }}
-		</div>
-		<div class="form-group">
+			</div>
+			<div class="form-group">
 			    {{ Form::label('Téléphone*', '') }}
 			    {{ Form::Text('phone_number','',['class' => 'form-control form-control', 'placeholder' => 'Ex: 0217918384']) }}
-		</div>
-		<div class="form-group">
-			<label class="custom-file">
-    		{{Form::file('image',['class' => 'custom-file-input'])}}
-    		<span class="custom-file-control">Ajouter le logo de l'entreprise</span>
-		</div>
-		{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
-		{{Form::close()}}
+			</div>
+			<div class="form-group">
+				<label class="custom-file">
+    			{{Form::file('image',['class' => 'custom-file-input'])}}
+    			<span class="custom-file-control">Ajouter le logo de l'entreprise</span>
+			</div>
+			{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
+			{{Form::close()}}
 		</div>
 </div>
 	<div id="div-applicant" class="tab-pane" role="tabpanel">
@@ -198,7 +190,6 @@ $applicants = 	ContactController::getApplicants();
 			  </thead>
 			  <tbody>
 			  <?php
-
 			  	foreach ($applicants as $applicant) 
 			  	{
 			  		$tickets = TicketController::getTicketsFromApplicant($applicant->id);
@@ -226,29 +217,27 @@ $applicants = 	ContactController::getApplicants();
 		<button id="show-jumbo-applicant" class="btn btn-primary">Ajouter un demandeur</button>
 		<div class="jumbotron jumbotron-form" id="jumbo-applicant">
 		<h3>Ajouter un demandeur</h3>
-		{{ Form::open(array('url'=>'storeapplicant' , 'method'=>'POST' , 'class'=>'form-group', 'files'=> true))}}
-
-		<div class="form-group">
+			{{ Form::open(array('url'=>'storeapplicant' , 'method'=>'POST' , 'class'=>'form-group', 'files'=> true))}}
+			<div class="form-group">
 			    {{ Form::label('Prénom*', '') }}
 			    {{ Form::Text('first_name','',['class' => 'form-control form-control']) }}
-		</div>
-		<div class="form-group">
+			</div>
+			<div class="form-group">
 			    {{ Form::label('Nom*', '') }}
 			    {{ Form::Text('last_name','',['class' => 'form-control form-control','id' => 'applicant_last_name']) }}
-		</div>
-		<div class="form-group">
+			</div>
+			<div class="form-group">
 			    {{ Form::label('Téléphone*', '') }}
 			    {{ Form::Text('phone_number','',['class' => 'form-control form-control', 'placeholder' => 'Ex: 0217918384']) }}
-		</div>
-		<div class="form-group">
+			</div>
+			<div class="form-group">
 			    {{ Form::label('Email*', '') }}
 			    {{ Form::Text('email','',['class' => 'form-control form-control']) }}
-		</div>
+			</div>
 
-		{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
-		{{Form::close()}}
+			{{ Form::submit('Créer',['class' => 'btn btn-primary']) }}
+			{{Form::close()}}
 		</div>
-
 	</div>
 </div>
 </div>
@@ -258,26 +247,27 @@ $(document ).ready(function() {
 	$('#jumbo-contact').hide();
 	$('#jumbo-applicant').hide();
 });
-	$('#show-jumbo-enterprise').click(function() {
-		$('#jumbo-enterprise').toggle(200);
-		$('#company_name').focus();
 
-	});
-	$('#show-jumbo-contact').click(function() {
-		$('#jumbo-contact').toggle(200);
-		$('#last_name').focus();
-	});
-	$('#show-jumbo-applicant').click(function() {
-		$('#jumbo-applicant').toggle(200);
-		$('#applicant_last_name').focus();
+$('#show-jumbo-enterprise').click(function() {
+	$('#jumbo-enterprise').toggle(200);
+	$('#company_name').focus();
 
-	});
-	$('.delete_contact').submit(function() {
-			return confirm('Attention ! Ce contact va être supprimé');
-	});
-	$('.delete_company').submit(function() {
-			return confirm('Attention ! Cette entreprise va être supprimé');
-	});
+});
+$('#show-jumbo-contact').click(function() {
+	$('#jumbo-contact').toggle(200);
+	$('#last_name').focus();
+});
+$('#show-jumbo-applicant').click(function() {
+	$('#jumbo-applicant').toggle(200);
+	$('#applicant_last_name').focus();
+
+});
+$('.delete_contact').submit(function() {
+		return confirm('Attention ! Ce contact va être supprimé');
+});
+$('.delete_company').submit(function() {
+		return confirm('Attention ! Cette entreprise va être supprimé');
+});
 </script>
 @endsection
   

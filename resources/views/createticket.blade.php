@@ -75,20 +75,19 @@ $output_array = json_encode( $output_array );
       </div>
 
     <div class="form-group">
-	    {{ Form::label('Titre de la demande*', '') }}
-	    {{ Form::Text('title','',['class' => 'form-control form-control-lg', 'id' => 'title-input']) }}
+	     {{ Form::label('Titre de la demande*', '') }}
+	     {{ Form::Text('title','',['class' => 'form-control form-control-lg', 'id' => 'title-input']) }}
     </div>
   	<div class="form-group">
-        {{ Form::label('Contenu*', '')}}
-	    {{ Form::textarea('content','',['class' => 'form-control','id' => 'content']) }}
+       {{ Form::label('Contenu*', '')}}
+	     {{ Form::textarea('content','',['class' => 'form-control','id' => 'content']) }}
   	</div>
     {{ Form::button('Ajouter des notes',['class' => 'btn btn-secondary','id' => 'show-note-box']) }}
   	<div class="form-group" id="note_box" style="display: none">
-      {{ Form::label('Notes', '')}} 
-	    <br>
-      {{ Form::textarea('note','',['class' => 'form-control']) }}
+       {{ Form::label('Notes', '')}} 
+       <br>
+       {{ Form::textarea('note','',['class' => 'form-control']) }}
   	</div>
- 
   	<div class="form-group">
      {{ Form::label('Secteur', '') }}
     <select class="form-control" name="sector_id" id="sector_id">
@@ -154,8 +153,6 @@ $( function() {
     //initialize date picker with date format
     $('#datepicker').datepicker({ dateFormat: 'dd/mm/yy' })
 });
-
-
 
 //set json array for autocomplete function
 <?php echo "var javascript_array = ". $output_array . ";\n"; ?>
@@ -225,17 +222,16 @@ $("#check-project").change(function(){
   }
 });
 
-
 var type="all";
 
 $('#sector_id').change(function() {
   if($('#sector_id').val() == "null")
   {
       $('#user_id')
-            .find('option')
-            .remove()
-            .end()
-            .append('<option value="null">Aucun</option>');
+        .find('option')
+        .remove()
+        .end()
+        .append('<option value="null">Aucun</option>');
   }
   else
   {
@@ -308,8 +304,6 @@ $("#ticket-form").submit(function( event){
     window.scrollTo(0,0);
     event.preventDefault();     
   }
-  
-
 });
 </script>
 @endsection

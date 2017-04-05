@@ -59,7 +59,7 @@ class AdminController extends Controller
         return redirect('admin');
     }
 
-    /// storetitle
+    ///storetitle
     //simply stores the title into the database
     //returns with flashed data (good, error)
     public function storetitle(request $request)

@@ -28,28 +28,28 @@ $applicant = ContactController::getApplicant($id);
 		  ?>  
 		{{ Form::open(array('url' => 'updateapplicant','method'=>'POST','class' => 'form-group'))}}
 		<div class="form-group">
-			    {{ Form::label('Prénom', '') }}
-				{{ Form::Text('first_name',$applicant->first_name,['class' => 'form-control']) }}
+		    {{ Form::label('Prénom', '') }}
+			{{ Form::Text('first_name',$applicant->first_name,['class' => 'form-control']) }}
 		</div>
 
 		<div class="form-group">
-			    {{ Form::label('Nom', '') }}
-				{{ Form::Text('last_name',$applicant->last_name,['class' => 'form-control']) }}
+		    {{ Form::label('Nom', '') }}
+			{{ Form::Text('last_name',$applicant->last_name,['class' => 'form-control']) }}
 		</div>
 
 		<div class="form-group">
-			    {{ Form::label('Téléphone', '') }}
-				{{ Form::Text('phone_number',$applicant->phone_number,['class' => 'form-control','placeholder'=>'Ex : 0798654321']) }}
+		    {{ Form::label('Téléphone', '') }}
+			{{ Form::Text('phone_number',$applicant->phone_number,['class' => 'form-control','placeholder'=>'Ex : 0798654321']) }}
 		</div>
 
 		<div class="form-group">
-			    {{ Form::label('Email', '') }}
-				{{ Form::Text('email',$applicant->email,['class' => 'form-control']) }}
+		    {{ Form::label('Email', '') }}
+			{{ Form::Text('email',$applicant->email,['class' => 'form-control']) }}
 		</div>
 		  	
-				{{ Form::hidden('id',$applicant->id) }}
+		{{ Form::hidden('id',$applicant->id) }}
 
-		  	{{ Form::submit('Modifier',['class' => 'btn btn-primary']) }}
+		{{ Form::submit('Modifier',['class' => 'btn btn-primary']) }}
 		{{ Form::close() }}
 </div>
 @endsection

@@ -3,9 +3,6 @@
 
     {{ Html::image('img/logoMT.png','', array('class'=>'','width' => '100')) }}
     <span style="font-size: 25px;">ManageTicket</span>
-
-	
-
 	<?php
 		setLocale(LC_TIME,config('app.locale'));
 	?>
@@ -39,7 +36,6 @@
 		}
 	?>
 	</tbody>
-
 	</table>
 
 <div id="links">
